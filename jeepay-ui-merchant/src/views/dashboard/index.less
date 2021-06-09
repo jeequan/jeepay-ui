@@ -1,0 +1,165 @@
+#chart-card {
+	width: 100%;
+
+  .chart-data {
+    min-height: 100px;
+    height: 100%;
+    width: 100%;
+    border-radius: 6px;
+    background-color: #fff;
+  }
+  .chart-top, .chart-bottom {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .middle-smaller, .middle-larger { // 较小的区域
+      height: 100%;
+    }
+    .top-left {
+      min-height: 238px;
+    }
+  }
+  .chart-item {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+  }
+}
+@media screen and (max-width:767px){
+#chart-card {
+  .chart-top {
+    .top-left {
+      order: 1;
+    }
+    .top-middle {
+      order: 2;
+      width: 100%;
+
+      .middle-top, .middle-bottom {
+        display: flex;
+        flex-direction: column;
+
+        .middle-larger, .middle-smaller {
+          width: 100%;
+        }
+      }
+
+    }
+    .top-right {
+      order: 0;
+    }
+  }
+}
+}
+@media screen and (min-width:768px){
+#chart-card {
+  .top-left, .top-middle {
+    order: 1;
+  }
+  .top-middle {
+    width: 100%;
+    .middle-top, .middle-bottom {
+      display: flex;
+      flex-direction: row;
+
+      .middle-larger  {
+        flex-grow: 1; // 设置为1，存在剩余空间放大
+      }
+      .middle-smaller {
+        max-width: 170px;
+        min-width: 130px;
+      }
+    }
+  }
+
+  .top-right {
+    order: 0;
+  }
+}
+}
+
+@media screen and (min-width:1200px){
+#chart-card {
+    .top-left {
+      order: 1;
+      width: 50%;
+    }
+    .top-middle {
+      width: 50%;
+      order: 2;
+
+      .middle-top, .middle-bottom {
+        display: flex;
+        flex-direction: row;
+
+        .middle-larger  {
+          flex-grow: 1; // 设置为1，存在剩余空间放大
+        }
+        .middle-smaller {
+          max-width: 170px;
+          min-width: 130px;
+        }
+      }
+    }
+
+    .top-right {
+      width: 100%;
+      order: 0;
+    }  
+  }
+}
+
+@media screen and (min-width:1500px){
+	#chart-card {
+    flex-direction: row;
+
+    .chart-top {
+      width:100%;
+      order: 0;
+      flex-wrap: nowrap; // 禁止换行
+
+      .top-left, .top-middle {
+        width:500px;
+        min-width: 460px;
+        order: 0;
+      }
+      .top-middle {
+        order: 1;
+        .middle-top, .middle-bottom {
+          display: flex;
+          width: 100%;
+          height: 50%;
+          flex-wrap: nowrap; // 禁止换行
+        }
+        .middle-smaller { // 较小的区域
+          width: 150px;
+          min-width: 150px;
+        }
+        .middle-larger { // 较大的区域
+          width: 300px;
+          flex-grow: 1; // 设置为1，存在剩余空间放大
+        }
+      }
+      .top-right {
+        order: 2;
+        flex-grow: 1; // 设置为1，存在剩余空间放大
+      }
+    }
+
+    .chart-bottom {
+      order: 1;
+      width:100%;
+
+      flex-wrap: nowrap;
+      .bottom-right {
+        max-width: 500px;
+        min-width: 330px;
+      }
+      .bottom-left {
+        min-width: 900px;
+        flex-grow: 1; // 设置为1，存在剩余空间放大
+      }
+    }
+	}
+}

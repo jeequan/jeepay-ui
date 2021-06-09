@@ -1,0 +1,375 @@
+@import '../node_modules/ant-design-vue/es/style/themes/default.less';
+// @import './default.less';
+
+html,
+body,
+#app, #root {
+  height: 100%;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Microsoft YaHei,PingFang SC,Hiragino Sans GB,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+  letter-spacing: 0.4px;
+}
+// jee主题颜色class列表, 用于文字颜色
+.jee-theme {
+  color: @jee-theme; //主题色
+}
+.jee-back {
+  color: @jee-back; //主要背景色
+}
+.jee-card-back {
+  color: @jee-card-back;  //卡片底色
+}
+.jee-theme-mask {
+  color: @jee-theme-mask;  //主体遮罩色(10% 透明度)
+}
+.jee-strengthen {
+  color: @jee-strengthen;//强化色
+}
+.jee-theme-hover {
+  color: @jee-theme-hover;//主题Hover
+}
+.jee-warning {
+  color: @jee-warning;   //危险，强化警告色
+}
+.jee-inside-link {
+  color: @jee-inside-link; //内部链接
+}
+.jee-external-link {
+  color: @jee-external-link; //外部链接
+}
+// jee主题颜色class列表, 用于文字颜色
+.jee-theme {
+  color: @jee-theme;  //主题色
+}
+.jee-back {
+  color: @jee-back; //主要背景色
+}
+.jee-card-back {
+  color: @jee-card-back;  //卡片底色
+}
+.jee-theme-mask {
+  color: @jee-theme-mask;  //主体遮罩色(10% 透明度)
+}
+.jee-strengthen {
+  color: @jee-strengthen;//强化色
+}
+.jee-theme-hover {
+  color: @jee-theme-hover;//主题Hover
+}
+.jee-warning {
+  color: @jee-warning;   //危险，强化警告色
+}
+.jee-inside-link {
+  color: @jee-inside-link; //内部链接
+}
+.jee-external-link {
+  color: @jee-external-link; //外部链接
+}
+
+// jee主题颜色class列表, 用于背景颜色
+.jee-theme-back-color {
+  background-color: @jee-theme;  //主题色
+}
+.jee-back-color {
+  background-color: @jee-back; //主要背景色
+}
+.jee-card-back-color {
+  background-color: @jee-card-back;  //卡片底色
+}
+.jee-theme-mask-back-color {
+  background-color: @jee-theme-mask;  //主体遮罩色(10% 透明度)
+}
+.jee-strengthen-back-color {
+  background-color: @jee-strengthen;//强化色
+}
+.jee-theme-hover-back-color {
+  background-color: @jee-theme-hover;//主题Hover
+}
+.jee-warning-back-color {
+  background-color: @jee-warning;   //危险，强化警告色
+}
+.jee-inside-link-back-color {
+  background-color: @jee-inside-link; //内部链接
+}
+.jee-external-link-back-color {
+  background-color: @jee-external-link; //外部链接
+}
+
+.colorWeak {
+  filter: invert(80%);
+}
+
+.ant-layout{
+  .layout-basic {
+    height: 100vh;
+    min-height: 100vh;
+  }
+}
+
+canvas {
+  display: block;
+}
+
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #f0f2f5;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+// 滚动条高度 和宽度
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+// 滚动条颜色
+::-webkit-scrollbar-thumb {
+  background: #B3B3B3;
+}
+// 滑块区域底色
+::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.03);
+}
+// 滚动条hover色
+::-webkit-scrollbar-thumb:hover {
+  background: #A6A6A6;
+}
+// 滚动条选中色
+::-webkit-scrollbar-thumb:active {
+  background: #8C8C8C;
+}
+// 结合 表格组件中的 :scroll ，让表格在收缩时，展示滚动条
+.ant-table-body{
+  overflow-x: auto !important;
+}
+// /*显示滚动条上方以及下方的渐增按钮*/
+// ::-webkit-scrollbar-button:start:decrement,
+// ::-webkit-scrollbar-button:end:increment {
+//     display: block;
+// }
+// /* 定义垂直滚动条渐增按扭的样式 */
+// ::-webkit-scrollbar-button:vertical:end:increment {
+//   background-image: url(~@/assets/svg/scroll_down.svg);
+//   background-size: cover;
+//   background-position: center;
+// }
+// /* 定义垂直滚动条渐减按扭的样式 */
+// ::-webkit-scrollbar-button:vertical:start:decrement {
+//   background-image: url(~@/assets/svg/scroll_up.svg);
+//   background-size: cover;
+//   background-position: center;
+// }
+// /* 定义水平滚动条渐增按扭的样式 */
+// ::-webkit-scrollbar-button:horizontal:end:increment {
+//   background-image: url(~@/assets/svg/scroll_right.svg);
+//   background-size: cover;
+//   background-position: center;
+// }
+// /* 定义水平滚动条渐减按扭的样式 */
+// ::-webkit-scrollbar-button:horizontal:start:decrement {
+//   background-image: url(~@/assets/svg/scroll_left.svg);
+//   background-size: cover;
+//   background-position: center;
+// }
+
+// 隐藏面包屑底下的标题
+.ant-page-header-heading {
+  display: none;
+}
+
+// 数据列表 样式
+.table-alert {
+  margin-bottom: 16px;
+}
+// 数据列表 操作
+.table-operator {
+  margin-bottom: 18px;
+
+  button {
+    margin-right: 8px;
+  }
+}
+// 数据列表 搜索条件
+.table-page-search-wrapper {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 30px;
+  padding-bottom: 0;
+  border-bottom: 1px solid #e8e8e8;
+  background: #fafafa;
+
+  .ant-form-inline {
+    .ant-form-item {
+      display: flex;
+      margin-bottom: 24px;
+      margin-right: 0;
+
+      .ant-form-item-control-wrapper {
+        flex: 1 1;
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      > .ant-form-item-label {
+        line-height: 32px;
+        padding-right: 8px;
+        width: auto;
+      }
+      .ant-form-item-control {
+        height: 32px;
+        line-height: 32px;
+      }
+    }
+  }
+
+  .table-page-search-submitButtons {
+    display: block;
+    margin-bottom: 24px;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: @screen-xs) {
+  .ant-table {
+    width: 100%;
+    overflow-x: auto;
+    &-thead > tr,
+    &-tbody > tr {
+      > th,
+      > td {
+        white-space: pre;
+        > span {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+// 修改侧边栏宽度为230
+.ant-pro-sider-menu-sider {
+  // min-width: 80px !important;
+  // max-width: 230px !important;
+
+  // 去掉侧边栏阴影
+  .light {
+    box-shadow: none;
+  }
+}
+
+// 删除表格的内边距
+.ant-card-body {
+  padding: 0 !important;
+}
+// 增加内容区域的边框圆角
+.ant-card {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+// 登录页输入框fcous hover事件，边框为jee主题蓝
+.ant-input-affix-wrapper:hover .ant-input:not(.ant-input-disabled) {
+  border-color: @jee-theme
+}
+.ant-input:focus {
+  border-color: @jee-theme
+}
+
+// 抽屉，按钮板块，居中
+.drawer-btn-center {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  width: 100%;
+  border-top: 1px solid rgb(233, 233, 233);
+  padding: 10px 16px;
+  background: rgb(255, 255, 255);
+  text-align: center;
+  z-index: 1;
+
+  &:first-child {
+    margin-right: 80px;
+  }
+  button {
+    margin: 0;
+    padding: 3px 20px;
+  }
+}
+
+.els {
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap
+}
+
+// 内容区域去掉最外层的magin 24px ,改为 padding 15px
+.ant-pro-basicLayout-content {
+  margin: 0 ;
+  padding: 15px;
+}
+
+// 表格页面的间距
+.ant-table-pagination.ant-pagination {
+  margin: 20px;
+}
+
+// 去掉表格边框线
+.ant-card-bordered {
+  border:none;
+}
+
+.ant-table-align-left {
+  padding-left: 38px;
+}
+// 向下的30外边距
+.mg-b-30 { 
+  margin-bottom: 30px
+}
+
+.ant-card-bordered {
+  border: none !important;
+}
+
+// 表格，搜索框板块布局
+.table-head-ground {
+  display: flex;
+  justify-content: start;
+  flex-wrap: wrap;
+  .table-layer {
+   display: flex;
+    flex-wrap: wrap;
+    flex-grow: 1; 
+    flex-shrink: 1;
+  }
+}
+.table-head-layout {
+  min-width: 220px;
+  max-width: 240px;
+  flex-grow: 1;
+  flex-shrink: 1;
+  margin-bottom:30px !important;
+  margin-right: 16px !important;
+}
+
+// 404 500 403
+.result-err {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  overflow: auto;
+  div {
+    margin: 20px 0;
+    text-align:center;
+    font-size: 16px;
+    p.big-text {
+      font-size: 36px;
+      font-weight: 700;
+    }
+  }
+}

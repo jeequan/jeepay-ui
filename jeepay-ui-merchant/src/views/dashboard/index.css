@@ -1,0 +1,159 @@
+#chart-card {
+  width: 100%;
+}
+#chart-card .chart-data {
+  min-height: 100px;
+  height: 100%;
+  width: 100%;
+  border-radius: 6px;
+  background-color: #fff;
+}
+#chart-card .chart-top,
+#chart-card .chart-bottom {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+#chart-card .chart-top .middle-smaller,
+#chart-card .chart-bottom .middle-smaller,
+#chart-card .chart-top .middle-larger,
+#chart-card .chart-bottom .middle-larger {
+  height: 100%;
+}
+#chart-card .chart-top .top-left,
+#chart-card .chart-bottom .top-left {
+  min-height: 238px;
+}
+#chart-card .chart-item {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+}
+@media screen and (max-width: 767px) {
+  #chart-card .chart-top .top-left {
+    order: 1;
+  }
+  #chart-card .chart-top .top-middle {
+    order: 2;
+    width: 100%;
+  }
+  #chart-card .chart-top .top-middle .middle-top,
+  #chart-card .chart-top .top-middle .middle-bottom {
+    display: flex;
+    flex-direction: column;
+  }
+  #chart-card .chart-top .top-middle .middle-top .middle-larger,
+  #chart-card .chart-top .top-middle .middle-bottom .middle-larger,
+  #chart-card .chart-top .top-middle .middle-top .middle-smaller,
+  #chart-card .chart-top .top-middle .middle-bottom .middle-smaller {
+    width: 100%;
+  }
+  #chart-card .chart-top .top-right {
+    order: 0;
+  }
+}
+@media screen and (min-width: 768px) {
+  #chart-card .top-left,
+  #chart-card .top-middle {
+    order: 1;
+  }
+  #chart-card .top-middle {
+    width: 100%;
+  }
+  #chart-card .top-middle .middle-top,
+  #chart-card .top-middle .middle-bottom {
+    display: flex;
+    flex-direction: row;
+  }
+  #chart-card .top-middle .middle-top .middle-larger,
+  #chart-card .top-middle .middle-bottom .middle-larger {
+    flex-grow: 1;
+  }
+  #chart-card .top-middle .middle-top .middle-smaller,
+  #chart-card .top-middle .middle-bottom .middle-smaller {
+    max-width: 170px;
+    min-width: 130px;
+  }
+  #chart-card .top-right {
+    order: 0;
+  }
+}
+@media screen and (min-width: 1200px) {
+  #chart-card .top-left {
+    order: 1;
+    width: 50%;
+  }
+  #chart-card .top-middle {
+    width: 50%;
+    order: 2;
+  }
+  #chart-card .top-middle .middle-top,
+  #chart-card .top-middle .middle-bottom {
+    display: flex;
+    flex-direction: row;
+  }
+  #chart-card .top-middle .middle-top .middle-larger,
+  #chart-card .top-middle .middle-bottom .middle-larger {
+    flex-grow: 1;
+  }
+  #chart-card .top-middle .middle-top .middle-smaller,
+  #chart-card .top-middle .middle-bottom .middle-smaller {
+    max-width: 170px;
+    min-width: 130px;
+  }
+  #chart-card .top-right {
+    width: 100%;
+    order: 0;
+  }
+}
+@media screen and (min-width: 1500px) {
+  #chart-card {
+    flex-direction: row;
+  }
+  #chart-card .chart-top {
+    width: 100%;
+    order: 0;
+    flex-wrap: nowrap;
+  }
+  #chart-card .chart-top .top-left,
+  #chart-card .chart-top .top-middle {
+    width: 500px;
+    min-width: 460px;
+    order: 0;
+  }
+  #chart-card .chart-top .top-middle {
+    order: 1;
+  }
+  #chart-card .chart-top .top-middle .middle-top,
+  #chart-card .chart-top .top-middle .middle-bottom {
+    display: flex;
+    width: 100%;
+    height: 50%;
+    flex-wrap: nowrap;
+  }
+  #chart-card .chart-top .top-middle .middle-smaller {
+    width: 150px;
+    min-width: 150px;
+  }
+  #chart-card .chart-top .top-middle .middle-larger {
+    width: 300px;
+    flex-grow: 1;
+  }
+  #chart-card .chart-top .top-right {
+    order: 2;
+    flex-grow: 1;
+  }
+  #chart-card .chart-bottom {
+    order: 1;
+    width: 100%;
+    flex-wrap: nowrap;
+  }
+  #chart-card .chart-bottom .bottom-right {
+    max-width: 500px;
+    min-width: 330px;
+  }
+  #chart-card .chart-bottom .bottom-left {
+    min-width: 900px;
+    flex-grow: 1;
+  }
+}

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="矩形_2548" data-name="矩形 2548" width="32" height="32" transform="translate(6848 11598)" fill="#fff" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+    <clipPath id="clip-path-2">
+      <rect id="矩形_2547" data-name="矩形 2547" width="32" height="29.211" transform="translate(0 0)" fill="#1953ff"/>
+    </clipPath>
+  </defs>
+  <g id="logo-jeepay" transform="translate(-6848 -11598)" clip-path="url(#clip-path)">
+    <g id="组_1000" data-name="组 1000" transform="translate(3462.959 9987.395)">
+      <g id="组_999" data-name="组 999" transform="translate(3385.041 1612)" clip-path="url(#clip-path-2)">
+        <path id="路径_4157" data-name="路径 4157" d="M3398.508,1679.5h0l-4.173,3.659a2.08,2.08,0,0,0,1.371,3.644h7.49a.729.729,0,0,0,.553-1.2Z" transform="translate(-3390.837 -1657.592)" fill="#1953ff" opacity="0.5"/>
+        <path id="路径_4158" data-name="路径 4158" d="M3387.958,1615.772l-2.874,20.448a4.382,4.382,0,0,0,4.339,4.991h1.628a.73.73,0,0,0,.723-.628l.762-5.418a1.459,1.459,0,0,1,1.445-1.256h4.765a1.46,1.46,0,0,0,1.446-1.256l.673-4.789a1.461,1.461,0,0,1,1.446-1.257h4.353a1.461,1.461,0,0,1,1.446,1.664l-.792,5.639-.91,6.473a.729.729,0,0,0,.722.83h2.655a4.382,4.382,0,0,0,4.339-3.772l2.874-20.448a4.381,4.381,0,0,0-4.338-4.991H3392.3A4.382,4.382,0,0,0,3387.958,1615.772Zm19.628,7.182h-4.351a1.462,1.462,0,0,1-1.447-1.665l.615-4.379a1.462,1.462,0,0,1,1.448-1.258h4.351a1.462,1.462,0,0,1,1.448,1.665l-.615,4.379A1.462,1.462,0,0,1,3407.586,1622.954Z" transform="translate(-3385.041 -1612)" fill="#1953ff"/>
+      </g>
+    </g>
+  </g>
+</svg>
