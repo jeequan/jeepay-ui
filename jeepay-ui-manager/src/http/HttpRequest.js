@@ -10,7 +10,7 @@
 import axios from 'axios'
 import storage from '@/utils/jeepayStorageWrapper'
 import appConfig from '@/config/appConfig'
-import { Vue } from 'vue'
+import Vue from 'vue'
 import store from '@/store/index'
 class HttpRequest {
   constructor (baseUrl = process.env.VUE_APP_API_BASE_URL) {
