@@ -3,7 +3,8 @@ import store from './store'
 import storage from '@/utils/jeepayStorageWrapper'
 import NProgress from 'nprogress' // progress bar
 import '@/components/NProgress/nprogress.less' // progress bar custom style
-import { setDocumentTitle, domTitle } from '@/utils/domUtil'
+import { setDocumentTitle } from '@/utils/domUtil'
+import appConfig from '@/config/appConfig'
 
 import { getInfo } from '@/api/login'
 
@@ -16,7 +17,7 @@ const loginRoutePath = '/user/login'
 router.beforeEach((to, from, next) => {
   NProgress.start() // start progress bar
 
-  to.meta && (typeof to.meta.title !== 'undefined' && setDocumentTitle(`${to.meta.title} - ${domTitle}`)) // 设置浏览器标题
+  to.meta && (typeof to.meta.title !== 'undefined' && setDocumentTitle(`${to.meta.title} - ${appConfig.APP_TITLE}`)) // 设置浏览器标题
 
   // 如果在免登录页面则直接放行
   if (allowList.includes(to.name)) {
