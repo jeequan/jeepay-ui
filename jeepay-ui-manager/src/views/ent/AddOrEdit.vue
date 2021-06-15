@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { API_URL_ENT_LIST, req, getEntBySystem } from '@/api/manage'
+import { API_URL_ENT_LIST, req, getEntBySysType } from '@/api/manage'
 export default {
 
   props: {
@@ -50,7 +50,7 @@ export default {
       isShow: false, // 是否显示弹层/抽屉
       saveObject: {}, // 数据对象
       recordId: null, // 更新对象ID
-      system: 'MGR', // 菜单类型
+      sysType: 'MGR', // 菜单类型
       rules: {
         entName: [
           { required: true, message: '请输入资源名称', trigger: 'blur' }
@@ -61,9 +61,9 @@ export default {
   created () {
   },
   methods: {
-    show: function (recordId, system) { // 弹层打开事件
+    show: function (recordId, sysType) { // 弹层打开事件
       this.isAdd = !recordId
-      this.system = system
+      this.sysType = sysType
       this.saveObject = {} // 数据清空
       this.confirmLoading = false // 关闭loading
 
@@ -74,7 +74,7 @@ export default {
       const that = this
       if (!this.isAdd) { // 修改信息 延迟展示弹层
         that.recordId = recordId
-        getEntBySystem(recordId, system).then(res => { that.saveObject = res })
+        getEntBySysType(recordId, sysType).then(res => { that.saveObject = res })
         this.isShow = true
       } else {
         that.isShow = true // 立马展示弹层信息

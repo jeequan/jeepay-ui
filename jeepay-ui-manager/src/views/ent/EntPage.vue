@@ -91,7 +91,7 @@ export default {
 
     updateState: function (recordId, state) {
       const that = this
-      return reqLoad.updateById(API_URL_ENT_LIST, recordId, { state: state, system: that.querySysType }).then(res => {
+      return reqLoad.updateById(API_URL_ENT_LIST, recordId, { state: state, sysType: that.querySysType }).then(res => {
         that.$message.success('更新成功')
         that.refTable() // 刷新页面
       })

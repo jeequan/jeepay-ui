@@ -115,8 +115,8 @@ const api = {
 export default api
 
 /** 获取权限树状结构图 **/
-export function getEntTree (system) {
-  return request.request({ url: '/api/sysEnts/showTree?system=' + system, method: 'GET' })
+export function getEntTree (sysType) {
+  return request.request({ url: '/api/sysEnts/showTree?sysType=' + sysType, method: 'GET' })
 }
 
 /** 更新用户角色信息 */
@@ -266,10 +266,10 @@ export function getConfigs (parameter) {
   })
 }
 
-export function getEntBySystem (entId, system) {
+export function getEntBySysType (entId, sysType) {
   return request.request({
-    url: '/api/sysEnts/bySystem',
+    url: '/api/sysEnts/bySysType',
     method: 'GET',
-    params: { entId: entId, system: system }
+    params: { entId: entId, sysType: sysType }
   })
 }

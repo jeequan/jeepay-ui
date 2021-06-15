@@ -243,7 +243,7 @@
             <a-col :span="24">
               <a-descriptions>
                 <a-descriptions-item label="所属系统">
-                  {{ $store.state.user.system==="MGR"?"运营平台": $store.state.user.system==="MCH"?"商户系统":"未知" }}
+                  {{ $store.state.user.sysType==="MGR"?"运营平台": $store.state.user.sysType==="MCH"?"商户系统":"未知" }}
                 </a-descriptions-item>
               </a-descriptions>
             </a-col>

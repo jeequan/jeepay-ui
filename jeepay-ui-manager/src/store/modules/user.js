@@ -13,7 +13,7 @@ const user = {
     isAdmin: '', // 是否是超级管理员
     loginUsername: '', // 登录用户名
     state: '', // 用户状态
-    system: '', // 所属系统
+    sysType: '', // 所属系统
     telphone: '', // 手机号
     sex: '' // 性别
   },
@@ -36,7 +36,7 @@ const user = {
       state.isAdmin = userInfo.isAdmin // 是否是超级管理员
       state.loginUsername = userInfo.loginUsername // 登录用户名
       state.state = userInfo.state // 用户状态
-      state.system = userInfo.system // 所属系统
+      state.sysType = userInfo.sysType // 所属系统
       state.telphone = userInfo.telphone // 手机号
       state.sex = userInfo.sex // 性别
     }

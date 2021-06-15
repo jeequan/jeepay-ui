@@ -17,7 +17,7 @@
             <jeepay-text-up :placeholder="'用户ID'" :msg="searchData.userId" v-model="searchData.userId" />
             <jeepay-text-up :placeholder="'用户名'" :msg="searchData.userName" v-model="searchData.userName" />
             <a-form-item label="" class="table-head-layout">
-              <a-select v-model="searchData.system" placeholder="所属系统" default-value="">
+              <a-select v-model="searchData.sysType" placeholder="所属系统" default-value="">
                 <a-select-option value="">全部</a-select-option>
                 <a-select-option value="MGR">运营平台</a-select-option>
                 <a-select-option value="MCH">商户系统</a-select-option>
@@ -48,9 +48,9 @@
         :scrollX="1200"
       >
         <template slot="userNameSlot" slot-scope="{record}"><b>{{ record.userName }}</b></template> <!-- 自定义插槽 -->
-        <template slot="systemSlot" slot-scope="{record}">
-          <a-tag :key="record.system" :color="record.system === 'MGR'?'green':record.system === 'MCH'?'geekblue':'loser'">
-            {{ record.system === 'MGR'?'运营平台':record.system === 'MCH'?'商户系统':'其他' }}
+        <template slot="sysTypeSlot" slot-scope="{record}">
+          <a-tag :key="record.sysType" :color="record.sysType === 'MGR'?'green':record.sysType === 'MCH'?'geekblue':'loser'">
+            {{ record.sysType === 'MGR'?'运营平台':record.sysType === 'MCH'?'商户系统':'其他' }}
           </a-tag>
         </template>
         <template slot="opSlot" slot-scope="{record}">  <!-- 操作列插槽 -->
@@ -97,8 +97,8 @@
           <a-col :sm="12">
             <a-descriptions>
               <a-descriptions-item label="所属系统">
-                <a-tag :key="detailData.system" :color="detailData.system === 'MGR'?'green':detailData.system === 'MCH'?'geekblue':'loser'">
-                  {{ detailData.system === 'MGR'?'运营平台':detailData.system === 'MCH'?'商户系统':'其他' }}
+                <a-tag :key="detailData.sysType" :color="detailData.sysType === 'MGR'?'green':detailData.sysType === 'MCH'?'geekblue':'loser'">
+                  {{ detailData.sysType === 'MGR'?'运营平台':detailData.sysType === 'MCH'?'商户系统':'其他' }}
                 </a-tag>
               </a-descriptions-item>
             </a-descriptions>
@@ -169,7 +169,7 @@ const tableColumns = [
   { key: 'userName', title: '用户名', fixed: 'left', scopedSlots: { customRender: 'userNameSlot' } },
   { key: 'userId', title: '用户ID', dataIndex: 'userId' },
   { key: 'userIp', title: '用户IP', dataIndex: 'userIp' },
-  { key: 'system', title: '所属系统', scopedSlots: { customRender: 'systemSlot' } },
+  { key: 'sysType', title: '所属系统', scopedSlots: { customRender: 'sysTypeSlot' } },
   { key: 'methodRemark', title: '操作描述', ellipsis: true, dataIndex: 'methodRemark' },
   { key: 'createdAt', dataIndex: 'createdAt', title: '创建日期' },
   { key: 'op', title: '操作', width: '100px', fixed: 'right', align: 'center', scopedSlots: { customRender: 'opSlot' } }

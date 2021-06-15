@@ -103,17 +103,8 @@ const api = {
 export default api
 
 /** 获取权限树状结构图 **/
-export function getEntTree (system) {
-  return request.request({ url: '/api/sysEnts/showTree?system=' + system, method: 'GET' })
-}
-
-/** 更新用户角色信息 */
-export function uSysRoleEntRela (sysRoleId, entIdList) {
-  return request.request({
-    url: 'api/sysRoleEntRelas/relas/' + sysRoleId,
-    method: 'POST',
-    data: { entIdListStr: JSON.stringify(entIdList) }
-  })
+export function getEntTree () {
+  return request.request({ url: '/api/sysEnts/showTree', method: 'GET' })
 }
 
 /** 更新用户角色信息 */
@@ -130,55 +121,6 @@ export function getRoleList (parameter) {
     url: '/api/sysRoles',
     method: 'get',
     params: parameter
-  })
-}
-
-export function getServiceList (parameter) {
-  return request({
-    url: api.service,
-    method: 'get',
-    params: parameter
-  })
-}
-
-export function getPermissions (parameter) {
-  return request({
-    url: api.permissionNoPager,
-    method: 'get',
-    params: parameter
-  })
-}
-
-export function getOrgTree (parameter) {
-  return request({
-    url: api.orgTree,
-    method: 'get',
-    params: parameter
-  })
-}
-
-// id == 0 add     post
-// id != 0 update  put
-export function saveService (parameter) {
-  return request({
-    url: api.service,
-    method: parameter.id === 0 ? 'post' : 'put',
-    data: parameter
-  })
-}
-
-export function saveSub (sub) {
-  return request({
-    url: '/sub',
-    method: sub.id === 0 ? 'post' : 'put',
-    data: sub
-  })
-}
-
-export function getIsvPayConfigUnique (infoId, ifCode) {
-  return request.request({
-    url: '/api/isv/payConfigs/' + infoId + '/' + ifCode,
-    method: 'get'
   })
 }
 

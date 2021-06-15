@@ -37,7 +37,7 @@ export default {
 
       that.recordId = recordId
       // 获取全部权限的树状结构
-      getEntTree('MCH').then(res => {
+      getEntTree().then(res => {
         that.treeData = res
 
         // 存储所有的菜单权限集合
