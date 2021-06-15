@@ -51,5 +51,5 @@ unpackage/
 # [vscode IDE]
 .vscode/
 
-# [package-lock.json 无需提交 ]
-package-lock.json
+# [package-lock.json。 已放开，请添加到假定未更改文件 ]
+# package-lock.json
