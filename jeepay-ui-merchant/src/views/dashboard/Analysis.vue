@@ -15,7 +15,7 @@
                 <a-icon type="question-circle" />
               </a-tooltip>
             </div>
-            <div v-show="ispayAmount" >
+            <div v-show="ispayAmount">
               <div class="pay-amount-text">
                 <span class="pay-amount">￥{{ mainChart.todayAmount }}</span>
                 <span>共{{ mainChart.todayPayCount }}笔</span>
@@ -161,7 +161,7 @@
           <div v-show="!skeletonIsShow">
             <div class="pay-count-title">
               <span class="chart-title">支付方式</span>
-              <div class="chart-padding" style="border: 1px solid #ddd;" >
+              <div class="chart-padding" style="border: 1px solid #ddd;">
                 <a-range-picker
                   style="width:100%"
                   ref="jeeRangePie"
@@ -445,6 +445,10 @@
             that.mainChart.yesterdayAmount = (res.yesterdayAmount)
             that.initPayAmount()
             that.skeletonClose(that)
+          }).catch(err => {
+            console.error(err)
+            that.skeletonClose(that)
+            this.ispayAmount = false
           })
         } else {
           this.ispayAmount = false
@@ -456,6 +460,9 @@
             that.skeletonClose(that)
             that.mainChart.totalAmount = res.totalAmount
             that.mainChart.totalPayCount = res.totalCount
+          }).catch(err => {
+            console.error(err)
+            that.skeletonClose(that)
           })
         } else {
           that.skeletonClose(that)
@@ -466,6 +473,10 @@
             that.mainChart.payCount = res
             res.length === 0 ? this.isPayCount = false : this.isPayCount = true
             that.initPayCount()
+            that.skeletonClose(that)
+          }).catch(err => {
+            console.error(err)
+            this.isPayCount = false
             that.skeletonClose(that)
           })
         } else {
@@ -478,6 +489,10 @@
             that.mainChart.payType = res[0]
             res[0].length === 0 ? this.isPayType = false : this.isPayType = true
             that.initPayType()
+            that.skeletonClose(that)
+          }).catch(err => {
+            console.error(err)
+            this.isPayType = false
             that.skeletonClose(that)
           })
         } else {
