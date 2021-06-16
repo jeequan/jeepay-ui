@@ -89,18 +89,6 @@
     </a-row>
     <a-row justify="start" type="flex">
       <a-col :sm="24">
-        <a-form-model-item label="私钥">
-          <a-input
-            type="textarea"
-            disabled="disabled"
-            style="height: 50px"
-            v-model="detailData.privateKey"
-          />
-        </a-form-model-item>
-      </a-col>
-    </a-row>
-    <a-row justify="start" type="flex">
-      <a-col :sm="24">
         <a-form-model-item label="备注">
           <a-input
             type="textarea"

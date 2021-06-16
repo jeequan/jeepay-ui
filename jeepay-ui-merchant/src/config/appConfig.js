@@ -27,7 +27,5 @@ export const asyncRouteDefine = {
   'MchAppPage': { defaultPath: '/apps', component: () => import ('@/views/mchApp/List') }, // 商户应用列表
 
   'PayOrderListPage': { defaultPath: '/payOrder', component: () => import('@/views/order/pay/PayOrderList') }, // 支付订单列表
-  'RefundOrderListPage': { defaultPath: '/refundOrder', component: () => import('@/views/order/refund/RefundOrderList') }, // 退款订单列表
-  'PayConfigPage': { defaultPath: '/pay/config', component: () => import('@/views/pay/PayConfigList') }, // 支付参数配置
-  'PayPassagePage': { defaultPath: '/pay/passage', component: () => import('@/views/pay/PayPassageList') } // 支付通道配置
+  'RefundOrderListPage': { defaultPath: '/refundOrder', component: () => import('@/views/order/refund/RefundOrderList') } // 退款订单列表
 }

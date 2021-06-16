@@ -124,14 +124,6 @@
 
       <a-row justify="space-between" type="flex">
         <a-col :span="24">
-          <a-form-model-item label="私钥" prop="privateKey" >
-            <a-input v-model="saveObject.privateKey" placeholder="请输入私钥" type="textarea" />
-            <a-button type="primary" ghost @click="randomKey(false, 128, 0)"><a-icon type="file-sync" />随机生成私钥</a-button>
-          </a-form-model-item>
-        </a-col>
-      </a-row>
-      <a-row justify="space-between" type="flex">
-        <a-col :span="24">
           <a-form-model-item label="备注" prop="remark">
             <a-input v-model="saveObject.remark" placeholder="请输入备注" type="textarea" />
           </a-form-model-item>
@@ -233,7 +225,6 @@ export default {
         isvNo: [{ validator: checkIsvNo, trigger: 'blur' }],
         contactEmail: [{ required: false, pattern: /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/, message: '请输入正确的邮箱地址', trigger: 'blur' }],
         contactTel: [{ required: true, pattern: /^1\d{10}$/, message: '请输入正确的手机号', trigger: 'blur' }],
-        privateKey: [{ required: true, message: '请输入私钥或点击随机生成私钥' }],
         newPwd: [{ required: false, trigger: 'blur' }, {
           validator: (rule, value, callBack) => {
             if (!this.sysPassword.defaultPass) {
@@ -261,7 +252,7 @@ export default {
   methods: {
     show: function (recordId) { // 弹层打开事件
       this.isAdd = !recordId
-      this.saveObject = { 'state': 1, 'type': 1, 'privateKey': '' } // 数据清空
+      this.saveObject = { 'state': 1, 'type': 1 } // 数据清空
       if (this.$refs.infoFormModel !== undefined) {
         this.$refs.infoFormModel.resetFields()
       }
@@ -275,9 +266,6 @@ export default {
         that.recordId = recordId
         req.getById(API_URL_MCH_LIST, recordId).then(res => {
           that.saveObject = res
-          if (!that.saveObject.privateKey) { // 解决商户私钥为空无法写入的问题
-            that.saveObject.privateKey = ''
-          }
         })
         this.visible = true
       } else {
@@ -333,20 +321,6 @@ export default {
     },
     searchFunc: function () { // 点击【查询】按钮点击事件
       this.$refs.infoTable.refTable(true)
-    },
-    randomKey: function (randomFlag, min, max) { // 生成随机128位私钥
-      let str = ''
-      let range = min
-      const arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-      // 随机产生
-      if (randomFlag) {
-        range = Math.round(Math.random() * (max - min)) + min
-      }
-      for (var i = 0; i < range; i++) {
-        var pos = Math.round(Math.random() * (arr.length - 1))
-        str += arr[ pos ]
-      }
-      this.saveObject.privateKey = str
     },
     // 使用默认密码重置是否为true
     isResetPass () {
