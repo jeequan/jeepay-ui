@@ -42,7 +42,7 @@
           <JeepayTableColumns>
             <a v-if="$access('ENT_UR_USER_UPD_ROLE')" @click="roleDist(record.sysUserId)" >变更角色</a>
             <a v-if="$access('ENT_UR_USER_EDIT')" @click="editFunc(record.sysUserId)">修改</a>
-            <a style="color: red" @click="delFunc(record.sysUserId)">删除</a>
+            <a v-if="$access('ENT_UR_USER_DELETE')" style="color: red" @click="delFunc(record.sysUserId)">删除</a>
           </JeepayTableColumns>
         </template>
       </JeepayTable>

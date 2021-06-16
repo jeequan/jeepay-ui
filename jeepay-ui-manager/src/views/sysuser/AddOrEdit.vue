@@ -129,12 +129,18 @@ export default {
         telphone: [{ required: true, pattern: /^[1][0-9]{10}$/, message: '请输入正确的手机号码', trigger: 'blur' }],
         userNo: [{ required: true, message: '请输入编号', trigger: 'blur' }],
         loginUsername: [],
-        newPwd: [{ required: true, min: 6, max: 12, message: '请输入6-12位新密码', trigger: 'blur' }], // 新密码
-        confirmPwd: [{ required: true, message: '请确认输入新密码', trigger: 'blur' }, {
+        newPwd: [{ required: false, min: 6, max: 12, message: '请输入6-12位新密码', trigger: 'blur' }, {
           validator: (rule, value, callBack) => {
-            console.log(value)
-            console.log(this.sysPassword.newPwd)
-            this.sysPassword.newPwd === value ? callBack() : callBack('新密码与确认密码不一致')
+            this.sysPassword.defaultPass === true ? callBack() : callBack('请输入6-12位新密码')
+          }
+        }], // 新密码
+        confirmPwd: [{ required: false, message: '请确认输入新密码', trigger: 'blur' }, {
+          validator: (rule, value, callBack) => {
+            if (!this.sysPassword.defaultPass) {
+              this.sysPassword.newPwd === value ? callBack() : callBack('新密码与确认密码不一致')
+            } else {
+              callBack()
+            }
           }
         }] // 确认新密码
       }
