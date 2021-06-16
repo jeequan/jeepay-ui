@@ -42,6 +42,7 @@
           <JeepayTableColumns>
             <a v-if="$access('ENT_UR_USER_UPD_ROLE')" @click="roleDist(record.sysUserId)" >变更角色</a>
             <a v-if="$access('ENT_UR_USER_EDIT')" @click="editFunc(record.sysUserId)">修改</a>
+            <a style="color: red" @click="delFunc(record.sysUserId)">删除</a>
           </JeepayTableColumns>
         </template>
       </JeepayTable>
@@ -115,6 +116,16 @@ export default {
 
     editFunc: function (recordId) { // 业务通用【修改】 函数
       this.$refs.infoAddOrEdit.show(recordId)
+    },
+
+    delFunc: function (recordId) { // 业务通用【删除】 函数
+      const that = this
+      this.$infoBox.confirmDanger('确认删除？', '', () => {
+        return req.delById(API_URL_SYS_USER_LIST, recordId).then(res => {
+          that.$message.success('删除成功！')
+          that.$refs.infoTable.refTable(false)
+        })
+      })
     },
 
     roleDist: function (recordId) { // 【分配权限】 按钮点击事件

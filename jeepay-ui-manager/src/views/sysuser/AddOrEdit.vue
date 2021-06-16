@@ -11,7 +11,13 @@
   >
     <!-- <a-modal :confirmLoading="confirmLoading"> -->
 
-    <a-form-model ref="infoFormModel" :model="saveObject" :label-col="{span: 8}" :wrapper-col="{span: 12}" :rules="rules">
+    <a-form-model
+      ref="infoFormModel"
+      :model="saveObject"
+      :label-col="{span: 8}"
+      :wrapper-col="{span: 12}"
+      :rules="rules"
+      style="padding-bottom:50px">
 
       <a-form-model-item label="用户登录名:" prop="loginUsername">
         <a-input v-model="saveObject.loginUsername" :disabled="!isAdd" />
@@ -50,6 +56,39 @@
         </a-radio-group>
       </a-form-model-item>
 
+      <a-form-model-item label="重置密码：" v-if="resetIsShow">
+        <a-checkbox v-model="sysPassword.resetPass"></a-checkbox>
+      </a-form-model-item>
+
+      <div v-if="sysPassword.resetPass">
+        <a-form-model-item label="使用默认密码重置：" >
+          <a-checkbox v-model="sysPassword.defaultPass" @click="isResetPass"></a-checkbox>
+        </a-form-model-item>
+
+        <div>
+          <!-- <div v-if="sysPassword.defaultPass">
+            <a-form-model-item label="新密码：" >
+              <a-input-password v-model="sysPassword.newPwd" :disabled="sysPassword.defaultPass" />
+            </a-form-model-item>
+            <a-form-model-item label="确认新密码：">
+              <a-input-password v-model="sysPassword.confirmPwd" :disabled="sysPassword.defaultPass"/>
+            </a-form-model-item>
+          </div> -->
+
+          <!-- <div v-else> -->
+          <div>
+            <a-form-model-item label="新密码：" prop="newPwd">
+              <a-input-password autocomplete="new-password" v-model="sysPassword.newPwd" :disabled="sysPassword.defaultPass"/>
+            </a-form-model-item>
+
+            <a-form-model-item label="确认新密码：" prop="confirmPwd">
+              <a-input-password autocomplete="new-password" v-model="sysPassword.confirmPwd" :disabled="sysPassword.defaultPass"/>
+            </a-form-model-item>
+          </div>
+        </div>
+
+      </div>
+
       <div class="drawer-btn-center">
         <a-button :style="{ marginRight: '8px' }" @click="onClose" icon="close">取消</a-button>
         <a-button type="primary" @click="handleOkFunc" icon="check" :loading="confirmLoading">保存</a-button>
@@ -71,6 +110,13 @@ export default {
 
   data () {
     return {
+      resetIsShow: false, // 重置密码是否展现
+      sysPassword: {
+        resetPass: false, // 重置密码
+        defaultPass: true, // 使用默认密码
+        newPwd: '', //  新密码
+        confirmPwd: '' //  确认密码
+      },
       loading: false, // 按钮上的loading
       value: 1, // 单选框默认的值
       confirmLoading: false, // 显示确定按钮loading图标
@@ -82,7 +128,15 @@ export default {
         realname: [{ required: true, message: '请输入用户姓名', trigger: 'blur' }],
         telphone: [{ required: true, pattern: /^[1][0-9]{10}$/, message: '请输入正确的手机号码', trigger: 'blur' }],
         userNo: [{ required: true, message: '请输入编号', trigger: 'blur' }],
-        loginUsername: []
+        loginUsername: [],
+        newPwd: [{ required: true, min: 6, max: 12, message: '请输入6-12位新密码', trigger: 'blur' }], // 新密码
+        confirmPwd: [{ required: true, message: '请确认输入新密码', trigger: 'blur' }, {
+          validator: (rule, value, callBack) => {
+            console.log(value)
+            console.log(this.sysPassword.newPwd)
+            this.sysPassword.newPwd === value ? callBack() : callBack('新密码与确认密码不一致')
+          }
+        }] // 确认新密码
       }
     }
   },
@@ -115,6 +169,7 @@ export default {
 
       const that = this
       if (!this.isAdd) { // 修改信息 延迟展示弹层
+        that.resetIsShow = true // 展示重置密码板块
         that.recordId = recordId
         req.getById(API_URL_SYS_USER_LIST, recordId).then(res => { that.saveObject = res })
         this.isShow = true
@@ -139,19 +194,36 @@ export default {
                 that.confirmLoading = false
               })
             } else {
+              Object.assign(that.saveObject, that.sysPassword) // 拼接对象
+              console.log(that.saveObject)
               req.updateById(API_URL_SYS_USER_LIST, that.recordId, that.saveObject).then(res => {
                 that.$message.success('修改成功')
                 that.isShow = false
-
                 that.callbackFunc() // 刷新列表
-              }).catch(res => { that.confirmLoading = false })
+                that.resetIsShow = false // 取消展示
+                that.sysPassword.resetPass = false
+              }).catch(res => {
+                that.confirmLoading = false
+                that.resetIsShow = false // 取消展示
+                that.sysPassword.resetPass = false
+              })
             }
           }
         })
     },
-    // 点击遮罩层关闭抽屉
+    // 关闭抽屉
     onClose () {
       this.isShow = false
+      this.resetIsShow = false // 取消重置密码板块展示
+      this.sysPassword.resetPass = false
+    },
+    // 使用默认密码重置是否为true
+    isResetPass () {
+      if (!this.sysPassword.defaultPass) {
+        console.log(0)
+        this.sysPassword.newPwd = ''
+        this.sysPassword.confirmPwd = ''
+      }
     }
   }
 }
