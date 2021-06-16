@@ -14,72 +14,103 @@
     <a-form-model
       ref="infoFormModel"
       :model="saveObject"
-      :label-col="{span: 8}"
-      :wrapper-col="{span: 12}"
+      layout="vertical"
       :rules="rules"
       style="padding-bottom:50px">
 
-      <a-form-model-item label="用户登录名:" prop="loginUsername">
-        <a-input v-model="saveObject.loginUsername" :disabled="!isAdd" />
-      </a-form-model-item>
+      <a-row justify="space-between" type="flex">
+        <a-col :span="10">
+          <a-form-model-item label="用户登录名:" prop="loginUsername">
+            <a-input v-model="saveObject.loginUsername" :disabled="!isAdd" />
+          </a-form-model-item>
+        </a-col>
 
-      <a-form-model-item label="用户姓名：" prop="realname">
-        <a-input v-model="saveObject.realname" />
-      </a-form-model-item>
+        <a-col :span="10">
+          <a-form-model-item label="用户姓名：" prop="realname">
+            <a-input v-model="saveObject.realname" />
+          </a-form-model-item>
+        </a-col>
 
-      <a-form-model-item label="手机号：" prop="telphone">
-        <a-input v-model="saveObject.telphone" />
-      </a-form-model-item>
+        <a-col :span="10">
+          <a-form-model-item label="手机号：" prop="telphone">
+            <a-input v-model="saveObject.telphone" />
+          </a-form-model-item>
+        </a-col>
 
-      <a-form-model-item label="编号：" prop="userNo">
-        <a-input v-model="saveObject.userNo" />
-      </a-form-model-item>
+        <a-col :span="10">
+          <a-form-model-item label="编号：" prop="userNo">
+            <a-input v-model="saveObject.userNo" />
+          </a-form-model-item>
+        </a-col>
 
-      <a-form-model-item label="请选择性别：" prop="sex">
-        <a-radio-group v-model="saveObject.sex">
-          <a-radio :value="1">男</a-radio>
-          <a-radio :value="2">女</a-radio>
-        </a-radio-group>
-      </a-form-model-item>
+        <a-col :span="10">
+          <a-form-model-item label="请选择性别：" prop="sex">
+            <a-radio-group v-model="saveObject.sex">
+              <a-radio :value="1">男</a-radio>
+              <a-radio :value="2">女</a-radio>
+            </a-radio-group>
+          </a-form-model-item>
+        </a-col>
 
-      <a-form-model-item label="是否为超级管理员：" prop="isAdmin">
-        <a-radio-group v-model="saveObject.isAdmin">
-          <a-radio :value="1">是</a-radio>
-          <a-radio :value="0">否</a-radio>
-        </a-radio-group>
-      </a-form-model-item>
+        <a-col :span="10">
+          <a-form-model-item label="是否为超级管理员：" prop="isAdmin">
+            <a-radio-group v-model="saveObject.isAdmin">
+              <a-radio :value="1">是</a-radio>
+              <a-radio :value="0">否</a-radio>
+            </a-radio-group>
+          </a-form-model-item>
+        </a-col>
 
-      <a-form-model-item label="状态：" prop="state">
-        <a-radio-group v-model="saveObject.state">
-          <a-radio :value="1">启用</a-radio>
-          <a-radio :value="0">停用</a-radio>
-        </a-radio-group>
-      </a-form-model-item>
-
+        <a-col :span="10">
+          <a-form-model-item label="状态：" prop="state">
+            <a-radio-group v-model="saveObject.state">
+              <a-radio :value="1">启用</a-radio>
+              <a-radio :value="0">停用</a-radio>
+            </a-radio-group>
+          </a-form-model-item>
+        </a-col>
+      </a-row>
       <a-divider orientation="left" v-if="resetIsShow">
         <a-tag color="#FF4B33">
           账户安全
         </a-tag>
       </a-divider>
-      <a-form-model-item label="重置密码：" v-if="resetIsShow">
-        <a-checkbox v-model="sysPassword.resetPass"></a-checkbox>
-      </a-form-model-item>
+
+      <div style="display:flex;flex-direction:row;">
+        <a-row justify="space-between" type="flex" style="width:100%">
+          <a-col :span="10">
+            <a-form-model-item label="" v-if="resetIsShow">
+              重置密码：<a-checkbox v-model="sysPassword.resetPass"></a-checkbox>
+            </a-form-model-item>
+          </a-col>
+          <a-col :span="10">
+            <a-form-model-item label="" v-if="sysPassword.resetPass">
+              恢复默认密码：<a-checkbox v-model="sysPassword.defaultPass" @click="isResetPass"></a-checkbox>
+            </a-form-model-item>
+          </a-col>
+        </a-row>
+      </div>
 
       <div v-if="sysPassword.resetPass">
-        <a-form-model-item label="恢复默认密码：" >
-          <a-checkbox v-model="sysPassword.defaultPass" @click="isResetPass"></a-checkbox>
-        </a-form-model-item>
-        <div>
-          <!-- <div v-else> -->
-          <div v-show="!this.sysPassword.defaultPass">
-            <a-form-model-item label="新密码：" prop="newPwd">
-              <a-input-password autocomplete="new-password" v-model="sysPassword.newPwd" :disabled="sysPassword.defaultPass"/>
-            </a-form-model-item>
-
-            <a-form-model-item label="确认新密码：" prop="confirmPwd">
-              <a-input-password autocomplete="new-password" v-model="sysPassword.confirmPwd" :disabled="sysPassword.defaultPass"/>
-            </a-form-model-item>
-          </div>
+        <div v-show="!this.sysPassword.defaultPass">
+          <a-row justify="space-between" type="flex">
+            <a-col :span="10">
+              <a-form-model-item label="新密码：" prop="newPwd">
+                <a-input-password
+                  autocomplete="new-password"
+                  v-model="newPwd"
+                  :disabled="sysPassword.defaultPass" />
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="10">
+              <a-form-model-item label="确认新密码：" prop="confirmPwd">
+                <a-input-password
+                  autocomplete="new-password"
+                  v-model="sysPassword.confirmPwd"
+                  :disabled="sysPassword.defaultPass" />
+              </a-form-model-item>
+            </a-col>
+          </a-row>
         </div>
       </div>
 
@@ -95,7 +126,7 @@
 
 <script>
 import { req, API_URL_SYS_USER_LIST } from '@/api/manage'
-
+import { Base64 } from 'js-base64'
 export default {
 
   props: {
@@ -104,11 +135,11 @@ export default {
 
   data () {
     return {
+      newPwd: '', //  新密码
       resetIsShow: false, // 重置密码是否展现
       sysPassword: {
         resetPass: false, // 重置密码
         defaultPass: true, // 使用默认密码
-        newPwd: '', //  新密码
         confirmPwd: '' //  确认密码
       },
       loading: false, // 按钮上的loading
@@ -126,7 +157,7 @@ export default {
         newPwd: [{ required: false, trigger: 'blur' }, {
           validator: (rule, value, callBack) => {
             if (!this.sysPassword.defaultPass) {
-              if (this.sysPassword.newPwd.length < 6 || this.sysPassword.newPwd.length > 12) {
+              if (this.newPwd.length < 6 || this.newPwd.length > 12) {
                 callBack('请输入6-12位新密码')
               }
             }
@@ -136,7 +167,7 @@ export default {
         confirmPwd: [{ required: false, trigger: 'blur' }, {
           validator: (rule, value, callBack) => {
             if (!this.sysPassword.defaultPass) {
-              this.sysPassword.newPwd === this.sysPassword.confirmPwd ? callBack() : callBack('新密码与确认密码不一致')
+              this.newPwd === this.sysPassword.confirmPwd ? callBack() : callBack('新密码与确认密码不一致')
             } else {
               callBack()
             }
@@ -199,20 +230,23 @@ export default {
               that.confirmLoading = false
             })
           } else {
+            that.sysPassword.confirmPwd = Base64.encode(that.sysPassword.confirmPwd)
             Object.assign(that.saveObject, that.sysPassword) // 拼接对象
             console.log(that.saveObject)
             req.updateById(API_URL_SYS_USER_LIST, that.recordId, that.saveObject).then(res => {
               that.$message.success('修改成功')
               that.isShow = false
               that.callbackFunc() // 刷新列表
-              this.resetIsShow = false // 取消重置密码板块展示
-              this.sysPassword.resetPass = false // 是否使用默认密码不展示
-              this.sysPassword.defaultPass = true	// 是否使用默认密码默认为true
+              that.resetIsShow = false // 取消展示
+							that.sysPassword.resetPass = false
+							that.sysPassword.defaultPass = true	// 是否使用默认密码默认为true
+							that.resetPassEmpty(that) // 清空密码
             }).catch(res => {
               that.confirmLoading = false
-              this.resetIsShow = false // 取消重置密码板块展示
-              this.sysPassword.resetPass = false // 是否使用默认密码不展示
-              this.sysPassword.defaultPass = true	// 是否使用默认密码默认为true
+              that.resetIsShow = false // 取消展示
+							that.sysPassword.resetPass = false
+							that.sysPassword.defaultPass = true	// 是否使用默认密码默认为true
+							that.resetPassEmpty(that) // 清空密码
             })
           }
         }
@@ -222,16 +256,22 @@ export default {
     onClose () {
       this.isShow = false
       this.resetIsShow = false // 取消重置密码板块展示
-      this.sysPassword.resetPass = false // 是否使用默认密码不展示
-      this.sysPassword.defaultPass = true	// 是否使用默认密码默认为true
+			this.resetPassEmpty(this) // 清空密码
+			this.sysPassword.resetPass = false // 关闭密码输入
+			this.sysPassword.defaultPass = true	// 是否使用默认密码默认为true
     },
     // 使用默认密码重置是否为true
     isResetPass () {
       if (!this.sysPassword.defaultPass) {
-        this.sysPassword.newPwd = ''
+        this.newPwd = ''
         this.sysPassword.confirmPwd = ''
       }
-    }
+    },
+    // 保存后清空密码
+		resetPassEmpty (that) {
+		that.newPwd = ''
+		that.sysPassword.confirmPwd = ''
+		}
   }
 }
 </script>

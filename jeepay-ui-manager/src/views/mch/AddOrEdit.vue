@@ -169,7 +169,7 @@
           <a-row justify="space-between" type="flex">
             <a-col :span="10">
               <a-form-model-item label="新密码：" prop="newPwd">
-                <a-input-password autocomplete="new-password" v-model="sysPassword.newPwd" :disabled="sysPassword.defaultPass"/>
+                <a-input-password autocomplete="new-password" v-model="newPwd" :disabled="sysPassword.defaultPass"/>
               </a-form-model-item>
             </a-col>
 
@@ -197,6 +197,7 @@
 
 <script>
 import { API_URL_MCH_LIST, API_URL_ISV_LIST, req } from '@/api/manage'
+import { Base64 } from 'js-base64'
 export default {
 
   props: {
@@ -211,11 +212,11 @@ export default {
       callback()
     }
     return {
+      newPwd: '', //  新密码
       resetIsShow: false, // 重置密码是否展现
       sysPassword: {
         resetPass: false, // 重置密码
         defaultPass: true, // 使用默认密码
-        newPwd: '', //  新密码
         confirmPwd: '' //  确认密码
       },
       btnLoading: false,
@@ -236,7 +237,7 @@ export default {
         newPwd: [{ required: false, trigger: 'blur' }, {
           validator: (rule, value, callBack) => {
             if (!this.sysPassword.defaultPass) {
-              if (this.sysPassword.newPwd.length < 6 || this.sysPassword.newPwd.length > 12) {
+              if (this.newPwd.length < 6 || this.newPwd.length > 12) {
                 callBack('请输入6-12位新密码')
               }
             }
@@ -246,7 +247,7 @@ export default {
         confirmPwd: [{ required: false, trigger: 'blur' }, {
           validator: (rule, value, callBack) => {
             if (!this.sysPassword.defaultPass) {
-              this.sysPassword.newPwd === this.sysPassword.confirmPwd ? callBack() : callBack('新密码与确认密码不一致')
+              this.newPwd === this.sysPassword.confirmPwd ? callBack() : callBack('新密码与确认密码不一致')
             } else {
               callBack()
             }
@@ -299,6 +300,8 @@ export default {
                 that.btnLoading = false
               })
             } else {
+              that.sysPassword.confirmPwd = Base64.encode(that.sysPassword.confirmPwd)
+              console.log(that.sysPassword.confirmPwd)
               Object.assign(that.saveObject, that.sysPassword) // 拼接对象
               console.log(that.saveObject)
               req.updateById(API_URL_MCH_LIST, that.recordId, that.saveObject).then(res => {
@@ -308,10 +311,14 @@ export default {
                 that.btnLoading = false
                 that.resetIsShow = true // 展示重置密码板块
                 that.sysPassword.resetPass = false
+                that.sysPassword.defaultPass = true	// 是否使用默认密码默认为true
+                that.resetPassEmpty(that) // 清空密码
               }).catch(res => {
                 that.btnLoading = false
                 that.resetIsShow = true // 展示重置密码板块
                 that.sysPassword.resetPass = false
+                that.sysPassword.defaultPass = true	// 是否使用默认密码默认为true
+                that.resetPassEmpty(that) // 清空密码
               })
             }
           }
@@ -321,6 +328,8 @@ export default {
       this.visible = false
       this.resetIsShow = false // 取消重置密码板块展示
       this.sysPassword.resetPass = false
+      this.resetPassEmpty(this)
+      this.sysPassword.defaultPass = true	// 是否使用默认密码默认为true
     },
     searchFunc: function () { // 点击【查询】按钮点击事件
       this.$refs.infoTable.refTable(true)
@@ -342,10 +351,15 @@ export default {
     // 使用默认密码重置是否为true
     isResetPass () {
       if (!this.sysPassword.defaultPass) {
-        this.sysPassword.newPwd = ''
+        this.newPwd = ''
         this.sysPassword.confirmPwd = ''
       }
-    }
+    },
+    // 保存后清空密码
+			resetPassEmpty (that) {
+				that.newPwd = ''
+				that.sysPassword.confirmPwd = ''
+			}
   }
 }
 </script>

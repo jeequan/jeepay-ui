@@ -88,7 +88,7 @@
               <a-form-model-item label="新密码：" prop="newPwd">
                 <a-input-password
                   autocomplete="new-password"
-                  v-model="sysPassword.newPwd"
+                  v-model="newPwd"
                   :disabled="sysPassword.defaultPass" />
               </a-form-model-item>
             </a-col>
@@ -118,6 +118,7 @@
 		req,
 		API_URL_SYS_USER_LIST
 	} from '@/api/manage'
+	import { Base64 } from 'js-base64'
 
 	export default {
 
@@ -130,11 +131,11 @@
 
 		data () {
 			return {
+				newPwd: '', //  新密码
 				resetIsShow: false, // 重置密码是否展现
 				sysPassword: {
 					resetPass: false, // 重置密码
 					defaultPass: true, // 使用默认密码
-					newPwd: '', //  新密码
 					confirmPwd: '' //  确认密码
 				},
 				loading: false, // 按钮上的loading
@@ -168,7 +169,7 @@
 					}, {
 						validator: (rule, value, callBack) => {
 							if (!this.sysPassword.defaultPass) {
-								if (this.sysPassword.newPwd.length < 6 || this.sysPassword.newPwd.length >
+								if (this.newPwd.length < 6 || this.newPwd.length >
 									12) {
 									callBack('请输入6-12位新密码')
 								}
@@ -182,7 +183,7 @@
 					}, {
 						validator: (rule, value, callBack) => {
 							if (!this.sysPassword.defaultPass) {
-								this.sysPassword.newPwd === this.sysPassword.confirmPwd ? callBack()
+								this.newPwd === this.sysPassword.confirmPwd ? callBack()
 									: callBack('新密码与确认密码不一致')
 							} else {
 								callBack()
@@ -246,7 +247,9 @@
 								that.confirmLoading = false
 							})
 						} else {
+							that.sysPassword.confirmPwd = Base64.encode(that.sysPassword.confirmPwd)
 							Object.assign(that.saveObject, that.sysPassword) // 拼接对象
+							console.log(that.sysPassword.confirmPwd)
 							req.updateById(API_URL_SYS_USER_LIST, that.recordId, that.saveObject).then(res => {
 								that.$message.success('修改成功')
 								that.isShow = false
@@ -277,13 +280,13 @@
 			// 使用默认密码重置是否为true
 			isResetPass () {
 				if (!this.sysPassword.defaultPass) {
-					this.sysPassword.newPwd = ''
+					this.newPwd = ''
 					this.sysPassword.confirmPwd = ''
 				}
 			},
 			// 保存后清空密码
 			resetPassEmpty (that) {
-				that.sysPassword.newPwd = ''
+				that.newPwd = ''
 				that.sysPassword.confirmPwd = ''
 			}
 		}
