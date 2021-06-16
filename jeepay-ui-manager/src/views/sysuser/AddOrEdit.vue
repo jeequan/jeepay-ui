@@ -1,23 +1,23 @@
 <template>
   <a-drawer
-    :title=" isAdd ? '新增操作员' : '修改操作员' "
-    placement="right"
-    :closable="true"
-    @ok="handleOkFunc"
-    :visible="isShow"
-    width="600"
-    @close="onClose"
-    :maskClosable="false"
+      :title=" isAdd ? '新增操作员' : '修改操作员' "
+      placement="right"
+      :closable="true"
+      @ok="handleOkFunc"
+      :visible="isShow"
+      width="600"
+      @close="onClose"
+      :maskClosable="false"
   >
     <!-- <a-modal :confirmLoading="confirmLoading"> -->
 
     <a-form-model
-      ref="infoFormModel"
-      :model="saveObject"
-      :label-col="{span: 8}"
-      :wrapper-col="{span: 12}"
-      :rules="rules"
-      style="padding-bottom:50px">
+        ref="infoFormModel"
+        :model="saveObject"
+        :label-col="{span: 8}"
+        :wrapper-col="{span: 12}"
+        :rules="rules"
+        style="padding-bottom:50px">
 
       <a-form-model-item label="用户登录名:" prop="loginUsername">
         <a-input v-model="saveObject.loginUsername" :disabled="!isAdd" />
@@ -56,27 +56,22 @@
         </a-radio-group>
       </a-form-model-item>
 
+      <a-divider orientation="left">
+        <a-tag color="#FF4B33">
+          账户安全
+        </a-tag>
+      </a-divider>
       <a-form-model-item label="重置密码：" v-if="resetIsShow">
         <a-checkbox v-model="sysPassword.resetPass"></a-checkbox>
       </a-form-model-item>
 
       <div v-if="sysPassword.resetPass">
-        <a-form-model-item label="使用默认密码重置：" >
+        <a-form-model-item label="恢复默认密码：" >
           <a-checkbox v-model="sysPassword.defaultPass" @click="isResetPass"></a-checkbox>
         </a-form-model-item>
-
         <div>
-          <!-- <div v-if="sysPassword.defaultPass">
-            <a-form-model-item label="新密码：" >
-              <a-input-password v-model="sysPassword.newPwd" :disabled="sysPassword.defaultPass" />
-            </a-form-model-item>
-            <a-form-model-item label="确认新密码：">
-              <a-input-password v-model="sysPassword.confirmPwd" :disabled="sysPassword.defaultPass"/>
-            </a-form-model-item>
-          </div> -->
-
           <!-- <div v-else> -->
-          <div>
+          <div v-show="!this.sysPassword.defaultPass">
             <a-form-model-item label="新密码：" prop="newPwd">
               <a-input-password autocomplete="new-password" v-model="sysPassword.newPwd" :disabled="sysPassword.defaultPass"/>
             </a-form-model-item>
@@ -86,7 +81,6 @@
             </a-form-model-item>
           </div>
         </div>
-
       </div>
 
       <div class="drawer-btn-center">
@@ -129,15 +123,20 @@ export default {
         telphone: [{ required: true, pattern: /^[1][0-9]{10}$/, message: '请输入正确的手机号码', trigger: 'blur' }],
         userNo: [{ required: true, message: '请输入编号', trigger: 'blur' }],
         loginUsername: [],
-        newPwd: [{ required: false, min: 6, max: 12, message: '请输入6-12位新密码', trigger: 'blur' }, {
-          validator: (rule, value, callBack) => {
-            this.sysPassword.defaultPass === true ? callBack() : callBack('请输入6-12位新密码')
-          }
-        }], // 新密码
-        confirmPwd: [{ required: false, message: '请确认输入新密码', trigger: 'blur' }, {
+        newPwd: [{ required: false, trigger: 'blur' }, {
           validator: (rule, value, callBack) => {
             if (!this.sysPassword.defaultPass) {
-              this.sysPassword.newPwd === value ? callBack() : callBack('新密码与确认密码不一致')
+              if (this.sysPassword.newPwd.length < 6 || this.sysPassword.newPwd.length > 12) {
+                callBack('请输入6-12位新密码')
+              }
+            }
+            callBack()
+          }
+        }], // 新密码
+        confirmPwd: [{ required: false, trigger: 'blur' }, {
+          validator: (rule, value, callBack) => {
+            if (!this.sysPassword.defaultPass) {
+              this.sysPassword.newPwd === this.sysPassword.confirmPwd ? callBack() : callBack('新密码与确认密码不一致')
             } else {
               callBack()
             }
@@ -184,38 +183,38 @@ export default {
       }
     },
     handleOkFunc: function () { // 点击【确认】按钮事件
-        const that = this
-        this.$refs.infoFormModel.validate(valid => {
-          if (valid) { // 验证通过
-            // 请求接口
-            that.loading = true // 打开按钮上的 loading
-            that.confirmLoading = true // 显示loading
-            if (that.isAdd) {
-              req.add(API_URL_SYS_USER_LIST, that.saveObject).then(res => {
-                that.$message.success('新增成功')
-                that.isShow = false
-                that.loading = false
-                that.callbackFunc() // 刷新列表
-              }).catch((res) => {
-                that.confirmLoading = false
-              })
-            } else {
-              Object.assign(that.saveObject, that.sysPassword) // 拼接对象
-              console.log(that.saveObject)
-              req.updateById(API_URL_SYS_USER_LIST, that.recordId, that.saveObject).then(res => {
-                that.$message.success('修改成功')
-                that.isShow = false
-                that.callbackFunc() // 刷新列表
-                that.resetIsShow = false // 取消展示
-                that.sysPassword.resetPass = false
-              }).catch(res => {
-                that.confirmLoading = false
-                that.resetIsShow = false // 取消展示
-                that.sysPassword.resetPass = false
-              })
-            }
+      const that = this
+      this.$refs.infoFormModel.validate(valid => {
+        if (valid) { // 验证通过
+          // 请求接口
+          that.loading = true // 打开按钮上的 loading
+          that.confirmLoading = true // 显示loading
+          if (that.isAdd) {
+            req.add(API_URL_SYS_USER_LIST, that.saveObject).then(res => {
+              that.$message.success('新增成功')
+              that.isShow = false
+              that.loading = false
+              that.callbackFunc() // 刷新列表
+            }).catch((res) => {
+              that.confirmLoading = false
+            })
+          } else {
+            Object.assign(that.saveObject, that.sysPassword) // 拼接对象
+            console.log(that.saveObject)
+            req.updateById(API_URL_SYS_USER_LIST, that.recordId, that.saveObject).then(res => {
+              that.$message.success('修改成功')
+              that.isShow = false
+              that.callbackFunc() // 刷新列表
+              that.resetIsShow = false // 取消展示
+              that.sysPassword.resetPass = false
+            }).catch(res => {
+              that.confirmLoading = false
+              that.resetIsShow = false // 取消展示
+              that.sysPassword.resetPass = false
+            })
           }
-        })
+        }
+      })
     },
     // 关闭抽屉
     onClose () {
@@ -226,7 +225,6 @@ export default {
     // 使用默认密码重置是否为true
     isResetPass () {
       if (!this.sysPassword.defaultPass) {
-        console.log(0)
         this.sysPassword.newPwd = ''
         this.sysPassword.confirmPwd = ''
       }
