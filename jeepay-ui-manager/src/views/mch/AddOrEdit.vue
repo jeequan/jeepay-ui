@@ -108,9 +108,7 @@
             </a-select>
           </a-form-model-item>
         </a-col>
-      </a-row>
-      <a-row justify="space-between" type="flex">
-        <a-col :span="24">
+        <a-col :span="10">
           <a-form-model-item label="状态" prop="state">
             <a-radio-group v-model="saveObject.state">
               <a-radio :value="1">
@@ -123,6 +121,7 @@
           </a-form-model-item>
         </a-col>
       </a-row>
+
       <a-row justify="space-between" type="flex">
         <a-col :span="24">
           <a-form-model-item label="私钥" prop="privateKey" >
@@ -138,6 +137,51 @@
           </a-form-model-item>
         </a-col>
       </a-row>
+
+      <!-- 重置密码板块 -->
+      <a-row justify="space-between" type="flex">
+        <a-col :span="24">
+          <a-divider orientation="left" v-if="resetIsShow">
+            <a-tag color="#FF4B33">
+              账户安全
+            </a-tag>
+          </a-divider>
+        </a-col>
+      </a-row>
+      <div>
+        <a-row justify="space-between" type="flex">
+          <a-col :span="10">
+            <a-form-model-item label="" v-if="resetIsShow" >
+              重置密码：<a-checkbox v-model="sysPassword.resetPass"></a-checkbox>
+            </a-form-model-item>
+          </a-col>
+          <a-col :span="10">
+            <a-form-model-item label="" v-if="sysPassword.resetPass">
+              恢复默认密码：<a-checkbox v-model="sysPassword.defaultPass" @click="isResetPass"></a-checkbox>
+            </a-form-model-item>
+          </a-col>
+        </a-row>
+      </div>
+
+      <div v-if="sysPassword.resetPass">
+        <!-- <div v-else> -->
+        <div v-show="!this.sysPassword.defaultPass">
+          <a-row justify="space-between" type="flex">
+            <a-col :span="10">
+              <a-form-model-item label="新密码：" prop="newPwd">
+                <a-input-password autocomplete="new-password" v-model="sysPassword.newPwd" :disabled="sysPassword.defaultPass"/>
+              </a-form-model-item>
+            </a-col>
+
+            <a-col :span="10">
+              <a-form-model-item label="确认新密码：" prop="confirmPwd">
+                <a-input-password autocomplete="new-password" v-model="sysPassword.confirmPwd" :disabled="sysPassword.defaultPass"/>
+              </a-form-model-item>
+            </a-col>
+          </a-row>
+        </div>
+      </div>
+
     </a-form-model>
     <div class="drawer-btn-center" >
       <a-button icon="close" :style="{ marginRight: '8px' }" @click="onClose" style="margin-right:8px">
@@ -146,7 +190,6 @@
       <a-button type="primary" icon="check" @click="handleOkFunc" :loading="btnLoading">
         保存
       </a-button>
-
     </div>
   </a-drawer>
 
@@ -168,6 +211,13 @@ export default {
       callback()
     }
     return {
+      resetIsShow: false, // 重置密码是否展现
+      sysPassword: {
+        resetPass: false, // 重置密码
+        defaultPass: true, // 使用默认密码
+        newPwd: '', //  新密码
+        confirmPwd: '' //  确认密码
+      },
       btnLoading: false,
       isAdd: true, // 新增 or 修改页面标志
       saveObject: {}, // 数据对象
@@ -182,7 +232,26 @@ export default {
         isvNo: [{ validator: checkIsvNo, trigger: 'blur' }],
         contactEmail: [{ required: false, pattern: /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/, message: '请输入正确的邮箱地址', trigger: 'blur' }],
         contactTel: [{ required: true, pattern: /^1\d{10}$/, message: '请输入正确的手机号', trigger: 'blur' }],
-        privateKey: [{ required: true, message: '请输入私钥或点击随机生成私钥' }]
+        privateKey: [{ required: true, message: '请输入私钥或点击随机生成私钥' }],
+        newPwd: [{ required: false, trigger: 'blur' }, {
+          validator: (rule, value, callBack) => {
+            if (!this.sysPassword.defaultPass) {
+              if (this.sysPassword.newPwd.length < 6 || this.sysPassword.newPwd.length > 12) {
+                callBack('请输入6-12位新密码')
+              }
+            }
+            callBack()
+          }
+        }], // 新密码
+        confirmPwd: [{ required: false, trigger: 'blur' }, {
+          validator: (rule, value, callBack) => {
+            if (!this.sysPassword.defaultPass) {
+              this.sysPassword.newPwd === this.sysPassword.confirmPwd ? callBack() : callBack('新密码与确认密码不一致')
+            } else {
+              callBack()
+            }
+          }
+        }] // 确认新密码
       }
     }
   },
@@ -200,6 +269,8 @@ export default {
         that.isvList = res.records
       })
       if (!this.isAdd) { // 修改信息 延迟展示弹层
+        console.log(555)
+        that.resetIsShow = true // 展示重置密码板块
         that.recordId = recordId
         req.getById(API_URL_MCH_LIST, recordId).then(res => {
           that.saveObject = res
@@ -228,13 +299,19 @@ export default {
                 that.btnLoading = false
               })
             } else {
+              Object.assign(that.saveObject, that.sysPassword) // 拼接对象
+              console.log(that.saveObject)
               req.updateById(API_URL_MCH_LIST, that.recordId, that.saveObject).then(res => {
                 that.$message.success('修改成功')
                 that.visible = false
                 that.callbackFunc() // 刷新列表
                 that.btnLoading = false
+                that.resetIsShow = true // 展示重置密码板块
+                that.sysPassword.resetPass = false
               }).catch(res => {
                 that.btnLoading = false
+                that.resetIsShow = true // 展示重置密码板块
+                that.sysPassword.resetPass = false
               })
             }
           }
@@ -242,6 +319,8 @@ export default {
     },
     onClose () {
       this.visible = false
+      this.resetIsShow = false // 取消重置密码板块展示
+      this.sysPassword.resetPass = false
     },
     searchFunc: function () { // 点击【查询】按钮点击事件
       this.$refs.infoTable.refTable(true)
@@ -259,6 +338,13 @@ export default {
         str += arr[ pos ]
       }
       this.saveObject.privateKey = str
+    },
+    // 使用默认密码重置是否为true
+    isResetPass () {
+      if (!this.sysPassword.defaultPass) {
+        this.sysPassword.newPwd = ''
+        this.sysPassword.confirmPwd = ''
+      }
     }
   }
 }

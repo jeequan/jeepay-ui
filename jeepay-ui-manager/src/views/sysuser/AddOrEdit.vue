@@ -1,23 +1,23 @@
 <template>
   <a-drawer
-      :title=" isAdd ? '新增操作员' : '修改操作员' "
-      placement="right"
-      :closable="true"
-      @ok="handleOkFunc"
-      :visible="isShow"
-      width="600"
-      @close="onClose"
-      :maskClosable="false"
+    :title=" isAdd ? '新增操作员' : '修改操作员' "
+    placement="right"
+    :closable="true"
+    @ok="handleOkFunc"
+    :visible="isShow"
+    width="600"
+    @close="onClose"
+    :maskClosable="false"
   >
     <!-- <a-modal :confirmLoading="confirmLoading"> -->
 
     <a-form-model
-        ref="infoFormModel"
-        :model="saveObject"
-        :label-col="{span: 8}"
-        :wrapper-col="{span: 12}"
-        :rules="rules"
-        style="padding-bottom:50px">
+      ref="infoFormModel"
+      :model="saveObject"
+      :label-col="{span: 8}"
+      :wrapper-col="{span: 12}"
+      :rules="rules"
+      style="padding-bottom:50px">
 
       <a-form-model-item label="用户登录名:" prop="loginUsername">
         <a-input v-model="saveObject.loginUsername" :disabled="!isAdd" />
@@ -56,7 +56,7 @@
         </a-radio-group>
       </a-form-model-item>
 
-      <a-divider orientation="left">
+      <a-divider orientation="left" v-if="resetIsShow">
         <a-tag color="#FF4B33">
           账户安全
         </a-tag>
