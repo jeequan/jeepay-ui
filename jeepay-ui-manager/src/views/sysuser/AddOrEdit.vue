@@ -205,12 +205,14 @@ export default {
               that.$message.success('修改成功')
               that.isShow = false
               that.callbackFunc() // 刷新列表
-              that.resetIsShow = false // 取消展示
-              that.sysPassword.resetPass = false
+              this.resetIsShow = false // 取消重置密码板块展示
+              this.sysPassword.resetPass = false // 是否使用默认密码不展示
+              this.sysPassword.defaultPass = true	// 是否使用默认密码默认为true
             }).catch(res => {
               that.confirmLoading = false
-              that.resetIsShow = false // 取消展示
-              that.sysPassword.resetPass = false
+              this.resetIsShow = false // 取消重置密码板块展示
+              this.sysPassword.resetPass = false // 是否使用默认密码不展示
+              this.sysPassword.defaultPass = true	// 是否使用默认密码默认为true
             })
           }
         }
@@ -220,7 +222,8 @@ export default {
     onClose () {
       this.isShow = false
       this.resetIsShow = false // 取消重置密码板块展示
-      this.sysPassword.resetPass = false
+      this.sysPassword.resetPass = false // 是否使用默认密码不展示
+      this.sysPassword.defaultPass = true	// 是否使用默认密码默认为true
     },
     // 使用默认密码重置是否为true
     isResetPass () {
