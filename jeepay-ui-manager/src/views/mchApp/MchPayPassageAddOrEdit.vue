@@ -83,7 +83,7 @@ export default {
   data () {
     return {
       cardList: [],
-      mchNo: null, // 商户号
+      appId: null, // 应用appId
       wayCode: null, // 支付方式代码
       visible: false, // 是否显示弹层/抽屉
       jeepayCard: {
@@ -94,8 +94,8 @@ export default {
   },
   methods: {
     // 弹层打开事件
-    show: function (mchNo, wayCode) {
-      this.mchNo = mchNo
+    show: function (appId, wayCode) {
+      this.appId = appId
       this.wayCode = wayCode
       this.visible = true
       this.cardList = []
@@ -104,7 +104,7 @@ export default {
     // 请求支付接口定义数据
     refCardList () {
       const that = this
-      getAvailablePayInterfaceList(this.mchNo, this.wayCode).then(resData => {
+      getAvailablePayInterfaceList(this.appId, this.wayCode).then(resData => {
         if (resData === undefined || resData.length === 0) {
           that.cardList = []
           return
@@ -150,7 +150,7 @@ export default {
 
             reqParams.push({
               id: item.passageId,
-              mchNo: that.mchNo,
+              appId: that.appId,
               wayCode: that.wayCode,
               ifCode: item.ifCode,
               rate: item.rate,

@@ -58,7 +58,7 @@
         <template slot="opSlot" slot-scope="{record}">  <!-- 操作列插槽 -->
           <JeepayTableColumns>
             <a-button type="link" v-if="$access('ENT_MCH_INFO_EDIT')" @click="editFunc(record.mchNo)">修改</a-button>
-            <a-button type="link" v-if="$access('ENT_MCH_PAY_CONFIG_LIST')" @click="showPayIfConfigList(record)">支付配置</a-button>
+            <a-button type="link" v-if="$access('ENT_MCH_APP_CONFIG')" @click="mchAppConfig(record.mchNo)">应用配置</a-button>
             <a-button type="link" v-if="$access('ENT_MCH_INFO_DEL')" style="color: red" @click="delFunc(record.mchNo)">删除</a-button>
           </JeepayTableColumns>
         </template>
@@ -68,8 +68,6 @@
     <InfoAddOrEdit ref="infoAddOrEdit" :callbackFunc="searchFunc"/>
     <!-- 新增页面组件  -->
     <InfoDetail ref="infoDetail" :callbackFunc="searchFunc"/>
-    <!-- 支付参数配置页面组件  -->
-    <MchPayIfConfigList ref="mchPayIfConfigList" />
   </page-header-wrapper>
 </template>
 <script>
@@ -79,7 +77,6 @@ import JeepayTableColumns from '@/components/JeepayTable/JeepayTableColumns'
 import { API_URL_MCH_LIST, req, reqLoad } from '@/api/manage'
 import InfoAddOrEdit from './AddOrEdit'
 import InfoDetail from './Detail'
-import MchPayIfConfigList from './MchPayIfConfigList'
 
 // eslint-disable-next-line no-unused-vars
 const tableColumns = [
@@ -94,7 +91,7 @@ const tableColumns = [
 
 export default {
   name: 'MchListPage',
-  components: { JeepayTable, JeepayTableColumns, InfoAddOrEdit, InfoDetail, MchPayIfConfigList, JeepayTextUp },
+  components: { JeepayTable, JeepayTableColumns, InfoAddOrEdit, InfoDetail, JeepayTextUp },
   data () {
     return {
       btnLoading: false,
@@ -136,8 +133,11 @@ export default {
         })
       })
     },
-    showPayIfConfigList: function (record) { // 支付参数配置
-      this.$refs.mchPayIfConfigList.show(record.mchNo, record.type)
+    mchAppConfig: function (recordId) { // 应用配置
+      this.$router.push({
+        path: '/apps',
+        query: { mchNo: recordId }
+      })
     }
   }
 }

@@ -74,6 +74,8 @@ export const API_URL_USER_ROLE_RELA_LIST = '/api/sysUserRoleRelas'
 /** 服务商、商户管理 **/
 export const API_URL_ISV_LIST = '/api/isvInfo'
 export const API_URL_MCH_LIST = '/api/mchInfo'
+/** 商户App管理 **/
+export const API_URL_MCH_APP = '/api/mchApps'
 /** 支付订单管理 **/
 export const API_URL_PAY_ORDER_LIST = '/api/payOrder'
 /** 退款订单管理 **/
@@ -185,7 +187,7 @@ export function getIsvPayConfigUnique (infoId, ifCode) {
   })
 }
 
-export function getMcgPayConfigUnique (infoId, ifCode) {
+export function getMchPayConfigUnique (infoId, ifCode) {
   return request.request({
     url: '/api/mch/payConfigs/' + infoId + '/' + ifCode,
     method: 'get'

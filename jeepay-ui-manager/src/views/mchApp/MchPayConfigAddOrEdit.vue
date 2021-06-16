@@ -78,7 +78,7 @@
 <script>
 import JeepayCard from '@/components/JeepayCard/JeepayCard'
 import JeepayUpload from '@/components/JeepayUpload/JeepayUpload'
-import { API_URL_MCH_PAYCONFIGS_LIST, req, getMcgPayConfigUnique, upload } from '@/api/manage'
+import { API_URL_MCH_PAYCONFIGS_LIST, req, getMchPayConfigUnique, upload } from '@/api/manage'
 export default {
   components: {
       JeepayCard,
@@ -92,7 +92,7 @@ export default {
     return {
       btnLoading: false,
       visible: false, // 抽屉开关
-      mchNo: null, // 商户号
+      appId: null, // 商户号
       ifCode: null, // 接口代码
       mchType: null, // 商户类型：1-普通商户 2-特约商户
       action: upload.cert, // 上传文件地址
@@ -109,26 +109,26 @@ export default {
   },
   methods: {
     // 弹层打开事件
-    show: function (mchNo, mchType, record) {
-      this.mchNo = mchNo
+    show: function (appId, record) {
+      this.appId = appId
       this.ifCode = record.ifCode
-      this.mchType = mchType
+      this.mchType = record.mchType
       this.saveObject = {} // 要保存的对象
       this.ifParams = {} // 参数配置对象
       this.mchParams = {} // 支付接口定义描述
-      this.saveObject.infoId = mchNo
+      this.saveObject.infoId = appId
       this.saveObject.ifCode = record.ifCode
       this.saveObject.state = record.ifConfigState === 0 ? 0 : 1
       if (this.$refs.mchParamFormModel !== undefined) {
         this.$refs.mchParamFormModel.resetFields()
       }
-      this.getMcgPayConfig(record)
+      this.getMchPayConfig(record)
     },
     // 支付参数配置
-    getMcgPayConfig (record) {
+    getMchPayConfig (record) {
       const that = this
       // 获取支付参数
-      getMcgPayConfigUnique(that.saveObject.infoId, that.saveObject.ifCode).then(res => {
+      getMchPayConfigUnique(that.saveObject.infoId, that.saveObject.ifCode).then(res => {
         if (res && res.ifParams) {
           that.saveObject = res
           that.ifParams = JSON.parse(res.ifParams)

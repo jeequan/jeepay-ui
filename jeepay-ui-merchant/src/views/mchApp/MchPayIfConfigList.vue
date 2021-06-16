@@ -126,8 +126,7 @@ export default {
     return {
       currentStep: 0, // 当前步骤条index
       btnLoading: false,
-      mchNo: null, // 商户号
-      mchType: null, // 商户类型：1-普通商户 2-特约商户
+      appId: null, // 应用appId
       visible: false, // 抽屉开关
       jeepayCard: { // 卡片配置
         height: 300,
@@ -139,9 +138,8 @@ export default {
   },
   methods: {
     // 弹层打开事件
-    show (mchNo, mchType) {
-      this.mchNo = mchNo
-      this.mchType = mchType
+    show (appId) {
+      this.appId = appId
       this.ifCode = null
       this.currentStep = 0
       this.visible = true
@@ -153,7 +151,7 @@ export default {
     },
     // 请求支付接口定义数据
     reqCardListFunc () {
-      return req.list(API_URL_MCH_PAYCONFIGS_LIST, { 'mchNo': this.mchNo })
+      return req.list(API_URL_MCH_PAYCONFIGS_LIST, { 'appId': this.appId })
     },
     // 刷新支付接口card列表
     refCardList () {
@@ -162,7 +160,7 @@ export default {
     // 请求支付通道数据
     reqTableDataFunc (params) {
       const that = this
-      return req.list(API_URL_MCH_PAYPASSAGE_LIST, Object.assign(params, { mchNo: that.mchNo }))
+      return req.list(API_URL_MCH_PAYPASSAGE_LIST, Object.assign(params, { appId: that.appId }))
     },
     searchFunc (isToFirst = false) { // 点击【查询】按钮点击事件
       this.$refs.infoTable.refTable(isToFirst)
@@ -175,23 +173,23 @@ export default {
       if (record.subMchIsvConfig === 0) {
         this.$error({
           title: '提示',
-          content: '当前商户为特约商户，请先配置服务商支付参数！'
+          content: '服务商未配置，请联系服务商配置支付参数！'
         })
         return
       }
-      this.$refs.mchPayConfigAddOrEdit.show(this.mchNo, this.mchType, record)
+      this.$refs.mchPayConfigAddOrEdit.show(this.appId, record)
     },
     // 支付通道配置
     editPayPassageFunc (record) {
       const that = this
-      getAvailablePayInterfaceList(that.mchNo, record.wayCode).then(resData => {
+      getAvailablePayInterfaceList(that.appId, record.wayCode).then(resData => {
         if (!resData || resData.length === 0) {
           that.$error({
             title: '提示',
             content: '暂无可用支付接口配置'
           })
         } else {
-          that.$refs.mchPayPassageAddOrEdit.show(that.mchNo, record.wayCode)
+          that.$refs.mchPayPassageAddOrEdit.show(that.appId, record.wayCode)
         }
       })
     },

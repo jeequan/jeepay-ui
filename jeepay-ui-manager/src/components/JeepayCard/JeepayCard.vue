@@ -18,7 +18,7 @@
             <img src="~@/assets/svg/add-icon-hover.svg" alt="add-icon" class="jeepay-card-add-icon-hover">
           </div>
           <div class="jeepay-card-add-text">
-            新增{{ name }}
+            新建{{ name }}
           </div>
         </div>
       </a-col>

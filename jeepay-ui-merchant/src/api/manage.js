@@ -74,6 +74,8 @@ export const API_URL_USER_ROLE_RELA_LIST = '/api/sysUserRoleRelas'
 /** 首页统计 **/
 export const API_URL_MAIN_STATISTIC = 'api/mainChart'
 
+/** 商户App管理 **/
+export const API_URL_MCH_APP = '/api/mchApps'
 /** 支付订单管理 **/
 export const API_URL_PAY_ORDER_LIST = '/api/payOrder'
 /** 退款订单管理 **/
@@ -125,17 +127,17 @@ export function getRoleList (parameter) {
 }
 
 /** 根据支付接口查询支付参数配置 **/
-export function getMcgPayConfigUnique (ifCode) {
+export function getMchPayConfigUnique (infoId, ifCode) {
   return request.request({
-    url: '/api/mch/payConfigs/' + ifCode,
+    url: '/api/mch/payConfigs/' + infoId + '/' + ifCode,
     method: 'get'
   })
 }
 
 /** 根据支付方式查询可用支付接口 **/
-export function getAvailablePayInterfaceList (wayCode) {
+export function getAvailablePayInterfaceList (appId, wayCode) {
   return request.request({
-    url: '/api/mch/payPassages/availablePayInterface/' + wayCode,
+    url: '/api/mch/payPassages/availablePayInterface/' + appId + '/' + wayCode,
     method: 'GET'
   })
 }
