@@ -56,27 +56,22 @@
         </a-radio-group>
       </a-form-model-item>
 
+      <a-divider orientation="left">
+        <a-tag color="#FF4B33">
+          账户安全
+        </a-tag>
+      </a-divider>
       <a-form-model-item label="重置密码：" v-if="resetIsShow">
         <a-checkbox v-model="sysPassword.resetPass"></a-checkbox>
       </a-form-model-item>
 
       <div v-if="sysPassword.resetPass">
-        <a-form-model-item label="使用默认密码重置：" >
+        <a-form-model-item label="恢复默认密码：" >
           <a-checkbox v-model="sysPassword.defaultPass" @click="isResetPass"></a-checkbox>
         </a-form-model-item>
-
         <div>
-          <!-- <div v-if="sysPassword.defaultPass">
-            <a-form-model-item label="新密码：" >
-              <a-input-password v-model="sysPassword.newPwd" :disabled="sysPassword.defaultPass" />
-            </a-form-model-item>
-            <a-form-model-item label="确认新密码：">
-              <a-input-password v-model="sysPassword.confirmPwd" :disabled="sysPassword.defaultPass"/>
-            </a-form-model-item>
-          </div> -->
-
           <!-- <div v-else> -->
-          <div>
+          <div v-show="!this.sysPassword.defaultPass">
             <a-form-model-item label="新密码：" prop="newPwd">
               <a-input-password autocomplete="new-password" v-model="sysPassword.newPwd" :disabled="sysPassword.defaultPass"/>
             </a-form-model-item>
@@ -86,7 +81,6 @@
             </a-form-model-item>
           </div>
         </div>
-
       </div>
 
       <div class="drawer-btn-center">
@@ -129,12 +123,23 @@ export default {
         telphone: [{ required: true, pattern: /^[1][0-9]{10}$/, message: '请输入正确的手机号码', trigger: 'blur' }],
         userNo: [{ required: true, message: '请输入编号', trigger: 'blur' }],
         loginUsername: [],
-        newPwd: [{ required: true, min: 6, max: 12, message: '请输入6-12位新密码', trigger: 'blur' }], // 新密码
-        confirmPwd: [{ required: true, message: '请确认输入新密码', trigger: 'blur' }, {
+        newPwd: [{ required: false, trigger: 'blur' }, {
           validator: (rule, value, callBack) => {
-            console.log(value)
-            console.log(this.sysPassword.newPwd)
-            this.sysPassword.newPwd === value ? callBack() : callBack('新密码与确认密码不一致')
+            if (!this.sysPassword.defaultPass) {
+              if (this.sysPassword.newPwd.length < 6 || this.sysPassword.newPwd.length > 12) {
+                callBack('请输入6-12位新密码')
+              }
+            }
+            callBack()
+          }
+        }], // 新密码
+        confirmPwd: [{ required: false, trigger: 'blur' }, {
+          validator: (rule, value, callBack) => {
+            if (!this.sysPassword.defaultPass) {
+              this.sysPassword.newPwd === this.sysPassword.confirmPwd ? callBack() : callBack('新密码与确认密码不一致')
+            } else {
+              callBack()
+            }
           }
         }] // 确认新密码
       }
@@ -220,7 +225,6 @@ export default {
     // 使用默认密码重置是否为true
     isResetPass () {
       if (!this.sysPassword.defaultPass) {
-        console.log(0)
         this.sysPassword.newPwd = ''
         this.sysPassword.confirmPwd = ''
       }
