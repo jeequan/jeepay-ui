@@ -82,6 +82,7 @@
 <script>
 import JeepayUpload from '@/components/JeepayUpload/JeepayUpload'
 import { getInfo } from '@/api/login'
+import { Base64 } from 'js-base64'
 import { updateUserInfo, updateUserPass, getUserInfo, upload } from '@/api/manage'
 import AvatarModal from './AvatarModal'
 import store from '@/store'
@@ -168,6 +169,9 @@ export default {
               that.btnLoading = true // 打开按钮上的 loading
               that.confirmLoading = true // 显示loading
               that.updateObject.recordId = that.recordId // 用户ID
+              that.updateObject.originalPwd = Base64.encode(that.updateObject.originalPwd)
+              that.updateObject.confirmPwd = Base64.encode(that.updateObject.confirmPwd)
+              this.$delete(this.updateObject, 'newPwd')
               updateUserPass(that.updateObject).then(res => {
                 that.$message.success('修改成功')
                 // 退出登录
