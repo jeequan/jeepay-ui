@@ -18,6 +18,7 @@
             <jeepay-text-up :placeholder="'商户订单号'" :msg="searchData.mchOrderNo" v-model="searchData.mchOrderNo" />
             <jeepay-text-up :placeholder="'商户号'" :msg="searchData.mchNo" v-model="searchData.mchNo" />
             <jeepay-text-up :placeholder="'服务商号'" :msg="searchData.isvNo" v-model="searchData.isvNo" />
+            <jeepay-text-up :placeholder="'应用AppId'" :msg="searchData.appId" v-model="searchData.appId"/>
             <a-form-item label="" class="table-head-layout">
               <a-select v-model="searchData.state" placeholder="通知状态" default-value="">
                 <a-select-option value="">全部</a-select-option>
@@ -122,6 +123,13 @@
           </a-col>
           <a-col :sm="12">
             <a-descriptions>
+              <a-descriptions-item label="应用APPID">
+                {{ detailData.appId }}
+              </a-descriptions-item>
+            </a-descriptions>
+          </a-col>
+          <a-col :sm="12">
+            <a-descriptions>
               <a-descriptions-item label="通知状态">
                 <a-tag :color="detailData.state === 1?'orange':detailData.state === 2?'green':'volcano'">
                   {{ detailData.state === 1?'通知中':detailData.state === 2?'通知成功':detailData.state === 3?'通知失败':'未知' }}
@@ -136,7 +144,7 @@
               </a-descriptions-item>
             </a-descriptions>
           </a-col>
-          <a-col :sm="12">
+          <a-col :sm="24">
             <a-descriptions>
               <a-descriptions-item label="最后通知时间">
                 {{ detailData.lastNotifyTime }}

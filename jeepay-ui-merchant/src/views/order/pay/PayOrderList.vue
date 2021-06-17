@@ -15,9 +15,8 @@
               </a-range-picker>
             </a-form-item>
             <jeepay-text-up :placeholder="'支付订单号'" :msg="searchData.payOrderId" v-model="searchData.payOrderId" />
-
             <jeepay-text-up :placeholder="'商户订单号'" :msg="searchData.mchOrderNo" v-model="searchData.mchOrderNo" />
-
+            <jeepay-text-up :placeholder="'应用AppId'" :msg="searchData.appId" v-model="searchData.appId"/>
             <a-form-item label="" class="table-head-layout">
               <a-select v-model="searchData.state" placeholder="支付状态" default-value="">
                 <a-select-option value="">全部</a-select-option>
@@ -125,18 +124,25 @@
           </a-col>
           <a-col :sm="12">
             <a-descriptions>
-              <a-descriptions-item label="支付金额">
-                <a-tag color="green">
-                  {{ detailData.amount/100 }}
-                </a-tag>
+              <a-descriptions-item label="应用APPID">
+                {{ detailData.appId }}
               </a-descriptions-item>
             </a-descriptions>
           </a-col>
-          <a-col :sm="24">
+          <a-col :sm="12">
             <a-descriptions>
               <a-descriptions-item label="订单状态">
                 <a-tag :color="detailData.state === 0?'blue':detailData.state === 1?'orange':detailData.state === 2?'green':'volcano'">
                   {{ detailData.state === 0?'订单生成':detailData.state === 1?'支付中':detailData.state === 2?'支付成功':detailData.state === 3?'支付失败':detailData.state === 4?'已撤销':detailData.state === 5?'已退款':detailData.state === 6?'订单关闭':'未知' }}
+                </a-tag>
+              </a-descriptions-item>
+            </a-descriptions>
+          </a-col>
+          <a-col :sm="12">
+            <a-descriptions>
+              <a-descriptions-item label="支付金额">
+                <a-tag color="green">
+                  {{ detailData.amount/100 }}
                 </a-tag>
               </a-descriptions-item>
             </a-descriptions>

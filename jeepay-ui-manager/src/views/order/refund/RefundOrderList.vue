@@ -19,6 +19,7 @@
             <jeepay-text-up :placeholder="'渠道支付订单号'" :msg="searchData.channelPayOrderNo" v-model="searchData.channelPayOrderNo" />
             <jeepay-text-up :placeholder="'商户号'" :msg="searchData.mchNo" v-model="searchData.mchNo" />
             <jeepay-text-up :placeholder="'服务商号'" :msg="searchData.isvNo" v-model="searchData.isvNo" />
+            <jeepay-text-up :placeholder="'应用AppId'" :msg="searchData.appId" v-model="searchData.appId"/>
             <a-form-item label="" class="table-head-layout">
               <a-select v-model="searchData.state" placeholder="退款状态" default-value="">
                 <a-select-option value="">全部</a-select-option>
@@ -145,10 +146,17 @@
               </a-descriptions-item>
             </a-descriptions>
           </a-col>
-          <a-col :sm="24">
+          <a-col :sm="12">
             <a-descriptions>
               <a-descriptions-item label="渠道支付订单号">
                 {{ detailData.channelPayOrderNo }}
+              </a-descriptions-item>
+            </a-descriptions>
+          </a-col>
+          <a-col :sm="12">
+            <a-descriptions>
+              <a-descriptions-item label="应用APPID">
+                {{ detailData.appId }}
               </a-descriptions-item>
             </a-descriptions>
           </a-col>

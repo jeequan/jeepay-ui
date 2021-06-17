@@ -18,6 +18,7 @@
             <jeepay-text-up :placeholder="'商户订单号'" :msg="searchData.mchOrderNo" v-model="searchData.mchOrderNo" />
             <jeepay-text-up :placeholder="'商户号'" :msg="searchData.mchNo" v-model="searchData.mchNo" />
             <jeepay-text-up :placeholder="'服务商号'" :msg="searchData.isvNo" v-model="searchData.isvNo" />
+            <jeepay-text-up :placeholder="'应用AppId'" :msg="searchData.appId" v-model="searchData.appId"/>
             <a-form-item label="" class="table-head-layout">
               <a-select v-model="searchData.state" placeholder="支付状态" default-value="">
                 <a-select-option value="">全部</a-select-option>
@@ -156,12 +157,19 @@
               </a-descriptions-item>
             </a-descriptions>
           </a-col>
-          <a-col :sm="24">
+          <a-col :sm="12">
             <a-descriptions>
               <a-descriptions-item label="回调状态">
                 <a-tag :color="detailData.notifyState === 1?'green':'volcano'">
                   {{ detailData.notifyState === 0?'未发送':detailData.notifyState === 1?'已发送':'未知' }}
                 </a-tag>
+              </a-descriptions-item>
+            </a-descriptions>
+          </a-col>
+          <a-col :sm="12">
+            <a-descriptions>
+              <a-descriptions-item label="应用APPID">
+                {{ detailData.appId }}
               </a-descriptions-item>
             </a-descriptions>
           </a-col>
