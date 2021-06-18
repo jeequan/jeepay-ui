@@ -210,7 +210,7 @@
     { key: 'orderId', title: '订单ID', fixed: 'left', dataIndex: 'orderId' },
     { key: 'mchOrderNo', title: '商户订单号', dataIndex: 'mchOrderNo' },
     { key: 'state', title: '通知状态', width: '130px', scopedSlots: { customRender: 'stateSlot' } },
-    { key: 'orderType', title: '通知状态', width: '130px', scopedSlots: { customRender: 'orderTypeSlot' } },
+    { key: 'orderType', title: '订单类型', width: '130px', scopedSlots: { customRender: 'orderTypeSlot' } },
     { key: 'createdAt', dataIndex: 'createdAt', title: '创建日期' },
     { key: 'op', title: '操作', width: '100px', fixed: 'right', align: 'center', scopedSlots: { customRender: 'opSlot' } }
   ]
