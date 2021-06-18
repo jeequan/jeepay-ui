@@ -71,7 +71,6 @@
           htmlType="submit"
           class="login-button"
           :loading="loginBtnLoadingFlag"
-          :disabled="loginBtnLoadingFlag"
         >登录
         </a-button>
       </a-form-item>
@@ -168,7 +167,6 @@ export default {
     font-size: 16px;
     height: 40px;
     width: 100%;
-    // background-color: @jee-theme;
   }
 
   .user-login-other {
