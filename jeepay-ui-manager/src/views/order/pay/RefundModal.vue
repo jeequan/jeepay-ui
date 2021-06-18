@@ -38,10 +38,10 @@
         </a-col>
       </a-row>
 
-      <a-form-model :rules="rules" :model="refund" ref="refundInfo" :layout="horizontal">
+      <a-form-model :rules="rules" :model="refund" ref="refundInfo" >
 
         <a-form-model-item label="退款金额" prop="refundAmount">
-          <a-input v-model="refund.refundAmount" type="number" @keyup="handleInput2" style="flex-grow:1" />
+          <a-input-number v-model="refund.refundAmount" :precision="2" style="width:100%"/>
         </a-form-model-item>
 
         <a-form-model-item label="退款原因" prop="refundReason">
@@ -59,7 +59,6 @@ export default {
 
   data () {
     return {
-      horizontal: 'horizontal',
       recordId: '',
       labelCol: { span: 4 },
       wrapperCol: { span: 16 },
@@ -91,16 +90,6 @@ export default {
     }
   },
   methods: {
-    handleInput2 (e) {
-      // 只能输入两位小数，且首位数字不能为0
-      e.target.value = e.target.value.replace(/\.{2,}/g, '.') // 只保留第一个. 清除多余的
-      e.target.value = e.target.value.replace('.', '$#$').replace(/\./g, '').replace('$#$', '.')
-      e.target.value = e.target.value.replace(/^(-)*(\d+)\.(\d\d).*$/, '$1$2.$3')// 只能输入两个小数
-      if (e.target.value.indexOf('.') < 0 && e.target.value !== '') { // 以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额
-        e.target.value = parseFloat(e.target.value)
-      }
-      this.refund.refundAmount = e.target.value // 最后赋值给refundAmount
-    },
     show (recordId) {
       if (this.$refs.refundInfo !== undefined) {
 					this.$refs.refundInfo.resetFields()
@@ -127,6 +116,7 @@ export default {
           }).catch(err => {
             console.log(err)
             that.confirmLoading = false // 取消按钮转圈
+            console.log(that.refund.refundAmount)
           })
         }
       })
