@@ -30,15 +30,6 @@
               </a-select>
             </a-form-item>
             <a-form-item label="" class="table-head-layout">
-              <a-select v-model="searchData.result" placeholder="退款结果" default-value="">
-                <a-select-option value="">全部</a-select-option>
-                <a-select-option value="0">未确认</a-select-option>
-                <a-select-option value="1">待处理</a-select-option>
-                <a-select-option value="2">确认成功</a-select-option>
-                <a-select-option value="3">确认失败</a-select-option>
-              </a-select>
-            </a-form-item>
-            <a-form-item label="" class="table-head-layout">
               <a-select v-model="searchData.mchType" placeholder="商户类型" default-value="">
                 <a-select-option value="">全部</a-select-option>
                 <a-select-option value="1">普通商户</a-select-option>
@@ -74,14 +65,6 @@
             :color="record.state === 0?'blue':record.state === 1?'orange':record.state === 2?'green':'volcano'"
           >
             {{ record.state === 0?'订单生成':record.state === 1?'退款中':record.state === 2?'退款成功':record.state === 3?'退款失败':'未知' }}
-          </a-tag>
-        </template>
-        <template slot="resultSlot" slot-scope="{record}">
-          <a-tag
-            :key="record.result"
-            :color="record.result === 0?'blue':record.result === 1?'orange':record.result === 2?'green':'volcano'"
-          >
-            {{ record.result === 0?'未确认':record.result === 1?'待处理':record.result === 2?'确认成功':record.result === 3?'确认失败':'未知' }}
           </a-tag>
         </template>
         <template slot="opSlot" slot-scope="{record}">  <!-- 操作列插槽 -->
@@ -183,15 +166,6 @@
               <a-descriptions-item label="订单状态">
                 <a-tag :color="detailData.state === 0?'blue':detailData.state === 1?'orange':detailData.state === 2?'green':'volcano'">
                   {{ detailData.state === 0?'订单生成':detailData.state === 1?'退款中':detailData.state === 2?'退款成功':detailData.state === 3?'退款失败':'未知' }}
-                </a-tag>
-              </a-descriptions-item>
-            </a-descriptions>
-          </a-col>
-          <a-col :sm="12">
-            <a-descriptions>
-              <a-descriptions-item label="退款结果">
-                <a-tag :color="detailData.result === 0?'blue':detailData.result === 1?'orange':detailData.result === 2?'green':'volcano'">
-                  {{ detailData.result === 0?'未确认':detailData.result === 1?'待处理':detailData.result === 2?'确认成功':detailData.result === 3?'确认失败':'未知' }}
                 </a-tag>
               </a-descriptions-item>
             </a-descriptions>
@@ -327,7 +301,6 @@
     { key: 'payOrderId', title: '支付订单号', dataIndex: 'payOrderId' },
     { key: 'mchRefundNo', title: '商户退款单号', dataIndex: 'mchRefundNo' },
     { key: 'state', title: '支付状态', scopedSlots: { customRender: 'stateSlot' }, width: 100 },
-    { key: 'result', title: '退款结果', scopedSlots: { customRender: 'resultSlot' }, width: 100 },
     { key: 'createdAt', dataIndex: 'createdAt', title: '创建日期' },
     { key: 'op', title: '操作', width: '100px', fixed: 'right', align: 'center', scopedSlots: { customRender: 'opSlot' } }
   ]
