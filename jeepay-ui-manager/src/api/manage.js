@@ -121,8 +121,8 @@ export function getEntTree (sysType) {
   return request.request({ url: '/api/sysEnts/showTree?sysType=' + sysType, method: 'GET' })
 }
 
-/** 0617 测试退款用接口 */
-export function refundModal (payOrderId, refundAmount, refundReason) {
+/** 退款接口 */
+export function payOrderRefund (payOrderId, refundAmount, refundReason) {
   return request.request({
     url: '/api/payOrder/refunds/' + payOrderId,
     method: 'POST',

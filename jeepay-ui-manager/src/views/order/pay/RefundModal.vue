@@ -44,7 +44,7 @@
           <a-input v-model="refund.refundAmount" type="number" @keyup="handleInput2" style="flex-grow:1" />
         </a-form-model-item>
 
-        <a-form-model-item label="退款详情" prop="refundReason">
+        <a-form-model-item label="退款原因" prop="refundReason">
           <a-input v-model="refund.refundReason" type="textarea" />
         </a-form-model-item>
 
@@ -54,7 +54,7 @@
   </div>
 </template>
 <script>
-import { API_URL_PAY_ORDER_LIST, req, refundModal } from '@/api/manage'
+import { API_URL_PAY_ORDER_LIST, req, payOrderRefund } from '@/api/manage'
 export default {
 
   data () {
@@ -119,7 +119,7 @@ export default {
           this.confirmLoading = true
           const that = this
           // 退款接口
-          refundModal(that.recordId, that.refund.refundAmount, that.refund.refundReason).then(res => {
+          payOrderRefund(that.recordId, that.refund.refundAmount, that.refund.refundReason).then(res => {
               that.visible = false // 关闭弹窗
               that.confirmLoading = false // 取消按钮转圈
               that.$message.success('退款成功')
