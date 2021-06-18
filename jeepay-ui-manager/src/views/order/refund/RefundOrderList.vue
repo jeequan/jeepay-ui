@@ -265,14 +265,14 @@
         <a-col :sm="12">
           <a-descriptions>
             <a-descriptions-item label="渠道错误码">
-              {{ detailData.channelErrCode }}
+              {{ detailData.errCode }}
             </a-descriptions-item>
           </a-descriptions>
         </a-col>
         <a-col :sm="12">
           <a-descriptions>
             <a-descriptions-item label="渠道错误描述">
-              {{ detailData.channelErrMsg }}
+              {{ detailData.errMsg }}
             </a-descriptions-item>
           </a-descriptions>
         </a-col>
