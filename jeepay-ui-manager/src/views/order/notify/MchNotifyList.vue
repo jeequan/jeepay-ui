@@ -64,6 +64,14 @@
             {{ record.state === 1?'通知中':record.state === 2?'通知成功':record.state === 3?'通知失败':'未知' }}
           </a-tag>
         </template>
+        <template slot="orderTypeSlot" slot-scope="{record}">
+          <a-tag
+            :key="record.orderType"
+            :color="record.orderType === 1?'green':record.orderType === 2?'volcano':'orange'"
+          >
+            {{ record.orderType === 1?'支付':record.orderType === 2?'退款':'未知' }}
+          </a-tag>
+        </template>
         <template slot="opSlot" slot-scope="{record}">  <!-- 操作列插槽 -->
           <JeepayTableColumns>
             <a-button type="link" v-if="$access('ENT_MCH_NOTIFY_VIEW')" @click="detailFunc(record.notifyId)">详情</a-button>
@@ -202,6 +210,7 @@
     { key: 'orderId', title: '订单ID', fixed: 'left', dataIndex: 'orderId' },
     { key: 'mchOrderNo', title: '商户订单号', dataIndex: 'mchOrderNo' },
     { key: 'state', title: '通知状态', width: '130px', scopedSlots: { customRender: 'stateSlot' } },
+    { key: 'orderType', title: '通知状态', width: '130px', scopedSlots: { customRender: 'orderTypeSlot' } },
     { key: 'createdAt', dataIndex: 'createdAt', title: '创建日期' },
     { key: 'op', title: '操作', width: '100px', fixed: 'right', align: 'center', scopedSlots: { customRender: 'opSlot' } }
   ]

@@ -170,7 +170,7 @@
               </a-descriptions-item>
             </a-descriptions>
           </a-col>
-          <a-col :sm="24">
+          <a-col :sm="12">
             <a-descriptions>
               <a-descriptions-item label="退款成功时间">
                 {{ detailData.successTime }}
@@ -297,10 +297,9 @@
     { key: 'payAmount', title: '支付金额', fixed: 'left', scopedSlots: { customRender: 'payAmountSlot' } },
     { key: 'refundAmount', title: '退款金额', scopedSlots: { customRender: 'refundAmountSlot' } },
     { key: 'refundOrderId', title: '退款订单号', dataIndex: 'refundOrderId' },
-    { key: 'channelPayOrderNo', title: '渠道订单号', dataIndex: 'channelPayOrderNo' },
     { key: 'payOrderId', title: '支付订单号', dataIndex: 'payOrderId' },
     { key: 'mchRefundNo', title: '商户退款单号', dataIndex: 'mchRefundNo' },
-    { key: 'state', title: '支付状态', scopedSlots: { customRender: 'stateSlot' }, width: 100 },
+    { key: 'state', title: '状态', scopedSlots: { customRender: 'stateSlot' }, width: 100 },
     { key: 'createdAt', dataIndex: 'createdAt', title: '创建日期' },
     { key: 'op', title: '操作', width: '100px', fixed: 'right', align: 'center', scopedSlots: { customRender: 'opSlot' } }
   ]

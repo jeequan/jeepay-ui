@@ -74,6 +74,14 @@
             {{ record.state === 0?'订单生成':record.state === 1?'支付中':record.state === 2?'支付成功':record.state === 3?'支付失败':record.state === 4?'已撤销':record.state === 5?'已退款':record.state === 6?'订单关闭':'未知' }}
           </a-tag>
         </template>
+        <template slot="refundStateSlot" slot-scope="{record}">
+          <a-tag
+            :key="record.refundState"
+            :color="record.refundState === 0?'blue':record.refundState === 1?'orange':record.refundState === 2?'green':'volcano'"
+          >
+            {{ record.refundState === 0?'未发起':record.refundState === 1?'部分退款':record.refundState === 2?'全额退款':'未知' }}
+          </a-tag>
+        </template>
         <template slot="notifySlot" slot-scope="{record}">
           <a-badge :status="record.notifyState === 1?'processing':'error'" :text="record.notifyState === 1?'已发送':'未发送'" />
         </template>
@@ -288,6 +296,15 @@
           </a-col>
           <a-col :sm="12">
             <a-descriptions>
+              <a-descriptions-item label="退款状态">
+                <a-tag :color="detailData.refundState === 0?'blue':detailData.refundState === 1?'orange':detailData.refundState === 2?'green':'volcano'">
+                  {{ detailData.refundState === 0?'未发起':detailData.refundState === 1?'部分退款':detailData.refundState === 2?'全额退款':'未知' }}
+                </a-tag>
+              </a-descriptions-item>
+            </a-descriptions>
+          </a-col>
+          <a-col :sm="12">
+            <a-descriptions>
               <a-descriptions-item label="退款次数">
                 {{ detailData.refundTimes }}
               </a-descriptions-item>
@@ -335,6 +352,7 @@ const tableColumns = [
   { key: 'mchOrderNo', title: '商户订单号', dataIndex: 'mchOrderNo' },
   { key: 'wayName', title: '支付方式', dataIndex: 'wayName', width: 150 },
   { key: 'state', title: '支付状态', scopedSlots: { customRender: 'stateSlot' }, width: 100 },
+  { key: 'refundState', title: '退款状态', scopedSlots: { customRender: 'refundStateSlot' }, width: 100 },
   { key: 'notifyState', title: '回调状态', scopedSlots: { customRender: 'notifySlot' }, width: 100 },
   { key: 'createdAt', dataIndex: 'createdAt', title: '创建日期', width: 180 },
   { key: 'op', title: '操作', width: '100px', fixed: 'right', align: 'center', scopedSlots: { customRender: 'opSlot' } }
