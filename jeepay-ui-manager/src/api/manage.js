@@ -121,6 +121,15 @@ export function getEntTree (sysType) {
   return request.request({ url: '/api/sysEnts/showTree?sysType=' + sysType, method: 'GET' })
 }
 
+/** 0617 测试退款用接口 */
+export function refundModal (payOrderId, refundAmount, refundReason) {
+  return request.request({
+    url: '/api/payOrder/refunds/' + payOrderId,
+    method: 'POST',
+    data: { refundAmount, refundReason }
+  })
+}
+
 /** 更新用户角色信息 */
 export function uSysUserRoleRela (sysUserId, roleIdList) {
   return request.request({

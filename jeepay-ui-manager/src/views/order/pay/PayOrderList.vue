@@ -88,10 +88,13 @@
         <template slot="opSlot" slot-scope="{record}">  <!-- 操作列插槽 -->
           <JeepayTableColumns>
             <a-button type="link" v-if="$access('ENT_PAY_ORDER_VIEW')" @click="detailFunc(record.payOrderId)">详情</a-button>
+            <a-button type="link" v-if="$access('ENT_PAY_ORDER_REFUND')" style="color: red" v-show="(record.state === 2)" @click="openFunc(record.payOrderId)">退款</a-button>
           </JeepayTableColumns>
         </template>
       </JeepayTable>
     </a-card>
+    <!-- 退款弹出框 -->
+    <refund-modal ref="refundModalInfo"></refund-modal>
     <!-- 日志详情抽屉 -->
     <template>
       <a-drawer
@@ -338,6 +341,7 @@
   </page-header-wrapper>
 </template>
 <script>
+import RefundModal from './RefundModal' // 退款弹出框
 import JeepayTextUp from '@/components/JeepayTextUp/JeepayTextUp' // 文字上移组件
 import JeepayTable from '@/components/JeepayTable/JeepayTable'
 import JeepayTableColumns from '@/components/JeepayTable/JeepayTableColumns'
@@ -355,12 +359,12 @@ const tableColumns = [
   { key: 'refundState', title: '退款状态', scopedSlots: { customRender: 'refundStateSlot' }, width: 100 },
   { key: 'notifyState', title: '回调状态', scopedSlots: { customRender: 'notifySlot' }, width: 100 },
   { key: 'createdAt', dataIndex: 'createdAt', title: '创建日期', width: 180 },
-  { key: 'op', title: '操作', width: '100px', fixed: 'right', align: 'center', scopedSlots: { customRender: 'opSlot' } }
+  { key: 'op', title: '操作', width: '160px', fixed: 'right', align: 'center', scopedSlots: { customRender: 'opSlot' } }
 ]
 
 export default {
   name: 'IsvListPage',
-  components: { JeepayTable, JeepayTableColumns, JeepayTextUp },
+  components: { JeepayTable, JeepayTableColumns, JeepayTextUp, RefundModal },
   data () {
     return {
       btnLoading: false,
@@ -389,6 +393,11 @@ export default {
     },
     searchFunc: function () { // 点击【查询】按钮点击事件
       this.$refs.infoTable.refTable(true)
+    },
+
+    // 打开退款弹出框
+    openFunc (recordId) {
+      this.$refs.refundModalInfo.show(recordId)
     },
     detailFunc: function (recordId) {
       const that = this

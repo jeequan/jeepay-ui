@@ -168,7 +168,7 @@ export default {
     font-size: 16px;
     height: 40px;
     width: 100%;
-    background-color: @jee-theme;
+    // background-color: @jee-theme;
   }
 
   .user-login-other {
