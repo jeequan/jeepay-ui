@@ -86,7 +86,7 @@ export default {
   },
   computed: {
     nowRefundAmount () {
-      return (this.detailData.amount / 100 - this.detailData.refundAmount / 100)
+      return (this.detailData.amount - this.detailData.refundAmount) / 100
     }
   },
   methods: {
