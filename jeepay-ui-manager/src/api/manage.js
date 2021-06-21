@@ -284,3 +284,10 @@ export function getEntBySysType (entId, sysType) {
     params: { entId: entId, sysType: sysType }
   })
 }
+
+export function mchNotifyResend (notifyId) {
+  return request.request({
+    url: '/api/mchNotify/resend/' + notifyId,
+    method: 'POST'
+  })
+}

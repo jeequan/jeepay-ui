@@ -75,6 +75,7 @@
         <template slot="opSlot" slot-scope="{record}">  <!-- 操作列插槽 -->
           <JeepayTableColumns>
             <a-button type="link" v-if="$access('ENT_MCH_NOTIFY_VIEW')" @click="detailFunc(record.notifyId)">详情</a-button>
+            <a-button type="link" v-if="$access('ENT_MCH_NOTIFY_RESEND') && record.state === 3" @click="resendFunc(record.notifyId)">重发通知</a-button>
           </JeepayTableColumns>
         </template>
       </JeepayTable>
@@ -202,7 +203,7 @@
   import JeepayTable from '@/components/JeepayTable/JeepayTable'
   import JeepayTextUp from '@/components/JeepayTextUp/JeepayTextUp' // 文字上移组件
   import JeepayTableColumns from '@/components/JeepayTable/JeepayTableColumns'
-  import { API_URL_MCH_NOTIFY_LIST, req } from '@/api/manage'
+  import { API_URL_MCH_NOTIFY_LIST, req, mchNotifyResend } from '@/api/manage'
   import moment from 'moment'
 
   // eslint-disable-next-line no-unused-vars
@@ -212,7 +213,7 @@
     { key: 'state', title: '通知状态', width: '130px', scopedSlots: { customRender: 'stateSlot' } },
     { key: 'orderType', title: '订单类型', width: '130px', scopedSlots: { customRender: 'orderTypeSlot' } },
     { key: 'createdAt', dataIndex: 'createdAt', title: '创建日期' },
-    { key: 'op', title: '操作', width: '100px', fixed: 'right', align: 'center', scopedSlots: { customRender: 'opSlot' } }
+    { key: 'op', title: '操作', fixed: 'right', align: 'center', scopedSlots: { customRender: 'opSlot' } }
   ]
 
   export default {
@@ -274,6 +275,16 @@
       },
       onClose () {
         this.visible = false
+      },
+      resendFunc (notifyId) { // 重发通知
+        const that = this
+
+        this.$infoBox.confirmPrimary('确认重发通知？', '', () => {
+          mchNotifyResend(notifyId).then(res => {
+            that.$message.success('任务更新成功，请稍后查看最新状态！')
+            that.searchFunc()
+          })
+        })
       }
     }
   }
