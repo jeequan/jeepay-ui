@@ -88,13 +88,13 @@
         <template slot="opSlot" slot-scope="{record}">  <!-- 操作列插槽 -->
           <JeepayTableColumns>
             <a-button type="link" v-if="$access('ENT_PAY_ORDER_VIEW')" @click="detailFunc(record.payOrderId)">详情</a-button>
-            <a-button type="link" v-if="$access('ENT_PAY_ORDER_REFUND')" style="color: red" v-show="(record.state === 2)" @click="openFunc(record.payOrderId)">退款</a-button>
+            <a-button type="link" v-if="$access('ENT_PAY_ORDER_REFUND')" style="color: red" v-show="(record.state === 2)" @click="openFunc(record, record.payOrderId)">退款</a-button>
           </JeepayTableColumns>
         </template>
       </JeepayTable>
     </a-card>
     <!-- 退款弹出框 -->
-    <refund-modal ref="refundModalInfo"></refund-modal>
+    <refund-modal ref="refundModalInfo" :callbackFunc="searchFunc"></refund-modal>
     <!-- 日志详情抽屉 -->
     <template>
       <a-drawer
@@ -396,7 +396,10 @@ export default {
     },
 
     // 打开退款弹出框
-    openFunc (recordId) {
+    openFunc (record, recordId) {
+      if (record.refundState === 2) {
+        return this.$infoBox.modalError('订单无可退款金额', '')
+      }
       this.$refs.refundModalInfo.show(recordId)
     },
     detailFunc: function (recordId) {

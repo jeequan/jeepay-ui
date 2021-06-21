@@ -10,7 +10,7 @@ import { Modal } from 'ant-design-vue'
 // 确认提示： 标题， 内容， 点击确定回调函数， 取消回调，  扩展参数
 export const confirmResult = {
   confirm: function (title, content, okFunc, cancelFunc = (() => {}), extConfig = {}) {
-    Modal.confirm(
+      return Modal.confirm(
       Object.assign({
         okText: '确定',
         cancelText: '取消',
@@ -22,11 +22,23 @@ export const confirmResult = {
       }, extConfig))
   },
   confirmPrimary: function (title, content, okFunc, cancelFunc = (() => {}), extConfig = {}) {
-    this.confirm(title, content, okFunc, cancelFunc, Object.assign({ okType: 'primary' }, extConfig))
+      return this.confirm(title, content, okFunc, cancelFunc, Object.assign({ okType: 'primary' }, extConfig))
   },
 
   confirmDanger: function (title, content, okFunc, cancelFunc = (() => {}), extConfig = {}) {
-    this.confirm(title, content, okFunc, cancelFunc, Object.assign({ okType: 'danger' }, extConfig))
+      return this.confirm(title, content, okFunc, cancelFunc, Object.assign({ okType: 'danger' }, extConfig))
+  },
+
+  modalError: function (title, content, okFunc = (() => {})) {
+      return Modal.error({ title: title, content: content, onOk: okFunc })
+  },
+
+  modalSuccess: function (title, content, okFunc = (() => {})) {
+      return Modal.success({ title: title, content: content, onOk: okFunc })
+  },
+
+  modalWarning: function (title, content, okFunc = (() => {})) {
+      return Modal.warning({ title: title, content: content, onOk: okFunc })
   }
 }
 

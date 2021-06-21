@@ -57,6 +57,10 @@
 import { API_URL_PAY_ORDER_LIST, req, payOrderRefund } from '@/api/manage'
 export default {
 
+  props: {
+    callbackFunc: { type: Function, default: () => () => ({}) }
+  },
+
   data () {
     return {
       recordId: '',
@@ -111,19 +115,42 @@ export default {
           payOrderRefund(that.recordId, that.refund.refundAmount, that.refund.refundReason).then(res => {
               that.visible = false // 关闭弹窗
               that.confirmLoading = false // 取消按钮转圈
+
+            if (res.state === 0 || res.state === 3) { // 订单生成 || 失败
+              const refundErrorModal = that.$infoBox.modalError('退款失败', (h) => that.buildModalText(res, h, () => { refundErrorModal.destroy() }))
+            } else if (res.state === 1) { // 退款中
+              const refundErrorModal = that.$infoBox.modalWarning('退款中', (h) => that.buildModalText(res, h, () => { refundErrorModal.destroy() }))
+              that.callbackFunc()
+            } else if (res.state === 2) { // 退款成功
               that.$message.success('退款成功')
-              console.log(that.refund.refundAmount)
-          }).catch(err => {
-            console.log(err)
+              that.callbackFunc()
+            } else {
+              const refundErrorModal = that.$infoBox.modalWarning('退款状态未知', (h) => that.buildModalText(res, h, () => { refundErrorModal.destroy() }))
+            }
+          }).catch(() => {
             that.confirmLoading = false // 取消按钮转圈
-            console.log(that.refund.refundAmount)
           })
         }
       })
     },
     handleCancel (e) {
       this.visible = false
+    },
+
+    buildModalText (res, h, callbackFunc) {
+      // 跳转退款列表Btn
+      const toRefundPageBtn = h('a', { on: { click: () => {
+            callbackFunc()
+            this.$router.push({ name: 'ENT_REFUND_ORDER' })
+          } } })
+      toRefundPageBtn.text = '退款列表'
+      return h('div', [
+        h('div', res.errCode ? `错误码：${res.errCode}` : ''),
+        h('div', res.errMsg ? `错误信息：${res.errMsg}` : ''),
+        h('div', [h('span', '请到'), toRefundPageBtn, h('span', '中查看详细信息')])
+      ])
     }
+
   }
 }
 </script>
