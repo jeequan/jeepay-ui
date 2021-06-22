@@ -134,6 +134,23 @@ export function getMchPayConfigUnique (infoId, ifCode) {
   })
 }
 
+/** 支付体验配置 **/
+export function payTest (appId) {
+  return request.request({
+    url: 'api/paytest/payways/' + appId,
+    method: 'GET'
+  })
+}
+
+/** 支付体验下单配置 **/
+export function payTestOrder (parameter) {
+  return request.request({
+    url: '/api/paytest/payOrders',
+    method: 'POST',
+    data: parameter
+  })
+}
+
 /** 根据支付方式查询可用支付接口 **/
 export function getAvailablePayInterfaceList (appId, wayCode) {
   return request.request({

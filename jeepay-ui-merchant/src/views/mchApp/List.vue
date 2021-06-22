@@ -44,6 +44,11 @@
         </template>
         <template slot="opSlot" slot-scope="{record}">  <!-- 操作列插槽 -->
           <JeepayTableColumns>
+            <a-button type="link" v-if="$access('ENT_MCH_PAY_TEST')">
+              <router-link :to="{path:'paytest',query:{appid:record.appId}}">
+                支付体验
+              </router-link>
+            </a-button>
             <a-button type="link" v-if="$access('ENT_MCH_APP_EDIT')" @click="editFunc(record.appId)">修改</a-button>
             <a-button type="link" v-if="$access('ENT_MCH_PAY_CONFIG_LIST')" @click="showPayIfConfigList(record.appId)">支付配置</a-button>
             <a-button type="link" v-if="$access('ENT_MCH_APP_DEL')" style="color: red" @click="delFunc(record.appId)">删除</a-button>
