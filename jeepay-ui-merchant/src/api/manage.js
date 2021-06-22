@@ -201,3 +201,20 @@ export function getUserInfo () {
     method: 'get'
   })
 }
+
+/** 获取到webSocket的前缀 （ws://localhost） **/
+export function getWebSocketPrefix () {
+  // 获取网站域名 +  端口号
+  let domain = document.location.protocol + '//' + document.location.host
+
+  // 判断api_base_url 是否设置
+  if (process.env.VUE_APP_API_BASE_URL && process.env.VUE_APP_API_BASE_URL !== '/') {
+    domain = process.env.VUE_APP_API_BASE_URL
+  }
+
+  if (domain.startsWith('https:')) {
+    return 'wss://' + domain.replace('https://', '')
+  } else {
+    return 'ws://' + domain.replace('http://', '')
+  }
+}
