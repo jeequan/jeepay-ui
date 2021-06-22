@@ -29,11 +29,11 @@
               <img src="@/assets/payTestImg/wx_bar.svg" class="paydemo-type-img"><span class="color-change">微信条码</span>
             </div>
 
-            <div class="paydemo-type color-change" v-show="appPaywayList.indexOf('WX_JSAPI') >= 0" @click="changeCurrentWayCode('WX_JSAPI', 'codeImgUrl')" :class="{this:(currentWayCode === 'WX_QR_CASHIER')}">
+            <div class="paydemo-type color-change" v-show="appPaywayList.indexOf('WX_JSAPI') >= 0" @click="changeCurrentWayCode('WX_JSAPI', 'codeImgUrl')" :class="{this:(currentWayCode === 'WX_JSAPI')}">
               <img src="@/assets/payTestImg/wx_jsapi.svg" class="paydemo-type-img"><span class="color-change">公众号/小程序</span>
             </div>
 
-            <div class="paydemo-type-h5" v-show="appPaywayList.indexOf('WX_H5') >= 0" @click="changeCurrentWayCode('WX_H5', 'codeImgUrl')">
+            <div class="paydemo-type-h5" v-show="appPaywayList.indexOf('WX_H5') >= 0" @click="changeCurrentWayCode('WX_H5', 'payurl')" :class="{this:(currentWayCode === 'WX_H5')}">
               <img src="@/assets/payTestImg/wx_h5.svg" class="paydemo-type-img"><span class="color-change">微信H5</span>
             </div>
 
