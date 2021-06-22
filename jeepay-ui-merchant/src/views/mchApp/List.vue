@@ -45,7 +45,7 @@
         <template slot="opSlot" slot-scope="{record}">  <!-- 操作列插槽 -->
           <JeepayTableColumns>
             <a-button type="link" v-if="$access('ENT_MCH_PAY_TEST')">
-              <router-link :to="{path:'paytest',query:{appid:record.appId}}">
+              <router-link :to="{path:'paytest',params:{appId:record.appId}}">
                 支付体验
               </router-link>
             </a-button>
