@@ -57,6 +57,20 @@ export default {
         this.payText = '支持微信、支付宝扫码'
       }
 
+      // 此处判断接口中返回的orderState，值为0，1 代表支付中，直接放行无需处理，2 成功 3 失败
+      if (apiRes.orderState === 2 || apiRes.orderState === 3) {
+        if (apiRes.orderState === 2) {
+          that.handleClose()
+          that.$message.success('支付成功')
+          that.$emit('closeBarCode') // 关闭条码框
+        } else if (apiRes.orderState === 3) {
+          that.handleClose()
+          that.$message.error('支付失败')
+          that.$emit('closeBarCode') // 关闭条码框
+        }
+        return
+      }
+
       // 跳转到PC网站
       if (apiRes.payDataType === 'payurl') {
         window.open(apiRes.payData)
@@ -70,9 +84,11 @@ export default {
         if (resMsgObject.state === 2) {
           that.handleClose()
           that.$message.success('支付成功')
+          that.$emit('closeBarCode') // 关闭条码框
         } else {
           that.handleClose()
           that.$message.error('支付失败')
+          that.$emit('closeBarCode') // 关闭条码框
         }
       }
     },
