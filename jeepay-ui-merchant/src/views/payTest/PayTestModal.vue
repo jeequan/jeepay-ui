@@ -3,7 +3,8 @@
     <a-modal v-model="visible" title="等待支付" @ok="handleClose" :footer="null" :width="300">
       <div style="width:100%;margin-bottom:20px;text-align:center">
         <img v-if="apiRes.payDataType == 'codeImgUrl'" :src="apiRes.payData" alt="">
-        <span v-if="apiRes.payDataType == 'payurl'">等待用户支付 <hr> 如浏览器未正确跳转请点击： <a :href="apiRes.payData" target="_blank">支付地址</a></span>
+        <span v-else-if="apiRes.payDataType == 'payurl'">等待用户支付 <hr> 如浏览器未正确跳转请点击： <a :href="apiRes.payData" target="_blank">支付地址</a><a-button size="small" class="copy-btn" v-clipboard:copy="apiRes.payData" v-clipboard:success="onCopy" >复制链接</a-button></span>
+        <span v-else>等待用户支付,请稍后</span>
       </div>
       <p class="describe">
         <img src="@/assets/payTestImg/wx_app.svg" alt="" v-show="wxApp"><!-- 微信图标 -->
@@ -31,6 +32,11 @@ export default {
     }
   },
   methods: {
+
+    onCopy () {
+      this.$message.success('复制成功')
+    },
+
     // 二维码以及条码弹窗
     showModal (wayCode, apiRes) {
       const that = this
@@ -45,6 +51,7 @@ export default {
       this.visible = true // 打开弹窗
 
       // 根据不同的支付方式，展示不同的信息
+      this.payText = ''
       if (wayCode === 'WX_NATIVE' || wayCode === 'WX_JSAPI') { // 微信二维码
         this.wxApp = true
         this.payText = '请使用微信"扫一扫"扫码支付'
@@ -61,19 +68,26 @@ export default {
       if (apiRes.orderState === 2 || apiRes.orderState === 3) {
         if (apiRes.orderState === 2) {
           that.handleClose()
-          that.$message.success('支付成功')
+          const succModal = that.$infoBox.modalSuccess('支付成功', <div>2s后自动关闭...</div>)
+          setTimeout(() => { succModal.destroy() }, 2000)
           that.$emit('closeBarCode') // 关闭条码框
         } else if (apiRes.orderState === 3) {
           that.handleClose()
-          that.$message.error('支付失败')
+
           that.$emit('closeBarCode') // 关闭条码框
+          that.$infoBox.modalError('支付失败', <div><div>错误码：{ apiRes.errCode}</div>
+          <div>错误信息：{ apiRes.errMsg}</div></div>)
         }
         return
       }
 
+      if (wayCode === 'WX_H5' || wayCode === 'ALI_WAP') { // h5 或者 wap
+        this.payText = '请复制链接到手机端打开'
+      } else {
       // 跳转到PC网站
       if (apiRes.payDataType === 'payurl') {
         window.open(apiRes.payData)
+      }
       }
 
       // 监听响应结果
@@ -83,11 +97,13 @@ export default {
         const resMsgObject = JSON.parse(msgObject.data)
         if (resMsgObject.state === 2) {
           that.handleClose()
-          that.$message.success('支付成功')
+          const succModal = that.$infoBox.modalSuccess('支付成功', <div>2s后自动关闭...</div>)
+          setTimeout(() => { succModal.destroy() }, 2000)
           that.$emit('closeBarCode') // 关闭条码框
         } else {
           that.handleClose()
-          that.$message.error('支付失败')
+          that.$infoBox.modalError('支付失败', <div><div>错误码：{ apiRes.errCode}</div>
+          <div>错误信息：{ apiRes.errMsg}</div></div>)
           that.$emit('closeBarCode') // 关闭条码框
         }
       }

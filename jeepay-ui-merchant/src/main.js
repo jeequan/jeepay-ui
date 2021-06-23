@@ -16,7 +16,9 @@ import './utils/filter' // global filter
 import './global.less' // global style
 import 'ant-design-vue/dist/antd.less'
 import infoBox from '@/utils/infoBox'
+import VueClipboard from 'vue-clipboard2' // 复制插件
 
+Vue.use(VueClipboard) // 复制插件
 Vue.config.productionTip = false
 
 // use pro-layout components

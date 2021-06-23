@@ -13,12 +13,13 @@
   "dependencies": {
     "@ant-design-vue/pro-layout": "^1.0.7",
     "@antv/data-set": "^0.10.2",
-    "ant-design-vue": "^1.7.2",
     "@antv/g2plot": "^2.3.21",
     "@antv/util": "^2.0.13",
+    "ant-design-vue": "^1.7.2",
     "axios": "^0.19.0",
     "core-js": "^3.1.2",
     "enquire.js": "^2.1.6",
+    "js-base64": "^2.5.2",
     "lodash.clonedeep": "^4.5.0",
     "lodash.get": "^4.4.2",
     "lodash.pick": "^4.4.0",
@@ -26,6 +27,7 @@
     "mockjs2": "1.0.8",
     "moment": "^2.24.0",
     "nprogress": "^0.2.0",
+    "reconnectingwebsocket": "^1.0.0",
     "store": "^2.0.12",
     "viser-vue": "^2.4.6",
     "vue": "^2.6.10",
@@ -36,9 +38,7 @@
     "vue-router": "^3.1.2",
     "vue-svg-component-runtime": "^1.0.1",
     "vuex": "^3.1.1",
-    "wangeditor": "^3.1.1",
-    "js-base64": "^2.5.2",
-    "reconnectingwebsocket": "^1.0.0"
+    "wangeditor": "^3.1.1"
   },
   "devDependencies": {
     "@ant-design/colors": "^3.2.1",

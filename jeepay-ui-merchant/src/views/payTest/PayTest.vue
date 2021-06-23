@@ -114,8 +114,8 @@
               </a-radio-group>
 
             </div>
-            <div style="margin-top:20px;text-align: right">
-              <span style="color: #FD482C;font-size: 18px;padding-right: 10px;" id="amountShow">{{ paytestAmount }}</span>
+            <div style="margin-top:20px;text-align: left">
+              <!-- <span style="color: #FD482C;font-size: 18px;padding-right: 10px;" id="amountShow">{{ paytestAmount }}</span> -->
               <a-button @click="immediatelyPay" style="padding:5px 20px;background-color: #1953ff;border-radius: 5px;color:#fff">立即支付</a-button>
             </div>
           </form>
@@ -147,8 +147,7 @@ export default {
       mchOrderNo: '', // 模拟商户订单号
       authCode: '', // 条码的值
       paytestAmount: '0.01', // 支付金额，默认为0.01
-      amountInput: false, // 自定金额输入框是否展示
-      barCodeAgain: true // 判断条码是否为，第二次吊起支付按钮,默认为true
+      amountInput: false // 自定金额输入框是否展示
     }
   },
 
@@ -215,7 +214,7 @@ export default {
     // 立即支付按钮
     immediatelyPay () {
       // 判断支付金额是否为0
-      if (this.paytestAmount === 0.00 || this.paytestAmount === ' ' || this.paytestAmount === undefined) {
+      if (!this.paytestAmount || this.paytestAmount === 0.00) {
         return this.$message.error('请输入支付金额')
       }
 
@@ -225,14 +224,9 @@ export default {
       }
 
       // 判断是否为条码支付
-      if (this.currentWayCode === 'WX_BAR' || this.currentWayCode === 'ALI_BAR' || this.currentWayCode === 'AUTO_BAR') {
-        // 此处判断是否是条码支付，同时让条码弹窗的输入框处于焦点状态，当在点击提交，或者扫码盒自动提交时，返回条码信息
-        // 此处返回一个值，代表他是条码要第二次吊起支付按钮，第二次吊起后，要将其清空
-        if (this.barCodeAgain) {
+      if (!this.$refs.payTestBarCode.getVisible() && (this.currentWayCode === 'WX_BAR' || this.currentWayCode === 'ALI_BAR' || this.currentWayCode === 'AUTO_BAR')) {
           this.$refs.payTestBarCode.showModal()
-          this.barCodeAgain = false
           return
-        }
       }
 
       const that = this
@@ -246,10 +240,9 @@ export default {
         authCode: this.authCode
       }).then(res => {
         that.$refs.payTestModal.showModal(this.currentWayCode, res) // 打开弹窗
-        that.barCodeAgain = true // 将条码的判断还原为true
         that.randomOrderNo() // 刷新订单号
-      }).catch(err => {
-        console.log(err)
+      }).catch(() => {
+        that.$refs.payTestBarCode.processCatch()
         that.randomOrderNo() // 刷新订单号
       })
     },
@@ -282,7 +275,6 @@ export default {
 
     // 条码弹窗点击x或者蒙版关闭
     testCodeChange () {
-      this.barCodeAgain = true
       this.randomOrderNo() // 刷新订单号
     }
 

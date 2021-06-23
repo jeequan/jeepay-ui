@@ -46,7 +46,7 @@
           <JeepayTableColumns>
             <a-button type="link" v-if="$access('ENT_MCH_PAY_TEST')">
               <router-link :to="{name:'ENT_MCH_PAY_TEST', params:{appId:record.appId}}">
-                支付体验
+                支付测试
               </router-link>
             </a-button>
             <a-button type="link" v-if="$access('ENT_MCH_APP_EDIT')" @click="editFunc(record.appId)">修改</a-button>
