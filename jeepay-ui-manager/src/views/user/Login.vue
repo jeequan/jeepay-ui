@@ -53,7 +53,7 @@
             <img :src="vercodeIcon" slot="prefix" class="user" alt="user" />
           </a-input>
         </a-form-item>
-        <div class="code-img"><img :src="vercodeImgSrc" @click="refVercode()"/></div>
+        <div class="code-img"><img v-show="vercodeImgSrc" :src="vercodeImgSrc" @click="refVercode()"/></div>
       </div>
 
       <a-form-item>
