@@ -30,7 +30,7 @@ export default {
       }
       return <div style="display:flex; justify-content: space-evenly;"> {firstEL}
                   <a-dropdown>
-                      <a style="line-height:32px" class="ant-dropdown-link">更多<a-icon type="down" /></a>
+                      <a-button style="line-height:32px" type="link" class="ant-dropdown-link">更多<a-icon type="down" /></a-button>
                       <a-menu slot="overlay">
                         {menuEL}
                       </a-menu>
