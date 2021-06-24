@@ -73,7 +73,6 @@ export default {
           that.$emit('closeBarCode') // 关闭条码框
         } else if (apiRes.orderState === 3) {
           that.handleClose()
-
           that.$emit('closeBarCode') // 关闭条码框
           that.$infoBox.modalError('支付失败', <div><div>错误码：{ apiRes.errCode}</div>
           <div>错误信息：{ apiRes.errMsg}</div></div>)
@@ -81,15 +80,18 @@ export default {
         return
       }
 
-      if (wayCode === 'WX_H5' || wayCode === 'ALI_WAP') { // h5 或者 wap
+      // h5 或者 wap
+      if (wayCode === 'WX_H5' || wayCode === 'ALI_WAP') {
         this.payText = '请复制链接到手机端打开'
       } else {
       // 跳转到PC网站
-      if (apiRes.payDataType === 'payurl') {
-        window.open(apiRes.payData)
-      }
+        if (apiRes.payDataType === 'payurl') {
+          window.open(apiRes.payData)
+        }
       }
 
+      // 如果上面未关闭条码框，则代表进入webScoket，那么先在此处关闭条码框
+      that.$emit('closeBarCode') // 关闭条码框
       // 监听响应结果
       this.payOrderWebSocket = new ReconnectingWebSocket(getWebSocketPrefix() + '/api/anon/ws/payOrder/' + apiRes.payOrderId + '/' + new Date().getTime())
       this.payOrderWebSocket.onopen = () => {}
@@ -99,12 +101,10 @@ export default {
           that.handleClose()
           const succModal = that.$infoBox.modalSuccess('支付成功', <div>2s后自动关闭...</div>)
           setTimeout(() => { succModal.destroy() }, 2000)
-          that.$emit('closeBarCode') // 关闭条码框
         } else {
           that.handleClose()
           that.$infoBox.modalError('支付失败', <div><div>错误码：{ apiRes.errCode}</div>
           <div>错误信息：{ apiRes.errMsg}</div></div>)
-          that.$emit('closeBarCode') // 关闭条码框
         }
       }
     },

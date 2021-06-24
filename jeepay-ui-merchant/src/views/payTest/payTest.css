@@ -122,3 +122,7 @@
 .paydemo-form-item label input {
 	margin-left:3px;
 }
+
+.paydemo .article-title {
+	font-weight: 600
+}
