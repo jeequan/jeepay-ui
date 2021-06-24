@@ -79,7 +79,7 @@
       <a-drawer
         width="50%"
         placement="right"
-        :closable="false"
+        :closable="true"
         :visible="visible"
         :title="visible === true? '退款订单详情':''"
         @close="onClose"
