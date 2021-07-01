@@ -89,6 +89,8 @@
           <JeepayTableColumns>
             <a-button type="link" v-if="$access('ENT_PAY_ORDER_VIEW')" @click="detailFunc(record.payOrderId)">详情</a-button>
             <a-button type="link" v-if="$access('ENT_PAY_ORDER_REFUND')" style="color: red" v-show="(record.state === 2)" @click="openFunc(record, record.payOrderId)">退款</a-button>
+            <!-- 占位用按钮，判断条件为 record.state !== 2 -->
+            <a-button type="link" v-show="(record.state !== 2)" style="width:60px"></a-button>
           </JeepayTableColumns>
         </template>
       </JeepayTable>
