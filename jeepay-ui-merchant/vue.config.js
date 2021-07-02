@@ -74,6 +74,7 @@ const vueConfig = {
       .use('file-loader')
       .loader('file-loader')
       .options({
+        limit: 100000,
         name: 'assets/[name].[hash:8].[ext]'
       })
 
