@@ -64,7 +64,7 @@
             :key="record.state"
             :color="record.state === 0?'blue':record.state === 1?'orange':record.state === 2?'green':'volcano'"
           >
-            {{ record.state === 0?'订单生成':record.state === 1?'退款中':record.state === 2?'退款成功':record.state === 3?'退款失败':'未知' }}
+            {{ record.state === 0?'订单生成':record.state === 1?'退款中':record.state === 2?'退款成功':record.state === 3?'退款失败':record.state === 4?'任务关闭':'未知' }}
           </a-tag>
         </template>
         <template slot="opSlot" slot-scope="{record}">  <!-- 操作列插槽 -->
@@ -165,7 +165,7 @@
             <a-descriptions>
               <a-descriptions-item label="订单状态">
                 <a-tag :color="detailData.state === 0?'blue':detailData.state === 1?'orange':detailData.state === 2?'green':'volcano'">
-                  {{ detailData.state === 0?'订单生成':detailData.state === 1?'退款中':detailData.state === 2?'退款成功':detailData.state === 3?'退款失败':'未知' }}
+                  {{ detailData.state === 0?'订单生成':detailData.state === 1?'退款中':detailData.state === 2?'退款成功':detailData.state === 3?'退款失败':detailData.state === 4?'任务关闭':'未知' }}
                 </a-tag>
               </a-descriptions-item>
             </a-descriptions>
