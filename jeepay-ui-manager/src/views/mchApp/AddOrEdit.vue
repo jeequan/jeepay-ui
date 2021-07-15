@@ -38,7 +38,7 @@
         </a-col>
         <a-col :span="24">
           <a-form-model-item label="私钥 AppSecret" prop="appSecret" >
-            <a-input v-model="saveObject.appSecret" placeholder="请输入" type="textarea" />
+            <a-input v-model="saveObject.appSecret" :placeholder="saveObject.appSecret_ph" type="textarea" />
             <a-button type="primary" ghost @click="randomKey(false, 128, 0)"><a-icon type="file-sync" />随机生成私钥</a-button>
           </a-form-model-item>
         </a-col>
@@ -74,8 +74,7 @@ export default {
       saveObject: {}, // 数据对象
       rules: {
         mchNo: [{ required: true, message: '请输入商户号', trigger: 'blur' }],
-        appName: [{ required: true, message: '请输入应用名称', trigger: 'blur' }],
-        appSecret: [{ required: true, message: '请输入私钥或点击随机生成私钥' }]
+        appName: [{ required: true, message: '请输入应用名称', trigger: 'blur' }]
       }
     }
   },
@@ -87,7 +86,8 @@ export default {
       this.saveObject = {
         'state': 1,
         'appSecret': '',
-        'mchNo': mchNo
+        'mchNo': mchNo,
+        'appSecret_ph': '请输入'
       }
 
       if (this.$refs.infoFormModel !== undefined) {
@@ -95,17 +95,25 @@ export default {
       }
 
       const that = this
+      that.rules.appSecret = []
       if (!this.isAdd) { // 修改信息 延迟展示弹层
         that.appId = appId
         // 拉取详情
         req.getById(API_URL_MCH_APP, appId).then(res => {
           that.saveObject = res
-          if (!that.saveObject.appSecret) { // 解决商户私钥为空无法写入的问题
-            that.saveObject.appSecret = ''
-          }
+          that.saveObject.appSecret_ph = res.appSecret
+          that.saveObject.appSecret = ''
         })
+
         this.visible = true
       } else {
+        // 新增时，appSecret必填
+        that.rules.appSecret.push({
+          required: true,
+          message: '请输入私钥或点击随机生成私钥',
+          trigger: 'blur'
+        })
+
         that.visible = true // 展示弹层信息
       }
     },
@@ -114,6 +122,7 @@ export default {
       const that = this
       this.$refs.infoFormModel.validate(valid => {
         if (valid) { // 验证通过
+          delete that.saveObject.appSecret_ph
           // 请求接口
           if (that.isAdd) {
             req.add(API_URL_MCH_APP, that.saveObject).then(res => {
@@ -122,6 +131,9 @@ export default {
               that.callbackFunc() // 刷新列表
             })
           } else {
+            if (that.saveObject.appSecret === '') {
+              delete that.saveObject.appSecret
+            }
             req.updateById(API_URL_MCH_APP, that.appId, that.saveObject).then(res => {
               that.$message.success('修改成功')
               that.visible = false

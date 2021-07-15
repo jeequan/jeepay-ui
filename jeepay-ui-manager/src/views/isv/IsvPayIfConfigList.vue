@@ -79,7 +79,8 @@
         <a-row :gutter="16">
           <a-col v-for="(item, key) in isvParams" :key="key" :span="item.type === 'text' ? 12 : 24">
             <a-form-model-item :label="item.desc" :prop="item.name" v-if="item.type === 'text' || item.type === 'textarea'">
-              <a-input v-model="ifParams[item.name]" placeholder="请输入" :type="item.type" />
+              <a-input v-if="item.star === '1'" v-model="ifParams[item.name]" :placeholder="ifParams[item.name + '_ph']" :type="item.type" />
+              <a-input v-else v-model="ifParams[item.name]" placeholder="请输入" :type="item.type" />
             </a-form-model-item>
             <a-form-model-item :label="item.desc" :prop="item.name" v-else-if="item.type === 'radio'">
               <a-radio-group v-model="ifParams[item.name]">
@@ -113,19 +114,22 @@
 
       </div>
     </a-drawer>
-
+    <!-- 支付参数配置页面组件  -->
+    <WxpayPayConfig ref="wxpayPayConfig" :callbackFunc="refCardList" />
   </a-drawer>
 </template>
 
 <script>
 import JeepayCard from '@/components/JeepayCard/JeepayCard'
 import JeepayUpload from '@/components/JeepayUpload/JeepayUpload'
+import WxpayPayConfig from './custom/WxpayPayConfig'
 import { API_URL_ISV_PAYCONFIGS_LIST, getIsvPayConfigUnique, req, upload } from '@/api/manage'
 
 export default {
   components: {
     JeepayCard,
-    JeepayUpload
+    JeepayUpload,
+    WxpayPayConfig
   },
   data () {
     return {
@@ -149,13 +153,18 @@ export default {
       ifParamsRules: {}
     }
   },
+  watch: {
+    ifParams: function (o, n) {
+      this.$set(this.ifParams, 'appSecret', this.ifParams.appSecret) // 解决appSecret  双向绑定数据不显示的问题
+    }
+  },
   methods: {
     generoterRules () {
       const rules = {}
       let newItems = []
       this.isvParams.forEach(item => {
         newItems = []
-        if (item.verify === 'required') {
+        if (item.verify === 'required' && item.star !== '1') {
           newItems.push({
             required: true,
             message: '请输入' + item.desc,
@@ -183,56 +192,68 @@ export default {
     },
     // 支付参数配置
     editPayIfConfigFunc (record) {
-      if (this.$refs.infoFormModel !== undefined) {
-        this.$refs.infoFormModel.resetFields()
-      }
-      if (this.$refs.isvParamFormModel !== undefined) {
-        this.$refs.isvParamFormModel.resetFields()
-      }
-      this.childrenVisible = true // 打开支付参数配置抽屉
-      this.saveObject = {} // 要保存的对象
-      this.ifParams = {} // 参数配置对象
-      this.isvParams = {} // 支付接口定义描述
-      this.saveObject.infoId = this.isvNo
-      this.saveObject.ifCode = record.ifCode
-      this.saveObject.state = record.ifConfigState === 0 ? 0 : 1
+      if (record.configPageType === 1) { // JSON渲染页面
+        if (this.$refs.infoFormModel !== undefined) {
+          this.$refs.infoFormModel.resetFields()
+        }
+        if (this.$refs.isvParamFormModel !== undefined) {
+          this.$refs.isvParamFormModel.resetFields()
+        }
+        this.childrenVisible = true // 打开支付参数配置抽屉
+        this.saveObject = {} // 要保存的对象
+        this.ifParams = {} // 参数配置对象
+        this.isvParams = {} // 支付接口定义描述
+        this.saveObject.infoId = this.isvNo
+        this.saveObject.ifCode = record.ifCode
+        this.saveObject.state = record.ifConfigState === 0 ? 0 : 1
 
-      if (!record) {
-        return
-      }
-      // 获取支付参数
-      getIsvPayConfigUnique(this.saveObject.infoId, this.saveObject.ifCode).then(res => {
-        if (!res || !res.ifParams) {
+        if (!record) {
           return
         }
-        this.saveObject = res
-        this.ifParams = JSON.parse(res.ifParams)
-      })
 
-      const newItems = [] // 重新加载支付接口配置定义描述json
-      JSON.parse(record.isvParams).forEach(item => {
-        const radioItems = [] // 存放单选框value title
-        if (item.type === 'radio') {
-          const valueItems = item.values.split(',')
-          const titleItems = item.titles.split(',')
-          for (const i in valueItems) {
-            radioItems.push({
-              value: valueItems[i],
-              title: titleItems[i]
-            })
+        const that = this
+        // 获取支付参数
+        getIsvPayConfigUnique(this.saveObject.infoId, this.saveObject.ifCode).then(res => {
+          if (res && res.ifParams) {
+            this.saveObject = res
+            this.ifParams = JSON.parse(res.ifParams)
           }
-        }
-        newItems.push({
-          name: item.name,
-          desc: item.desc,
-          type: item.type,
-          verify: item.verify,
-          values: radioItems
-        })
-      })
 
-      this.isvParams = newItems // 重新赋值接口定义描述
-      this.generoterRules()
+          const newItems = [] // 重新加载支付接口配置定义描述json
+          JSON.parse(record.isvParams).forEach(item => {
+            const radioItems = [] // 存放单选框value title
+            if (item.type === 'radio') {
+              const valueItems = item.values.split(',')
+              const titleItems = item.titles.split(',')
+              for (const i in valueItems) {
+                radioItems.push({
+                  value: valueItems[i],
+                  title: titleItems[i]
+                })
+              }
+            }
+
+            if (item.star === '1') {
+              that.ifParams[item.name + '_ph'] = that.ifParams[item.name] ? that.ifParams[item.name] : '请输入'
+              that.ifParams[item.name] = ''
+            }
+
+            newItems.push({
+              name: item.name,
+              desc: item.desc,
+              type: item.type,
+              verify: item.verify,
+              values: radioItems,
+              star: item.star // 脱敏标识 1-是
+            })
+          })
+          that.isvParams = newItems // 重新赋值接口定义描述
+          that.generoterRules()
+          that.$forceUpdate()
+        })
+      } else if (record.configPageType === 2) { // 自定义配置页面，页面放在custom目录下，配置模块命名规则：if_code + PayConfig
+        this.$refs[record.ifCode + 'PayConfig'].show(this.isvNo, record)
+      }
     },
     // 表单提交
     onSubmit () {
@@ -252,6 +273,13 @@ export default {
               this.$message.error('参数不能为空！')
               return
             }
+            // 脱敏数据为空时，删除该key
+            this.isvParams.forEach(item => {
+              if (item.star === '1' && that.ifParams[item.name] === '') {
+                that.ifParams[item.name] = undefined
+              }
+              that.ifParams[item.name + '_ph'] = undefined
+            })
             reqParams.ifParams = JSON.stringify(that.ifParams)
             // 请求接口
             req.add(API_URL_ISV_PAYCONFIGS_LIST, reqParams).then(res => {

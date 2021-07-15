@@ -43,17 +43,29 @@
             </a-radio-group>
           </a-form-model-item>
         </a-col>
-        <a-col :span="24" v-if="saveObject.isIsvMode == 1">
+        <a-col :span="24">
+          <a-form-model-item label="支付参数配置页面类型" prop="configPageType">
+            <a-radio-group v-model="saveObject.configPageType">
+              <a-radio :value="1">
+                根据接口配置定义描述渲染页面
+              </a-radio>
+              <a-radio :value="2">
+                自定义页面
+              </a-radio>
+            </a-radio-group>
+          </a-form-model-item>
+        </a-col>
+        <a-col :span="24" v-if="saveObject.isIsvMode == 1 && this.saveObject.configPageType === 1">
           <a-form-model-item label="服务商接口配置定义描述" prop="isvParams">
             <a-input v-model="saveObject.isvParams" placeholder="请输入" type="textarea" />
           </a-form-model-item>
         </a-col>
-        <a-col :span="24" v-if="saveObject.isIsvMode == 1">
+        <a-col :span="24" v-if="saveObject.isIsvMode == 1 && this.saveObject.configPageType === 1">
           <a-form-model-item label="特约商户接口配置定义描述" prop="isvsubMchParams">
             <a-input v-model="saveObject.isvsubMchParams" placeholder="请输入" type="textarea" />
           </a-form-model-item>
         </a-col>
-        <a-col :span="24" v-if="saveObject.isMchMode == 1">
+        <a-col :span="24" v-if="saveObject.isMchMode == 1 && this.saveObject.configPageType === 1">
           <a-form-model-item label="普通商户接口配置定义描述" prop="normalMchParams">
             <a-input v-model="saveObject.normalMchParams" placeholder="请输入" type="textarea" />
           </a-form-model-item>
@@ -124,19 +136,19 @@ export default {
 
   data () {
     const validateNormalMchParams = (rule, value, callback) => { // 普通商户接口配置定义描述 验证器
-      if (this.saveObject.isMchMode === 1 && !value) {
+      if (this.saveObject.isMchMode === 1 && this.saveObject.configPageType === 1 && !value) {
         callback(new Error('请输入普通商户接口配置定义描述'))
       }
       callback()
     }
     const validateIsvParams = (rule, value, callback) => { // 服务商接口配置定义描述 验证器
-      if (this.saveObject.isIsvMode === 1 && !value) {
+      if (this.saveObject.isIsvMode === 1 && this.saveObject.configPageType === 1 && !value) {
         callback(new Error('请输入服务商接口配置定义描述'))
       }
       callback()
     }
     const validateIsvsubMchParams = (rule, value, callback) => { // 特约商户接口配置定义描述 验证器
-      if (this.saveObject.isIsvMode === 1 && !value) {
+      if (this.saveObject.isIsvMode === 1 && this.saveObject.configPageType === 1 && !value) {
         callback(new Error('请输入特约商户接口配置定义描述'))
       }
       callback()
@@ -176,7 +188,8 @@ export default {
       this.saveObject = {
         'isMchMode': 1,
         'isIsvMode': 1,
-        'state': 1
+        'state': 1,
+        'configPageType': 1
       }
 
       if (this.$refs.infoFormModel !== undefined) {

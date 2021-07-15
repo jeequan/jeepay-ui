@@ -43,7 +43,8 @@
       <a-row :gutter="16">
         <a-col v-for="(item, key) in mchParams" :key="key" :span="item.type === 'text' ? 12 : 24">
           <a-form-model-item :label="item.desc" :prop="item.name" v-if="item.type === 'text' || item.type === 'textarea'">
-            <a-input v-model="ifParams[item.name]" placeholder="请输入" :type="item.type" />
+            <a-input v-if="item.star === '1'" v-model="ifParams[item.name]" :placeholder="ifParams[item.name + '_ph']" :type="item.type" />
+            <a-input v-else v-model="ifParams[item.name]" placeholder="请输入" :type="item.type" />
           </a-form-model-item>
           <a-form-model-item :label="item.desc" :prop="item.name" v-else-if="item.type === 'radio'">
             <a-radio-group v-model="ifParams[item.name]">
@@ -107,6 +108,11 @@ export default {
       ifParamsRules: {}
     }
   },
+  watch: {
+    ifParams: function (o, n) {
+      this.$set(this.ifParams, 'appSecret', this.ifParams.appSecret) // 解决appSecret  双向绑定数据不显示的问题
+    }
+  },
   methods: {
     // 弹层打开事件
     show: function (appId, record) {
@@ -133,35 +139,42 @@ export default {
           that.saveObject = res
           that.ifParams = JSON.parse(res.ifParams)
         }
-      })
 
-      const newItems = [] // 重新加载支付接口配置定义描述json
-      let radioItems = [] // 存放单选框value title
-      const mchParams = record.mchParams // 根据商户类型获取接口定义描述
-      JSON.parse(mchParams).forEach(item => {
-        radioItems = []
-        if (item.type === 'radio') {
-          const valueItems = item.values.split(',')
-          const titleItems = item.titles.split(',')
-          for (const i in valueItems) {
-            radioItems.push({
-              value: valueItems[i],
-              title: titleItems[i]
-            })
+        const newItems = [] // 重新加载支付接口配置定义描述json
+        let radioItems = [] // 存放单选框value title
+        const mchParams = record.mchParams // 根据商户类型获取接口定义描述
+        JSON.parse(mchParams).forEach(item => {
+          radioItems = []
+          if (item.type === 'radio') {
+            const valueItems = item.values.split(',')
+            const titleItems = item.titles.split(',')
+            for (const i in valueItems) {
+              radioItems.push({
+                value: valueItems[i],
+                title: titleItems[i]
+              })
+            }
           }
-        }
-        newItems.push({
-          name: item.name,
-          desc: item.desc,
-          type: item.type,
-          verify: item.verify,
-          values: radioItems
-        })
-      })
 
-      that.mchParams = newItems // 重新赋值接口定义描述
-      that.visible = true // 打开支付参数配置抽屉
-      that.generoterRules()
+          if (item.star === '1') {
+            that.ifParams[item.name + '_ph'] = that.ifParams[item.name] ? that.ifParams[item.name] : '请输入'
+            that.ifParams[item.name] = ''
+          }
+
+          newItems.push({
+            name: item.name,
+            desc: item.desc,
+            type: item.type,
+            verify: item.verify,
+            values: radioItems,
+            star: item.star // 脱敏标识 1-是
+          })
+        })
+
+        that.mchParams = newItems // 重新赋值接口定义描述
+        that.visible = true // 打开支付参数配置抽屉
+        that.generoterRules()
+      })
     },
     // 表单提交
     onSubmit () {
@@ -181,6 +194,13 @@ export default {
               this.$message.error('参数不能为空！')
               return
             }
+             // 脱敏数据为空时，删除该key
+            that.mchParams.forEach(item => {
+              if (item.star === '1' && that.ifParams[item.name] === '') {
+                that.ifParams[item.name] = undefined
+              }
+              that.ifParams[item.name + '_ph'] = undefined
+            })
             reqParams.ifParams = JSON.stringify(that.ifParams)
             // 请求接口
             if (Object.keys(reqParams).length === 0) {
@@ -208,7 +228,7 @@ export default {
       let newItems = []
       this.mchParams.forEach(item => {
         newItems = []
-        if (item.verify === 'required') {
+        if (item.verify === 'required' && item.star !== '1') {
           newItems.push({
             required: true,
             message: '请输入' + item.desc,

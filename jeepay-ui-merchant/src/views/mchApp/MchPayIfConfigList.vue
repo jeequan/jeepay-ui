@@ -91,8 +91,10 @@
       <a-button type="primary" icon="arrow-right" v-if="$access('ENT_MCH_PAY_PASSAGE_LIST') && currentStep ===0" @click="stepChange(1)">下一步</a-button>
     </div>
 
-    <!-- 支付参数配置页面组件  -->
+    <!-- 支付参数配置JSON渲染页面组件  -->
     <MchPayConfigAddOrEdit ref="mchPayConfigAddOrEdit" :callbackFunc="refCardList" />
+    <!-- 支付参数配置自定义页面组件 wxpay  -->
+    <WxpayPayConfig ref="wxpayPayConfig" :callbackFunc="refCardList" />
     <!-- 支付通道配置页面组件  -->
     <MchPayPassageAddOrEdit ref="mchPayPassageAddOrEdit" :callbackFunc="searchFunc"/>
   </a-drawer>
@@ -105,6 +107,7 @@ import JeepayTableColumns from '@/components/JeepayTable/JeepayTableColumns'
 import { API_URL_MCH_PAYCONFIGS_LIST, API_URL_MCH_PAYPASSAGE_LIST, req, getAvailablePayInterfaceList } from '@/api/manage'
 import MchPayConfigAddOrEdit from './MchPayConfigAddOrEdit'
 import MchPayPassageAddOrEdit from './MchPayPassageAddOrEdit'
+import WxpayPayConfig from './custom/WxpayPayConfig'
 
 // eslint-disable-next-line no-unused-vars
 const tableColumns = [
@@ -120,7 +123,8 @@ export default {
     JeepayTable,
     JeepayTableColumns,
     MchPayConfigAddOrEdit,
-    MchPayPassageAddOrEdit
+    MchPayPassageAddOrEdit,
+    WxpayPayConfig
   },
   data () {
     return {
@@ -175,9 +179,11 @@ export default {
           title: '提示',
           content: '服务商未配置，请联系服务商配置支付参数！'
         })
-        return
+      } else if (record.configPageType === 1) {
+        this.$refs.mchPayConfigAddOrEdit.show(this.appId, record)
+      } else if (record.configPageType === 2) {
+        this.$refs[record.ifCode + 'PayConfig'].show(this.appId, record)
       }
-      this.$refs.mchPayConfigAddOrEdit.show(this.appId, record)
     },
     // 支付通道配置
     editPayPassageFunc (record) {
