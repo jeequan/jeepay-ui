@@ -15,6 +15,7 @@ import './utils/filter' // global filter
 import './global.less' // global style
 import 'ant-design-vue/dist/antd.less'
 import infoBox from '@/utils/infoBox'
+import VueClipboard from 'vue-clipboard2' // 复制插件
 
 Vue.config.productionTip = false
 
@@ -23,6 +24,7 @@ Vue.config.productionTip = false
 Vue.component('pro-layout', ProLayout)
 Vue.component('page-container', PageHeaderWrapper)
 Vue.component('page-header-wrapper', PageHeaderWrapper)
+Vue.use(VueClipboard) // 复制插件
 
 /**
  * @description 全局注册权限验证
