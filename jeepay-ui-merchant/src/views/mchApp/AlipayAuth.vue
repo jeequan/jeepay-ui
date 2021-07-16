@@ -2,13 +2,13 @@
   <a-modal v-model="isShow" title="支付宝子商户扫码授权" @ok="handleOkFunc" @cancel="handleOkFunc">
 
     <div style="text-align: center">
-      <p>方式1： <br/>  请商家登录【支付宝】APP, 扫描如下二维码, 按提示授权： </p>
+      <p>方式1： <br/>  使用商家账号登录【支付宝】APP, 扫描如下二维码, 按提示授权： </p>
       <img style="margin-bottom: 10px" :src="apiResData.authQrImgUrl">
       <hr/>
 
       <p style="margin-top: 10px">
         方式2： <br/> <a-button size="small" class="copy-btn" v-clipboard:copy="apiResData.authUrl" v-clipboard:success="onCopySuccess" >点击复制</a-button>
-        链接并发送给商户，商户进入链接，按照页面提示自主授权：
+        或点击以下链接，按照页面提示自主授权：
       </p>
       <a target="_blank" :href="apiResData.authUrl">{{ apiResData.authUrl }}</a>
     </div>

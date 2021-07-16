@@ -34,6 +34,8 @@
             </div>
             <!-- 卡片底部操作栏 -->
             <div class="jeepay-card-ops">
+              <a v-if="record.mchType == 2 && record.ifCode == 'alipay' && $access('ENT_MCH_PAY_CONFIG_ADD')" @click="toAlipayAuthPageFunc(record)">扫码授权 <a-icon key="right" type="right" style="fontSize: 13px"></a-icon></a>
+
               <a v-if="$access('ENT_MCH_PAY_CONFIG_ADD')" @click="editPayIfConfigFunc(record)">填写参数 <a-icon key="right" type="right" style="fontSize: 13px"></a-icon></a>
               <a v-else>暂无操作</a>
             </div>
@@ -97,6 +99,8 @@
     <WxpayPayConfig ref="wxpayPayConfig" :callbackFunc="refCardList" />
     <!-- 支付通道配置页面组件  -->
     <MchPayPassageAddOrEdit ref="mchPayPassageAddOrEdit" :callbackFunc="searchFunc"/>
+    <!-- 支付宝授权弹层  -->
+    <AlipayAuth ref="alipayAuthPage" :callbackFunc="refCardList"/>
   </a-drawer>
 </template>
 
@@ -108,6 +112,7 @@ import { API_URL_MCH_PAYCONFIGS_LIST, API_URL_MCH_PAYPASSAGE_LIST, req, getAvail
 import MchPayConfigAddOrEdit from './MchPayConfigAddOrEdit'
 import MchPayPassageAddOrEdit from './MchPayPassageAddOrEdit'
 import WxpayPayConfig from './custom/WxpayPayConfig'
+import AlipayAuth from './AlipayAuth'
 
 // eslint-disable-next-line no-unused-vars
 const tableColumns = [
@@ -124,7 +129,8 @@ export default {
     JeepayTableColumns,
     MchPayConfigAddOrEdit,
     MchPayPassageAddOrEdit,
-    WxpayPayConfig
+    WxpayPayConfig,
+    AlipayAuth
   },
   data () {
     return {
@@ -202,6 +208,21 @@ export default {
     // 抽屉关闭
     onClose () {
       this.visible = false
+    },
+
+    // 支付宝子商户 扫码授权
+    toAlipayAuthPageFunc (record) {
+      if (!record) {
+        return
+      }
+      if (record.subMchIsvConfig === 0) {
+        this.$error({
+          title: '提示',
+          content: '当前应用所属商户为特约商户，请先配置服务商支付参数！'
+        })
+        return
+      }
+      this.$refs.alipayAuthPage.show(this.appId)
     }
   }
 }
