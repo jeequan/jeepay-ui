@@ -33,7 +33,7 @@
         :tableColumns="tableColumns"
         :searchData="searchData"
         :scrollX="1100"
-        rowKey="isvName"
+        rowKey="isvNo"
       >
         <template slot="isvNameSlot" slot-scope="{record}"><b>{{ record.isvName }}</b></template> <!-- 自定义插槽 -->
         <template slot="stateSlot" slot-scope="{record}">

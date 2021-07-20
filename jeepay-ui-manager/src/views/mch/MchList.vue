@@ -41,7 +41,7 @@
         :tableColumns="tableColumns"
         :searchData="searchData"
         :scrollX="1200"
-        rowKey="mchName"
+        rowKey="mchNo"
       >
         <template slot="mchNameSlot" slot-scope="{record}">
           <b v-if="!$access('ENT_MCH_INFO_VIEW')">{{ record.mchName }}</b>
