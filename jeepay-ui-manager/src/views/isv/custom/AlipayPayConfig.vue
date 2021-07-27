@@ -173,28 +173,28 @@ export default {
         } }],
         alipayPublicKey: [{ trigger: 'blur',
           validator: (rule, value, callback) => {
-            if (this.isAdd && !value) {
+            if (this.ifParams.useCert === 0 && this.isAdd && !value) {
               callback(new Error('请输入支付宝公钥'))
             }
             callback()
         } }],
         appPublicCert: [{ trigger: 'blur',
           validator: (rule, value, callback) => {
-            if (this.ifParams.useCert === 1 && !value) {
+            if (this.ifParams.useCert === 1 && !this.ifParams.appPublicCert) {
               callback(new Error('请上传应用公钥证书（.crt格式）'))
             }
             callback()
         } }],
         alipayPublicCert: [{ trigger: 'blur',
           validator: (rule, value, callback) => {
-            if (this.ifParams.useCert === 1 && !value) {
+            if (this.ifParams.useCert === 1 && !this.ifParams.alipayPublicCert) {
               callback(new Error('请上传支付宝公钥证书（.crt格式）'))
             }
             callback()
         } }],
         alipayRootCert: [{ trigger: 'blur',
           validator: (rule, value, callback) => {
-            if (this.ifParams.useCert === 1 && !value) {
+            if (this.ifParams.useCert === 1 && !this.ifParams.alipayRootCert) {
               callback(new Error('请上传支付宝根证书（.crt格式）'))
             }
             callback()
