@@ -41,9 +41,17 @@
     </a-divider>
     <a-form-model ref="isvParamFormModel" :model="ifParams" layout="vertical" :rules="ifParamsRules">
       <a-row :gutter="16">
+        <a-col span="24">
+          <a-form-model-item label="环境配置" prop="sandbox">
+            <a-radio-group v-model="ifParams.sandbox">
+              <a-radio :value="1">沙箱环境</a-radio>
+              <a-radio :value="0">生产环境</a-radio>
+            </a-radio-group>
+          </a-form-model-item>
+        </a-col>
         <a-col span="12">
-          <a-form-model-item label="微信支付商户号" prop="mchId">
-            <a-input v-model="ifParams.mchId" placeholder="请输入" />
+          <a-form-model-item label="合作伙伴身份（PID）" prop="pid">
+            <a-input v-model="ifParams.pid" placeholder="请输入" />
           </a-form-model-item>
         </a-col>
         <a-col span="12">
@@ -51,46 +59,39 @@
             <a-input v-model="ifParams.appId" placeholder="请输入" />
           </a-form-model-item>
         </a-col>
-        <a-col span="12">
-          <a-form-model-item label="应用AppSecret" prop="appSecret">
-            <a-input v-model="ifParams.appSecret" :placeholder="ifParams.appSecret_ph" />
-          </a-form-model-item>
-        </a-col>
-        <a-col span="12">
-          <a-form-model-item label="oauth2地址（置空将使用官方）" prop="oauth2Url">
-            <a-input v-model="ifParams.oauth2Url" placeholder="请输入" />
+        <a-col span="24">
+          <a-form-model-item label="应用私钥" prop="privateKey">
+            <a-input v-model="ifParams.privateKey" :placeholder="ifParams.privateKey_ph" type="textarea" />
           </a-form-model-item>
         </a-col>
         <a-col span="24">
-          <a-form-model-item label="API密钥" prop="key">
-            <a-input v-model="ifParams.key" :placeholder="ifParams.key_ph" type="textarea" />
+          <a-form-model-item label="支付宝公钥" prop="alipayPublicKey">
+            <a-input v-model="ifParams.alipayPublicKey" :placeholder="ifParams.alipayPublicKey_ph" type="textarea" />
           </a-form-model-item>
         </a-col>
         <a-col span="12">
-          <a-form-model-item label="微信支付API版本" prop="apiVersion">
-            <a-radio-group v-model="ifParams.apiVersion" defaultValue="V2">
-              <a-radio value="V2">V2</a-radio>
-              <a-radio value="V3">V3</a-radio>
+          <a-form-model-item label="接口签名方式(推荐使用RSA2)" prop="signType">
+            <a-radio-group v-model="ifParams.signType" defaultValue="RSA">
+              <a-radio value="RSA">RSA</a-radio>
+              <a-radio value="RSA2">RSA2</a-radio>
+            </a-radio-group>
+          </a-form-model-item>
+        </a-col>
+        <a-col span="12">
+          <a-form-model-item label="公钥证书" prop="useCert">
+            <a-radio-group v-model="ifParams.useCert" defaultValue="1">
+              <a-radio :value="1">使用证书（请使用RSA2私钥）</a-radio>
+              <a-radio :value="0">不使用证书</a-radio>
             </a-radio-group>
           </a-form-model-item>
         </a-col>
         <a-col span="24">
-          <a-form-model-item label="API V3秘钥" prop="apiV3Key">
-            <a-input v-model="ifParams.apiV3Key" :placeholder="ifParams.apiV3Key_ph" type="textarea" />
-          </a-form-model-item>
-        </a-col>
-        <a-col span="24">
-          <a-form-model-item label="序列号" prop="serialNo">
-            <a-input v-model="ifParams.serialNo" :placeholder="ifParams.serialNo_ph" type="textarea" />
-          </a-form-model-item>
-        </a-col>
-        <a-col span="24">
-          <a-form-model-item label="API证书(.p12格式)" prop="cert">
-            <a-input v-model="ifParams.cert" disabled="disabled" />
+          <a-form-model-item label="应用公钥证书（.crt格式）" prop="appPublicCert">
+            <a-input v-model="ifParams.appPublicCert" disabled="disabled" />
             <JeepayUpload
               :action="action"
-              :fileUrl="ifParams.cert"
-              @uploadSuccess="uploadSuccess($event, 'cert')"
+              :fileUrl="ifParams.appPublicCert"
+              @uploadSuccess="uploadSuccess($event, 'appPublicCert')"
             >
               <template slot="uploadSlot" slot-scope="{loading}">
                 <a-button style="marginTop:5px;"> <a-icon :type="loading ? 'loading' : 'upload'" /> {{ loading ? '正在上传' : '点击上传' }} </a-button>
@@ -99,12 +100,26 @@
           </a-form-model-item>
         </a-col>
         <a-col span="24">
-          <a-form-model-item label="私钥文件(.pem格式)" prop="apiClientKey">
-            <a-input v-model="ifParams.apiClientKey" disabled="disabled" />
+          <a-form-model-item label="支付宝公钥证书（.crt格式）" prop="alipayPublicCert">
+            <a-input v-model="ifParams.alipayPublicCert" disabled="disabled" />
             <JeepayUpload
               :action="action"
-              :fileUrl="ifParams.apiClientKey"
-              @uploadSuccess="uploadSuccess($event, 'apiClientKey')"
+              :fileUrl="ifParams.alipayPublicCert"
+              @uploadSuccess="uploadSuccess($event, 'alipayPublicCert')"
+            >
+              <template slot="uploadSlot" slot-scope="{loading}">
+                <a-button style="marginTop:5px;"> <a-icon :type="loading ? 'loading' : 'upload'" /> {{ loading ? '正在上传' : '点击上传' }} </a-button>
+              </template>
+            </JeepayUpload>
+          </a-form-model-item>
+        </a-col>
+        <a-col span="24">
+          <a-form-model-item label="支付宝根证书（.crt格式）" prop="alipayRootCert">
+            <a-input v-model="ifParams.alipayRootCert" disabled="disabled" />
+            <JeepayUpload
+              :action="action"
+              :fileUrl="ifParams.alipayRootCert"
+              @uploadSuccess="uploadSuccess($event, 'alipayRootCert')"
             >
               <template slot="uploadSlot" slot-scope="{loading}">
                 <a-button style="marginTop:5px;"> <a-icon :type="loading ? 'loading' : 'upload'" /> {{ loading ? '正在上传' : '点击上传' }} </a-button>
@@ -142,45 +157,45 @@ export default {
       isAdd: true,
       action: upload.cert, // 上传文件地址
       saveObject: {}, // 保存的对象
-      ifParams: { apiVersion: 'V2' }, // 参数配置对象
+      ifParams: {}, // 参数配置对象
       rules: {
         ifRate: [{ required: false, pattern: /^(([1-9]{1}\d{0,1})|(0{1}))(\.\d{1,4})?$/, message: '请输入0-100之间的数字，最多四位小数', trigger: 'blur' }]
       },
       ifParamsRules: {
-        mchId: [{ required: true, message: '请输入微信支付商户号', trigger: 'blur' }],
+        pid: [{ required: true, message: '请输入合作伙伴身份（PID）', trigger: 'blur' }],
         appId: [{ required: true, message: '请输入应用AppID', trigger: 'blur' }],
-        appSecret: [{ trigger: 'blur',
+        privateKey: [{ trigger: 'blur',
           validator: (rule, value, callback) => {
             if (this.isAdd && !value) {
-              callback(new Error('请输入应用AppSecret'))
+              callback(new Error('请输入应用私钥'))
             }
             callback()
         } }],
-        key: [{ trigger: 'blur',
+        alipayPublicKey: [{ trigger: 'blur',
           validator: (rule, value, callback) => {
-            if (this.ifParams.apiVersion === 'V2' && this.isAdd && !value) {
-              callback(new Error('请输入API密钥'))
+            if (this.isAdd && !value) {
+              callback(new Error('请输入支付宝公钥'))
             }
             callback()
         } }],
-        apiV3Key: [{ trigger: 'blur',
+        appPublicCert: [{ trigger: 'blur',
           validator: (rule, value, callback) => {
-            if (this.ifParams.apiVersion === 'V3' && this.isAdd && !value) {
-              callback(new Error('请输入API V3秘钥'))
+            if (this.ifParams.useCert === 1 && !value) {
+              callback(new Error('请上传应用公钥证书（.crt格式）'))
             }
             callback()
         } }],
-        serialNo: [{ trigger: 'blur',
+        alipayPublicCert: [{ trigger: 'blur',
           validator: (rule, value, callback) => {
-            if (this.ifParams.apiVersion === 'V3' && this.isAdd && !value) {
-              callback(new Error('请输入序列号'))
+            if (this.ifParams.useCert === 1 && !value) {
+              callback(new Error('请上传支付宝公钥证书（.crt格式）'))
             }
             callback()
         } }],
-        apiClientKey: [{ trigger: 'blur',
+        alipayRootCert: [{ trigger: 'blur',
           validator: (rule, value, callback) => {
-            if (this.ifParams.apiVersion === 'V3' && !this.ifParams.apiClientKey) {
-              callback(new Error('请上传私钥文件'))
+            if (this.ifParams.useCert === 1 && !value) {
+              callback(new Error('请上传支付宝根证书（.crt格式）'))
             }
             callback()
         } }]
@@ -206,15 +221,13 @@ export default {
 
       // 参数配置对象，数据初始化
       this.ifParams = {
-        apiVersion: 'V2',
-        appSecret: '',
-        appSecret_ph: '请输入',
-        key: '',
-        key_ph: '请输入',
-        apiV3Key: '',
-        apiV3Key_ph: '请输入',
-        serialNo: '',
-        serialNo_ph: '请输入'
+        sandbox: 0,
+        signType: 'RSA2',
+        useCert: 0,
+        privateKey: '',
+        privateKey_ph: '请输入',
+        alipayPublicKey: '',
+        alipayPublicKey_ph: '请输入'
       }
       this.visible = true
       this.getIsvPayConfig()
@@ -228,17 +241,11 @@ export default {
           that.saveObject = res
           that.ifParams = JSON.parse(res.ifParams)
 
-          that.ifParams.appSecret_ph = that.ifParams.appSecret
-          that.ifParams.appSecret = ''
+          that.ifParams.privateKey_ph = that.ifParams.privateKey
+          that.ifParams.privateKey = ''
 
-          that.ifParams.key_ph = that.ifParams.key
-          that.ifParams.key = ''
-
-          that.ifParams.apiV3Key_ph = that.ifParams.apiV3Key
-          that.ifParams.apiV3Key = ''
-
-          that.ifParams.serialNo_ph = that.ifParams.serialNo
-          that.ifParams.serialNo = ''
+          that.ifParams.alipayPublicKey_ph = that.ifParams.alipayPublicKey
+          that.ifParams.alipayPublicKey = ''
 
           that.isAdd = false
         } else if (res === undefined) {
@@ -265,10 +272,8 @@ export default {
               return
             }
             // 脱敏数据为空时，删除该key
-            that.clearEmptyKey('appSecret')
-            that.clearEmptyKey('key')
-            that.clearEmptyKey('apiV3Key')
-            that.clearEmptyKey('serialNo')
+            that.clearEmptyKey('privateKey')
+            that.clearEmptyKey('alipayPublicKey')
             reqParams.ifParams = JSON.stringify(that.ifParams)
             // 请求接口
             if (Object.keys(reqParams).length === 0) {

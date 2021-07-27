@@ -116,6 +116,8 @@
     </a-drawer>
     <!-- 支付参数配置页面组件  -->
     <WxpayPayConfig ref="wxpayPayConfig" :callbackFunc="refCardList" />
+    <!-- 支付参数配置页面组件  -->
+    <AlipayPayConfig ref="alipayPayConfig" :callbackFunc="refCardList" />
   </a-drawer>
 </template>
 
@@ -123,13 +125,15 @@
 import JeepayCard from '@/components/JeepayCard/JeepayCard'
 import JeepayUpload from '@/components/JeepayUpload/JeepayUpload'
 import WxpayPayConfig from './custom/WxpayPayConfig'
+import AlipayPayConfig from './custom/AlipayPayConfig'
 import { API_URL_ISV_PAYCONFIGS_LIST, getIsvPayConfigUnique, req, upload } from '@/api/manage'
 
 export default {
   components: {
     JeepayCard,
     JeepayUpload,
-    WxpayPayConfig
+    WxpayPayConfig,
+    AlipayPayConfig
   },
   data () {
     return {
@@ -225,9 +229,14 @@ export default {
             if (item.type === 'radio') {
               const valueItems = item.values.split(',')
               const titleItems = item.titles.split(',')
+
               for (const i in valueItems) {
+                // 检查参数是否为数字类型 然后赋值给radio值
+              let radioVal = valueItems[i]
+              if (!isNaN((radioVal))) { radioVal = Number(radioVal) }
+
                 radioItems.push({
-                  value: valueItems[i],
+                  value: radioVal,
                   title: titleItems[i]
                 })
               }
