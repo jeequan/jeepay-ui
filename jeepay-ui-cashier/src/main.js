@@ -35,15 +35,15 @@ router.beforeEach((to, from, next) => {
     }
 
     if(!config.cacheToken) {
-        next({ name: config.errorPageRouteName, params: { errInfo: "token参数有误！" } })
+        next({ name: config.errorPageRouteName, params: { errInfo: "请通过二维码进入支付页面！" } })
         return false;
     }
 
-  //获取不到支付类型, 需要跳转到错误页面
-   if( ! wayCode.getPayWay() ) {
-     next({ name: config.errorPageRouteName, params: { errInfo: "不支持的支付方式！" } })
-     return false;
-   }
+    //获取不到支付类型, 需要跳转到错误页面
+    if( ! wayCode.getPayWay() ) {
+        next({ name: config.errorPageRouteName, params: { errInfo: "不支持的支付方式！ 请在微信/支付宝/银联应用内扫码进入！" } })
+        return false;
+    }
 
     next()
 })
