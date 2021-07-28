@@ -15,9 +15,9 @@
               </a-range-picker>
             </a-form-item>
             <jeepay-text-up :placeholder="'退款订单号'" :msg="searchData.refundOrderId" v-model="searchData.refundOrderId" />
+            <jeepay-text-up :placeholder="'商户退款单号'" :msg="searchData.mchRefundNo" v-model="searchData.mchRefundNo" />
             <jeepay-text-up :placeholder="'支付订单号'" :msg="searchData.payOrderId" v-model="searchData.payOrderId" />
-            <jeepay-text-up :placeholder="'渠道支付订单号'" :msg="searchData.channelPayOrderNo" v-model="searchData.channelPayOrderNo" />
-            <jeepay-text-up :placeholder="'服务商号'" :msg="searchData.isvNo" v-model="searchData.isvNo" />
+            <jeepay-text-up :placeholder="'渠道订单号'" :msg="searchData.channelPayOrderNo" v-model="searchData.channelPayOrderNo" />
             <jeepay-text-up :placeholder="'应用AppId'" :msg="searchData.appId" v-model="searchData.appId"/>
             <a-form-item label="" class="table-head-layout">
               <a-select v-model="searchData.state" placeholder="退款状态" default-value="">
@@ -26,13 +26,6 @@
                 <a-select-option value="1">退款中</a-select-option>
                 <a-select-option value="2">退款成功</a-select-option>
                 <a-select-option value="3">退款失败</a-select-option>
-              </a-select>
-            </a-form-item>
-            <a-form-item label="" class="table-head-layout">
-              <a-select v-model="searchData.mchType" placeholder="商户类型" default-value="">
-                <a-select-option value="">全部</a-select-option>
-                <a-select-option value="1">普通商户</a-select-option>
-                <a-select-option value="2">特约商户</a-select-option>
               </a-select>
             </a-form-item>
 
@@ -50,6 +43,7 @@
         ref="infoTable"
         :initData="true"
         :closable="true"
+        :searchData="searchData"
         :reqTableDataFunc="reqTableDataFunc"
         :tableColumns="tableColumns"
         rowKey="refundOrderId"
@@ -296,9 +290,9 @@
     { key: 'payAmount', title: '支付金额', scopedSlots: { customRender: 'payAmountSlot' } },
     { key: 'refundAmount', title: '退款金额', scopedSlots: { customRender: 'refundAmountSlot' } },
     { key: 'refundOrderId', title: '退款订单号', dataIndex: 'refundOrderId' },
-    { key: 'channelPayOrderNo', title: '渠道订单号', dataIndex: 'channelPayOrderNo' },
-    { key: 'payOrderId', title: '支付订单号', dataIndex: 'payOrderId' },
     { key: 'mchRefundNo', title: '商户退款单号', dataIndex: 'mchRefundNo' },
+    { key: 'payOrderId', title: '支付订单号', dataIndex: 'payOrderId' },
+    { key: 'channelPayOrderNo', title: '渠道订单号', dataIndex: 'channelPayOrderNo' },
     { key: 'state', title: '支付状态', scopedSlots: { customRender: 'stateSlot' } },
     { key: 'createdAt', dataIndex: 'createdAt', title: '创建日期' },
     { key: 'op', title: '操作', width: '100px', fixed: 'right', align: 'center', scopedSlots: { customRender: 'opSlot' } }

@@ -98,6 +98,8 @@
     <MchPayConfigAddOrEdit ref="mchPayConfigAddOrEdit" :callbackFunc="refCardList" />
     <!-- 支付参数配置自定义页面组件 wxpay  -->
     <WxpayPayConfig ref="wxpayPayConfig" :callbackFunc="refCardList" />
+    <!-- 支付参数配置自定义页面组件 alipay  -->
+    <AlipayPayConfig ref="alipayPayConfig" :callbackFunc="refCardList" />
     <!-- 支付通道配置页面组件  -->
     <MchPayPassageAddOrEdit ref="mchPayPassageAddOrEdit" :callbackFunc="searchFunc"/>
     <!-- 支付宝授权弹层  -->
@@ -114,6 +116,7 @@ import { API_URL_MCH_PAYCONFIGS_LIST, API_URL_MCH_PAYPASSAGE_LIST, req, getAvail
 import MchPayConfigAddOrEdit from './MchPayConfigAddOrEdit'
 import MchPayPassageAddOrEdit from './MchPayPassageAddOrEdit'
 import WxpayPayConfig from './custom/WxpayPayConfig'
+import AlipayPayConfig from './custom/AlipayPayConfig'
 import AlipayAuth from './AlipayAuth'
 
 // eslint-disable-next-line no-unused-vars
@@ -132,6 +135,7 @@ export default {
     MchPayConfigAddOrEdit,
     MchPayPassageAddOrEdit,
     WxpayPayConfig,
+    AlipayPayConfig,
     AlipayAuth
   },
   data () {

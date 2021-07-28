@@ -149,8 +149,11 @@ export default {
             const valueItems = item.values.split(',')
             const titleItems = item.titles.split(',')
             for (const i in valueItems) {
+              // 检查参数是否为数字类型 然后赋值给radio值
+              let radioVal = valueItems[i]
+              if (!isNaN((radioVal))) { radioVal = Number(radioVal) }
               radioItems.push({
-                value: valueItems[i],
+                value: radioVal,
                 title: titleItems[i]
               })
             }

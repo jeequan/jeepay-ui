@@ -183,28 +183,27 @@ export default {
         } }],
         key: [{ trigger: 'blur',
           validator: (rule, value, callback) => {
-            if (this.ifParams.apiVersion === 'V2' && this.isAdd && this.mchType === 1 && !this.ifParams.key) {
+            if (this.ifParams.apiVersion === 'V2' && this.isAdd && this.mchType === 1 && !value) {
               callback(new Error('请输入API密钥'))
             }
             callback()
         } }],
         apiV3Key: [{ trigger: 'blur',
           validator: (rule, value, callback) => {
-            if (this.ifParams.apiVersion === 'V3' && this.isAdd && this.mchType === 1 && !this.ifParams.apiV3Key) {
+            if (this.ifParams.apiVersion === 'V3' && this.isAdd && this.mchType === 1 && !value) {
               callback(new Error('请输入API V3秘钥'))
             }
             callback()
         } }],
         serialNo: [{ trigger: 'blur',
           validator: (rule, value, callback) => {
-            if (this.ifParams.apiVersion === 'V3' && this.isAdd && this.mchType === 1 && !this.ifParams.serialNo) {
+            if (this.ifParams.apiVersion === 'V3' && this.isAdd && this.mchType === 1 && !value) {
               callback(new Error('请输入序列号'))
             }
             callback()
         } }],
         apiClientKey: [{ trigger: 'blur',
           validator: (rule, value, callback) => {
-            console.log(this.ifParams.apiVersion === 'V3' && this.mchType === 1 && !this.ifParams.apiClientKey)
             if (this.ifParams.apiVersion === 'V3' && this.mchType === 1 && !this.ifParams.apiClientKey) {
               callback(new Error('请上传私钥文件'))
             }
@@ -242,10 +241,14 @@ export default {
       // 参数配置对象，数据初始化
       this.ifParams = {
         apiVersion: 'V2',
-        'appSecret_ph': '请输入',
-        'key_ph': '请输入',
-        'apiV3Key_ph': '请输入',
-        'serialNo_ph': '请输入'
+        appSecret: '',
+        appSecret_ph: '请输入',
+        key: '',
+        key_ph: '请输入',
+        apiV3Key: '',
+        apiV3Key_ph: '请输入',
+        serialNo: '',
+        serialNo_ph: '请输入'
       }
       this.visible = true
       this.getMchPayConfig()

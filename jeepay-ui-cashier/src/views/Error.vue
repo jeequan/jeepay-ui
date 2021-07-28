@@ -1,7 +1,7 @@
 <template>
   <div class="center">
     <img src="../assets/icon/error.svg" alt="">
-    <p>支付失败，请重新扫码进入！</p>
+<!--    <p>支付失败，请重新扫码进入！</p>-->
     <p>错误: {{msg}}</p>
   </div>
 </template>
@@ -20,7 +20,7 @@ export default {
 
   },
   mounted() {
-    this.msg = this.$route.params.errInfo
+    this.msg = this.$route.params.errInfo || '请重新扫码进入！'
   }
 }
 </script>
