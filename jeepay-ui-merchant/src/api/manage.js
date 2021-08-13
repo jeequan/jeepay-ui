@@ -245,3 +245,29 @@ export function queryAlipayIsvsubMchAuthUrl (mchAppId) {
     method: 'GET'
   })
 }
+
+/** 查询商户转账支出的接口 **/
+export function queryMchTransferIfCode (appId) {
+  return request.request({
+    url: 'api/mchTransfers/ifCodes/' + appId,
+    method: 'GET'
+  })
+}
+
+/** 获取渠道用户ID二维码地址 **/
+export function getChannelUserQrImgUrl (ifCode, appId, extParam) {
+  return request.request({
+    url: '/api/mchTransfers/channelUserId',
+    method: 'GET',
+    params: { ifCode, appId, extParam }
+  })
+}
+
+/** 转账 **/
+export function doTransfer (parameter) {
+  return request.request({
+    url: '/api/mchTransfers/doTransfer',
+    method: 'POST',
+    data: parameter
+  }, true, true, true)
+}

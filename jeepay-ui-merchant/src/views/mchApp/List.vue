@@ -51,6 +51,11 @@
                 支付测试
               </router-link>
             </a-button>
+            <a-button type="link" v-if="$access('ENT_MCH_TRANSFER')">
+              <router-link :to="{name:'ENT_MCH_TRANSFER', params:{appId:record.appId}}">
+                发起转账
+              </router-link>
+            </a-button>
             <a-button type="link" v-if="$access('ENT_MCH_APP_DEL')" style="color: red" @click="delFunc(record.appId)">删除</a-button>
           </JeepayTableColumns>
         </template>
