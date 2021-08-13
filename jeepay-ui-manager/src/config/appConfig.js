@@ -31,6 +31,7 @@ export const asyncRouteDefine = {
   'MchAppPage': { defaultPath: '/apps', component: () => import ('@/views/mchApp/List') }, // 商户应用列表
   'PayOrderListPage': { defaultPath: '/payOrder', component: () => import('@/views/order/pay/PayOrderList') }, // 支付订单列表
   'RefundOrderListPage': { defaultPath: '/refundOrder', component: () => import('@/views/order/refund/RefundOrderList') }, // 退款订单列表
+  'TransferOrderListPage': { defaultPath: '/transferOrder', component: () => import('@/views/order/transfer/TransferOrderList') }, // 转账订单
   'MchNotifyListPage': { defaultPath: '/notify', component: () => import('@/views/order/notify/MchNotifyList') }, // 商户通知列表
   'SysConfigPage': { defaultPath: '/config', component: () => import('@/views/sys/config/SysConfig') }, // 系统配置
   'SysLogPage': { defaultPath: '/log', component: () => import('@/views/sys/log/SysLog') } // 系统日志

@@ -32,6 +32,7 @@
                 <a-select-option value="">全部</a-select-option>
                 <a-select-option value="1">支付</a-select-option>
                 <a-select-option value="2">退款</a-select-option>
+                <a-select-option value="3">转账</a-select-option>
               </a-select>
             </a-form-item>
 
@@ -67,9 +68,9 @@
         <template slot="orderTypeSlot" slot-scope="{record}">
           <a-tag
             :key="record.orderType"
-            :color="record.orderType === 1?'green':record.orderType === 2?'volcano':'orange'"
+            :color="record.orderType === 1?'green':record.orderType === 2?'volcano': record.orderType === 3? 'blue': 'orange'"
           >
-            {{ record.orderType === 1?'支付':record.orderType === 2?'退款':'未知' }}
+            {{ record.orderType === 1?'支付':record.orderType === 2?'退款':record.orderType === 3? '转账':'未知' }}
           </a-tag>
         </template>
         <template slot="opSlot" slot-scope="{record}">  <!-- 操作列插槽 -->
@@ -124,8 +125,8 @@
           <a-col :sm="12">
             <a-descriptions>
               <a-descriptions-item label="订单类型">
-                <a-tag :color="detailData.orderType === 1?'green':detailData.orderType === 2?'volcano':'orange'">
-                  {{ detailData.orderType === 1?'支付':detailData.orderType === 2?'退款':'未知' }}
+                <a-tag :color="detailData.orderType === 1?'green':detailData.orderType === 2?'volcano': detailData.orderType === 3? 'blue' : 'orange'">
+                  {{ detailData.orderType === 1?'支付':detailData.orderType === 2?'退款':detailData.orderType === 3 ? '转账': '未知' }}
                 </a-tag>
               </a-descriptions-item>
             </a-descriptions>
