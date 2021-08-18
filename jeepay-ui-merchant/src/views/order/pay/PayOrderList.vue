@@ -30,7 +30,7 @@
               </a-select>
             </a-form-item>
 
-            <a-form-item label="" class="table-head-layout">
+            <a-form-item v-if="$access('ENT_PAY_ORDER_SEARCH_PAY_WAY')" label="" class="table-head-layout">
               <a-select v-model="searchData.wayCode" placeholder="支付方式" default-value="">
                 <a-select-option value="">全部</a-select-option>
                 <a-select-option :key="item.wayCode" v-for="item in payWayList" :value="item.wayCode">
@@ -330,7 +330,9 @@ export default {
   computed: {
   },
   mounted () {
-    this.initPayWay()
+    if (this.$access('ENT_PAY_ORDER_SEARCH_PAY_WAY')) {
+      this.initPayWay()
+    }
   },
   methods: {
     queryFunc () {
