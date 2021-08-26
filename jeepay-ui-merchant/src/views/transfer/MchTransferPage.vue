@@ -92,7 +92,7 @@
 
 <script>
 import { API_URL_MCH_APP, req, queryMchTransferIfCode, doTransfer } from '@/api/manage' // 接口
-import ChannelUserModal from './ChannelUserModal'
+import ChannelUserModal from '@/components/ChannelUser/ChannelUserModal'
 export default {
   components: { ChannelUserModal },
   data () {
@@ -205,7 +205,7 @@ export default {
     },
 
     // 更新账户
-    changeChannelUserIdFunc (channelUserId) {
+    changeChannelUserIdFunc ({ channelUserId }) {
       this.$message.success('成功获取渠道用户ID')
       this.reqData.accountNo = channelUserId
     }

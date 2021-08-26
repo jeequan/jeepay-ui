@@ -23,14 +23,16 @@ export default {
       visible: false,
       qrImgUrl: '',
       payText: '', // 二维码底部描述文字
-      transferOrderWebSocket: null // 支付订单webSocket对象
+      transferOrderWebSocket: null, // 支付订单webSocket对象
+      extObject: null // 扩展对象， 将原样返回。
     }
   },
   methods: {
 
     // show
-    showModal (appId, ifCode) {
+    showModal (appId, ifCode, extObject) {
       const that = this
+      that.extObject = extObject
       // 关闭上一个webSocket监听
       if (this.transferOrderWebSocket) {
         this.transferOrderWebSocket.close()
@@ -56,7 +58,7 @@ export default {
         that.transferOrderWebSocket = new ReconnectingWebSocket(getWebSocketPrefix() + '/api/anon/ws/channelUserId/' + appId + '/' + cid)
         that.transferOrderWebSocket.onopen = () => {}
         that.transferOrderWebSocket.onmessage = (msgObject) => {
-          that.$emit('changeChannelUserId', msgObject.data) // 上层赋值
+          that.$emit('changeChannelUserId', { channelUserId: msgObject.data, extObject: that.extObject }) // 上层赋值
           that.handleClose()
         }
       })

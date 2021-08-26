@@ -89,6 +89,15 @@ export const API_URL_MCH_PAYPASSAGE_LIST = '/api/mch/payPassages'
 /** 转账订单管理 **/
 export const API_URL_TRANSFER_ORDER_LIST = '/api/transferOrders'
 
+/** 分账组管理 **/
+export const API_URL_DIVISION_RECEIVER_GROUP = '/api/divisionReceiverGroups'
+
+/** 分账账号管理 **/
+export const API_URL_DIVISION_RECEIVER = '/api/divisionReceivers'
+
+/** 分账记录管理 **/
+export const API_URL_PAY_ORDER_DIVISION_RECORD_LIST = '/api/division/records'
+
 /** 上传图片/文件地址 **/
 export const upload = {
   avatar: request.baseUrl + '/api/ossFiles/avatar',
@@ -269,5 +278,13 @@ export function doTransfer (parameter) {
     url: '/api/mchTransfers/doTransfer',
     method: 'POST',
     data: parameter
+  }, true, true, true)
+}
+
+/** 查询当前应用支持的支付接口 **/
+export function getIfCodeByAppId (appId) {
+  return request.request({
+    url: '/api/mch/payConfigs/ifCodes/' + appId,
+    method: 'GET'
   }, true, true, true)
 }

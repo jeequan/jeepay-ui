@@ -92,9 +92,23 @@
               <span @click="randomOrderNo" class=" paydemo-btn" style="padding:0 3px">刷新订单号</span>
             </div>
             <div class="paydemo-form-item">
-              <label>商品名称：</label>
-              <span id="paySubject">支付接口演示</span>
+              <label>订单标题：</label>
+              <a-input v-model="orderTitle" style="width: 200px"/>
             </div>
+
+            <div class="paydemo-form-item">
+              <label>分账方式：</label>
+              <a-radio-group v-model="divisionMode" style="display:flex">
+                <div style="display:flex">
+                  <a-radio :value="0">订单不分账</a-radio>
+                  <a-radio :value="1">支付完成自动分账</a-radio>
+                  <a-radio :value="2">手动分账（冻结商户资金， 只能通过API发起分账后解冻）</a-radio>
+                </div>
+              </a-radio-group>
+            </div>
+
+            <a-divider ></a-divider>
+
             <div class="paydemo-form-item">
               <span>支付金额(元)：</span>
 
@@ -118,8 +132,8 @@
                   </a-input-number>
                 </a-radio>
               </a-radio-group>
-
             </div>
+
             <div style="margin-top:20px;text-align: left">
               <!-- <span style="color: #FD482C;font-size: 18px;padding-right: 10px;" id="amountShow">{{ paytestAmount }}</span> -->
               <a-button @click="immediatelyPay" style="padding:5px 20px;background-color: #1953ff;border-radius: 5px;color:#fff">立即支付</a-button>
@@ -154,7 +168,9 @@ export default {
       authCode: '', // 条码的值
       paytestAmount: '0.01', // 支付金额，默认为0.01
       amountInput: false, // 自定金额输入框是否展示
-      noConfigText: false // 尚无任何配置分割线提示文字
+      noConfigText: false, // 尚无任何配置分割线提示文字
+      divisionMode: 0, // 订单分账模式
+      orderTitle: '接口调试' // 订单标题
     }
   },
 
@@ -236,6 +252,11 @@ export default {
         return this.$message.error('请选择支付方式')
       }
 
+      // 请输入订单标题
+      if (!this.orderTitle || this.orderTitle.length > 20) {
+        return this.$message.error('请输入正确的订单标题[20字以内]')
+      }
+
       // 判断是否为条码支付
       if (!this.$refs.payTestBarCode.getVisible() && (this.currentWayCode === 'WX_BAR' || this.currentWayCode === 'ALI_BAR' || this.currentWayCode === 'AUTO_BAR')) {
           this.$refs.payTestBarCode.showModal()
@@ -250,7 +271,9 @@ export default {
         appId: this.appId, // appId
         mchOrderNo: this.mchOrderNo, // 订单编号
         payDataType: this.currentPayDataType, // 支付参数（二维码，条码）
-        authCode: this.authCode
+        authCode: this.authCode,
+        divisionMode: this.divisionMode,
+        orderTitle: this.orderTitle
       }).then(res => {
         that.$refs.payTestModal.showModal(this.currentWayCode, res) // 打开弹窗
         that.randomOrderNo() // 刷新订单号

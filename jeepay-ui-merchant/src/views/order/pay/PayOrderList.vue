@@ -39,6 +39,16 @@
               </a-select>
             </a-form-item>
 
+            <a-form-item label="" class="table-head-layout">
+              <a-select v-model="searchData.divisionState" placeholder="分账状态" default-value="">
+                <a-select-option value="">全部</a-select-option>
+                <a-select-option value="0">未发生分账</a-select-option>
+                <a-select-option value="1">等待分账任务处理</a-select-option>
+                <a-select-option value="2">分账处理中</a-select-option>
+                <a-select-option value="3">分账任务已结束（状态请看分账记录）</a-select-option>
+              </a-select>
+            </a-form-item>
+
             <span class="table-page-search-submitButtons">
               <a-button type="primary" icon="search" @click="queryFunc" :loading="btnLoading">搜索</a-button>
               <a-button style="margin-left: 8px" icon="reload" @click="() => this.searchData = {}">重置</a-button>
@@ -67,6 +77,15 @@
             {{ record.state === 0?'订单生成':record.state === 1?'支付中':record.state === 2?'支付成功':record.state === 3?'支付失败':record.state === 4?'已撤销':record.state === 5?'已退款':record.state === 6?'订单关闭':'未知' }}
           </a-tag>
         </template>
+
+        <template slot="divisionStateSlot" slot-scope="{record}">
+          <a-tag color="blue" v-if="record.divisionState == 0">未发生分账</a-tag>
+          <a-tag color="orange" v-else-if="record.divisionState == 1">待分账</a-tag>
+          <a-tag color="red" v-else-if="record.divisionState == 2">分账处理中</a-tag>
+          <a-tag color="green" v-else-if="record.divisionState == 3">任务已结束</a-tag>
+          <a-tag color="#f50" v-else>未知</a-tag>
+        </template>
+
         <template slot="opSlot" slot-scope="{record}">  <!-- 操作列插槽 -->
           <JeepayTableColumns>
             <a-button type="link" v-if="$access('ENT_PAY_ORDER_VIEW')" @click="detailFunc(record.payOrderId)">详情</a-button>
@@ -146,6 +165,12 @@
                 </a-tag>
               </a-descriptions-item>
             </a-descriptions>
+          </a-col>
+          <a-col :sm="12">
+            <a-descriptions><a-descriptions-item label="手续费"><a-tag color="pink">{{ detailData.mchFeeAmount/100 }}</a-tag></a-descriptions-item></a-descriptions>
+          </a-col>
+          <a-col :sm="12">
+            <a-descriptions><a-descriptions-item label="商家费率">{{ (detailData.mchFeeRate*100).toFixed(2) }}%</a-descriptions-item></a-descriptions>
           </a-col>
           <a-col :sm="12">
             <a-descriptions>
@@ -276,6 +301,28 @@
               </a-descriptions-item>
             </a-descriptions>
           </a-col>
+
+          <a-divider />
+          <a-col :sm="12">
+            <a-descriptions><a-descriptions-item label="订单分账模式">
+              <span v-if="detailData.divisionMode == 0">该笔订单不允许分账</span>
+              <span v-else-if="detailData.divisionMode == 1">支付成功按配置自动完成分账</span>
+              <span v-else-if="detailData.divisionMode == 2">商户手动分账(解冻商户金额)</span>
+              <span v-else>未知</span>
+            </a-descriptions-item></a-descriptions>
+          </a-col>
+          <a-col :sm="12">
+            <a-descriptions><a-descriptions-item label="分账状态">
+                <a-tag color="blue" v-if="detailData.divisionState == 0">未发生分账</a-tag>
+                <a-tag color="orange" v-else-if="detailData.divisionState == 1">待分账</a-tag>
+                <a-tag color="red" v-else-if="detailData.divisionState == 2">分账处理中</a-tag>
+                <a-tag color="green" v-else-if="detailData.divisionState == 3">任务已结束</a-tag>
+                <a-tag color="#f50" v-else>未知</a-tag>
+            </a-descriptions-item></a-descriptions>
+          </a-col>
+          <a-col :sm="12">
+            <a-descriptions><a-descriptions-item label="最新分账发起时间">{{ detailData.divisionLastTime }}</a-descriptions-item></a-descriptions>
+          </a-col>
         </a-row>
         <a-divider />
         <a-row justify="start" type="flex">
@@ -304,10 +351,12 @@ import moment from 'moment'
 // eslint-disable-next-line no-unused-vars
 const tableColumns = [
   { key: 'amount', title: '支付金额', scopedSlots: { customRender: 'amountSlot' } },
+  { key: 'mchFeeAmount', dataIndex: 'mchFeeAmount', title: '手续费', customRender: (text) => '￥' + (text / 100).toFixed(2) },
   { key: 'payOrderId', title: '支付订单号', dataIndex: 'payOrderId' },
   { key: 'mchOrderNo', title: '商户订单号', dataIndex: 'mchOrderNo' },
   { key: 'wayName', title: '支付方式', dataIndex: 'wayName', width: 150 },
   { key: 'state', title: '支付状态', scopedSlots: { customRender: 'stateSlot' } },
+  { key: 'divisionState', title: '分账状态', scopedSlots: { customRender: 'divisionStateSlot' } },
   { key: 'createdAt', dataIndex: 'createdAt', title: '创建日期' },
   { key: 'op', title: '操作', width: '100px', fixed: 'right', align: 'center', scopedSlots: { customRender: 'opSlot' } }
 ]

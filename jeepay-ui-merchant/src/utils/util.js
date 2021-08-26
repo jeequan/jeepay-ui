@@ -1,3 +1,7 @@
+
+// 定义全局自增ID
+var atomicLong = 1
+
 export function timeFix () {
   const time = new Date()
   const hour = time.getHours()
@@ -9,4 +13,9 @@ export function isIE () {
   const compare = (s) => bw.indexOf(s) >= 0
   const ie11 = (() => 'ActiveXObject' in window)()
   return compare('MSIE') || ie11
+}
+
+/** 生成自增序列号（不重复） **/
+export function genRowKey () {
+  return new Date().getTime() + '_' + (atomicLong++)
 }
