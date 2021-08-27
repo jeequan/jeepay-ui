@@ -83,7 +83,7 @@ const tableColumns = [
   { key: 'payOrderId', title: '支付订单号', dataIndex: 'payOrderId' },
   { key: 'ifCode', title: '接口代码', dataIndex: 'ifCode' },
   { key: 'payOrderAmount', dataIndex: 'payOrderAmount', title: '订单金额', customRender: (text) => (text / 100).toFixed(2) },
-  { key: 'payOrderDivisionAmount', dataIndex: 'payOrderDivisionAmount', title: '订单商户入账金额', customRender: (text) => (text / 100).toFixed(2) },
+  { key: 'payOrderDivisionAmount', dataIndex: 'payOrderDivisionAmount', title: '分账基数', customRender: (text) => (text / 100).toFixed(2) },
   { key: 'receiverAlias', title: '账号别名', dataIndex: 'receiverAlias' },
   { key: 'accNo', title: '接收账号', dataIndex: 'accNo' },
   { key: 'accName', title: '账号姓名', dataIndex: 'accName' },

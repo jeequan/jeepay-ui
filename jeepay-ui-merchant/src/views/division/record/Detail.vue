@@ -15,7 +15,7 @@
       <a-col :sm="12"><a-descriptions><a-descriptions-item label="系统支付订单号">{{ detailData.payOrderId }}</a-descriptions-item></a-descriptions></a-col>
       <a-col :sm="12"><a-descriptions><a-descriptions-item label="支付订单渠道支付订单号">{{ detailData.payOrderChannelOrderNo }}</a-descriptions-item></a-descriptions></a-col>
       <a-col :sm="12"><a-descriptions><a-descriptions-item label="订单金额">{{ detailData.payOrderAmount / 100}}</a-descriptions-item></a-descriptions></a-col>
-      <a-col :sm="12"><a-descriptions><a-descriptions-item label="待计算分账金额">{{ detailData.payOrderDivisionAmount / 100 }}</a-descriptions-item></a-descriptions></a-col>
+      <a-col :sm="12"><a-descriptions><a-descriptions-item label="分账基数">{{ detailData.payOrderDivisionAmount / 100 }} （订单金额-手续费-退款金额）</a-descriptions-item></a-descriptions></a-col>
       <a-col :sm="12"><a-descriptions><a-descriptions-item label="系统分账批次号">{{ detailData.batchOrderId }}</a-descriptions-item></a-descriptions></a-col>
       <a-col :sm="12"><a-descriptions><a-descriptions-item label="上游分账批次号">{{ detailData.channelBatchOrderId }}</a-descriptions-item></a-descriptions></a-col>
       <a-col :sm="12"><a-descriptions><a-descriptions-item label="状态">
