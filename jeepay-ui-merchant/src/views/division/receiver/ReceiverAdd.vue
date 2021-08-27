@@ -4,6 +4,7 @@
     :visible="visible"
     @close="onClose"
     :closable="true"
+    :maskClosable="false"
     :body-style="{ paddingBottom: '80px' }"
     :drawer-style="{ backgroundColor: '#f0f2f5' }"
     width="80%"
