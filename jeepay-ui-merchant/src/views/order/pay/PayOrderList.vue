@@ -89,10 +89,13 @@
         <template slot="opSlot" slot-scope="{record}">  <!-- 操作列插槽 -->
           <JeepayTableColumns>
             <a-button type="link" v-if="$access('ENT_PAY_ORDER_VIEW')" @click="detailFunc(record.payOrderId)">详情</a-button>
+            <a-button type="link" v-if="$access('ENT_PAY_ORDER_REFUND')" style="color: red" v-show="(record.state === 2 && record.refundState !== 2)" @click="openFunc(record, record.payOrderId)">退款</a-button>
           </JeepayTableColumns>
         </template>
       </JeepayTable>
     </a-card>
+    <!-- 退款弹出框 -->
+    <refund-modal ref="refundModalInfo" :callbackFunc="searchFunc"></refund-modal>
     <!-- 日志详情抽屉 -->
     <template>
       <a-drawer
@@ -345,6 +348,7 @@
 import JeepayTextUp from '@/components/JeepayTextUp/JeepayTextUp' // 文字上移组件
 import JeepayTable from '@/components/JeepayTable/JeepayTable'
 import JeepayTableColumns from '@/components/JeepayTable/JeepayTableColumns'
+import RefundModal from './RefundModal' // 退款弹出框
 import { API_URL_PAY_ORDER_LIST, API_URL_PAYWAYS_LIST, req } from '@/api/manage'
 import moment from 'moment'
 
@@ -363,7 +367,7 @@ const tableColumns = [
 
 export default {
   name: 'IsvListPage',
-  components: { JeepayTable, JeepayTableColumns, JeepayTextUp },
+  components: { JeepayTable, JeepayTableColumns, JeepayTextUp, RefundModal },
   data () {
     return {
       btnLoading: false,
@@ -394,6 +398,13 @@ export default {
     },
     searchFunc: function () { // 点击【查询】按钮点击事件
       this.$refs.infoTable.refTable(true)
+    },
+    // 打开退款弹出框
+    openFunc (record, recordId) {
+      if (record.refundState === 2) {
+        return this.$infoBox.modalError('订单无可退款金额', '')
+      }
+      this.$refs.refundModalInfo.show(recordId)
     },
     detailFunc: function (recordId) {
       const that = this

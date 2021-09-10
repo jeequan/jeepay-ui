@@ -288,3 +288,12 @@ export function getIfCodeByAppId (appId) {
     method: 'GET'
   }, true, true, true)
 }
+
+/** 退款接口 */
+export function payOrderRefund (payOrderId, refundAmount, refundReason) {
+  return request.request({
+    url: '/api/payOrder/refunds/' + payOrderId,
+    method: 'POST',
+    data: { refundAmount, refundReason }
+  })
+}
