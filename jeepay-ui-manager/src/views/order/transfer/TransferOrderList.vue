@@ -14,9 +14,10 @@
                 <a-icon slot="suffixIcon" type="sync" />
               </a-range-picker>
             </a-form-item>
-            <jeepay-text-up :placeholder="'转账订单号'" :msg="searchData.transferId" v-model="searchData.transferId" />
-            <jeepay-text-up :placeholder="'商户订单号'" :msg="searchData.mchOrderNo" v-model="searchData.mchOrderNo" />
-            <jeepay-text-up :placeholder="'渠道支付订单号'" :msg="searchData.channelOrderNo" v-model="searchData.channelOrderNo" />
+            <jeepay-text-up :placeholder="'转账/商户/渠道订单号'" :msg="searchData.unionOrderId" v-model="searchData.unionOrderId" />
+<!--            <jeepay-text-up :placeholder="'转账订单号'" :msg="searchData.transferId" v-model="searchData.transferId" />-->
+<!--            <jeepay-text-up :placeholder="'商户订单号'" :msg="searchData.mchOrderNo" v-model="searchData.mchOrderNo" />-->
+<!--            <jeepay-text-up :placeholder="'渠道支付订单号'" :msg="searchData.channelOrderNo" v-model="searchData.channelOrderNo" />-->
             <jeepay-text-up :placeholder="'商户号'" :msg="searchData.mchNo" v-model="searchData.mchNo" />
             <jeepay-text-up :placeholder="'应用AppId'" :msg="searchData.appId" v-model="searchData.appId"/>
             <a-form-item label="" class="table-head-layout">
@@ -56,6 +57,13 @@
             {{ record.state === 0?'订单生成':record.state === 1?'转账中':record.state === 2?'转账成功':record.state === 3?'转账失败':record.state === 4?'任务关闭':'未知' }}
           </a-tag>
         </template>
+        <template slot="orderSlot" slot-scope="{record}">
+          <div class="order-list">
+            <p><span style="color:#729ED5;background:#e7f5f7">转账</span>{{ record.transferId }}</p>
+            <p><span style="color:#56cf56;background:#d8eadf">商户</span>{{ record.mchOrderNo }}</p>
+            <p v-if="record.channelOrderNo"><span style="color:#fff;background:#E09C4D">渠道</span>{{ record.channelOrderNo }}</p>
+          </div>
+        </template>
         <template slot="opSlot" slot-scope="{record}">  <!-- 操作列插槽 -->
           <JeepayTableColumns>
             <a-button type="link" v-if="$access('ENT_TRANSFER_ORDER_VIEW')" @click="detailFunc(record.transferId)">详情</a-button>
@@ -81,9 +89,10 @@
   const tableColumns = [
     { title: '转账金额', scopedSlots: { customRender: 'transferAmountSlot' } },
     { title: '商户名称', dataIndex: 'mchName' },
-    { title: '转账订单号', dataIndex: 'transferId' },
-    { title: '商户转账单号', dataIndex: 'mchOrderNo' },
-    { title: '渠道订单号', dataIndex: 'channelOrderNo' },
+    { key: 'orderNo', title: '订单号', scopedSlots: { customRender: 'orderSlot' }, width: '260px' },
+    // { title: '转账订单号', dataIndex: 'transferId' },
+    // { title: '商户转账单号', dataIndex: 'mchOrderNo' },
+    // { title: '渠道订单号', dataIndex: 'channelOrderNo' },
     { title: '收款账号', dataIndex: 'accountNo' },
     { title: '收款人姓名', dataIndex: 'accountName' },
     { title: '转账备注', dataIndex: 'transferDesc' },
@@ -130,3 +139,25 @@
     }
   }
 </script>
+<style lang="less" scoped>
+.order-list {
+  -webkit-text-size-adjust:none;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+
+  p {
+    white-space:nowrap;
+    span {
+      display: inline-block;
+      font-weight: 800;
+      height: 16px;
+      line-height: 16px;
+      width: 35px;
+      border-radius: 5px;
+      text-align: center;
+      margin-right: 2px;
+    }
+  }
+}
+</style>

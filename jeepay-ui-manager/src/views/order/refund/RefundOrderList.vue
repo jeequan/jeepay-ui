@@ -14,9 +14,10 @@
                 <a-icon slot="suffixIcon" type="sync" />
               </a-range-picker>
             </a-form-item>
-            <jeepay-text-up :placeholder="'退款订单号'" :msg="searchData.refundOrderId" v-model="searchData.refundOrderId" />
-            <jeepay-text-up :placeholder="'支付订单号'" :msg="searchData.payOrderId" v-model="searchData.payOrderId" />
-            <jeepay-text-up :placeholder="'渠道支付订单号'" :msg="searchData.channelPayOrderNo" v-model="searchData.channelPayOrderNo" />
+            <jeepay-text-up :placeholder="'退款/支付/渠道/商户退款订单号'" :msg="searchData.unionOrderId" v-model="searchData.unionOrderId" />
+<!--            <jeepay-text-up :placeholder="'退款订单号'" :msg="searchData.refundOrderId" v-model="searchData.refundOrderId" />-->
+<!--            <jeepay-text-up :placeholder="'支付订单号'" :msg="searchData.payOrderId" v-model="searchData.payOrderId" />-->
+<!--            <jeepay-text-up :placeholder="'渠道支付订单号'" :msg="searchData.channelPayOrderNo" v-model="searchData.channelPayOrderNo" />-->
             <jeepay-text-up :placeholder="'商户号'" :msg="searchData.mchNo" v-model="searchData.mchNo" />
             <jeepay-text-up :placeholder="'服务商号'" :msg="searchData.isvNo" v-model="searchData.isvNo" />
             <jeepay-text-up :placeholder="'应用AppId'" :msg="searchData.appId" v-model="searchData.appId"/>
@@ -66,6 +67,20 @@
           >
             {{ record.state === 0?'订单生成':record.state === 1?'退款中':record.state === 2?'退款成功':record.state === 3?'退款失败':record.state === 4?'任务关闭':'未知' }}
           </a-tag>
+        </template>
+
+        <template slot="payOrderSlot" slot-scope="{record}">
+          <div class="order-list">
+            <p><span style="color:#729ED5;background:#e7f5f7">支付</span>{{ record.payOrderId }}</p>
+            <p v-if="record.channelPayOrderNo"><span style="color:#fff;background:#E09C4D">渠道</span>{{ record.channelPayOrderNo }}</p>
+          </div>
+        </template>
+
+        <template slot="refundOrderSlot" slot-scope="{record}">
+          <div class="order-list">
+            <p><span style="color:#729ED5;background:#e7f5f7">退款</span>{{ record.refundOrderId }}</p>
+            <p><span style="color:#56cf56;background:#d8eadf">商户</span>{{ record.mchRefundNo }}</p>
+          </div>
         </template>
         <template slot="opSlot" slot-scope="{record}">  <!-- 操作列插槽 -->
           <JeepayTableColumns>
@@ -296,9 +311,11 @@
   const tableColumns = [
     { key: 'payAmount', title: '支付金额', fixed: 'left', scopedSlots: { customRender: 'payAmountSlot' } },
     { key: 'refundAmount', title: '退款金额', scopedSlots: { customRender: 'refundAmountSlot' } },
-    { key: 'refundOrderId', title: '退款订单号', dataIndex: 'refundOrderId' },
-    { key: 'payOrderId', title: '支付订单号', dataIndex: 'payOrderId' },
-    { key: 'mchRefundNo', title: '商户退款单号', dataIndex: 'mchRefundNo' },
+    { key: 'pay', title: '退款订单号', scopedSlots: { customRender: 'refundOrderSlot' }, width: '260px' },
+    { key: 'refund', title: '支付订单号', scopedSlots: { customRender: 'payOrderSlot' }, width: '260px' },
+    // { key: 'refundOrderId', title: '退款订单号', dataIndex: 'refundOrderId' },
+    // { key: 'payOrderId', title: '支付订单号', dataIndex: 'payOrderId' },
+    // { key: 'mchRefundNo', title: '商户退款单号', dataIndex: 'mchRefundNo' },
     { key: 'state', title: '状态', scopedSlots: { customRender: 'stateSlot' }, width: 100 },
     { key: 'createdAt', dataIndex: 'createdAt', title: '创建日期' },
     { key: 'op', title: '操作', width: '100px', fixed: 'right', align: 'center', scopedSlots: { customRender: 'opSlot' } }
@@ -367,3 +384,25 @@
     }
   }
 </script>
+<style lang="less" scoped>
+.order-list {
+  -webkit-text-size-adjust:none;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+
+  p {
+    white-space:nowrap;
+    span {
+      display: inline-block;
+      font-weight: 800;
+      height: 16px;
+      line-height: 16px;
+      width: 35px;
+      border-radius: 5px;
+      text-align: center;
+      margin-right: 2px;
+    }
+  }
+}
+</style>

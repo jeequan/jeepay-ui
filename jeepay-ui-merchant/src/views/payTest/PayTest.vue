@@ -186,6 +186,12 @@ export default {
     // 请求接口，获取所有的appid，只有此处进行pageSize=-1传参
     req.list(API_URL_MCH_APP, { pageSize: -1 }).then(res => {
       that.mchAppList = res.records
+      if (that.mchAppList.length > 0) {
+        // 赋予默认值
+        that.appId = that.mchAppList[0].appId
+        // 根据appId的值，动态显示支付方式
+        this.appPaywayListHandle(that.appId)
+      }
     })
 
     // 在进入页面时刷新订单号

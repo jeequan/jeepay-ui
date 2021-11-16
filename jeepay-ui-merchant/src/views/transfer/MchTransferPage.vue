@@ -127,6 +127,12 @@ export default {
     // 请求接口，获取所有的appid，只有此处进行pageSize=-1传参
     req.list(API_URL_MCH_APP, { pageSize: -1 }).then(res => {
       that.mchAppList = res.records
+      if (that.mchAppList.length > 0) {
+        // 赋予默认值
+        that.reqData.appId = that.mchAppList[0].appId
+        // 根据不同的appId展示不同的支付方式
+        this.changeAppId(that.reqData.appId)
+      }
     })
 
     // 在进入页面时刷新订单号
@@ -136,6 +142,10 @@ export default {
 
     // 变更 appId的事件
     changeAppId (value) {
+      if (!value) {
+        this.ifCodeList = []
+        return false
+      }
       const that = this
       queryMchTransferIfCode(value).then(res => { // 查询所有的支付接口
         that.ifCodeList = res
