@@ -53,8 +53,9 @@
             <img :src="vercodeIcon" slot="prefix" class="user" alt="user" />
           </a-input>
         </a-form-item>
-        <div class="code-img">
+        <div class="code-img" style="position: relative;background:#ddd">
           <img v-show="vercodeImgSrc" :src="vercodeImgSrc" @click="refVercode()"/>
+          <div class="vercode-mask" v-show="isOverdue" @click="refVercode()">已过期 请刷新</div>
         </div>
       </div>
 
@@ -90,6 +91,7 @@ export default {
   },
   data () {
     return {
+      isOverdue: false, // 设置过期样式
       isAutoLogin: true, // 是否是自动登录
       loginBtnLoadingFlag: false, // 登录按钮是否显示 加载状态
       showLoginErrorInfo: '', // 是否显示登录错误面板信息
@@ -154,6 +156,17 @@ export default {
       vercode().then(res => {
         that.vercodeImgSrc = res.imageBase64Data
         that.vercodeToken = res.vercodeToken
+
+        this.isOverdue = false
+        if (this.timer) clearInterval(this.timer) // 如果多次点击则清除已有的定时器
+        // 超过60秒提示过期刷新
+        this.timer = setInterval(() => {
+          res.expireTime--
+          if (res.expireTime <= 0) {
+            that.isOverdue = true
+            clearInterval(this.timer)
+          }
+        }, 1000)
       })
     }
   }
@@ -220,5 +233,19 @@ export default {
     margin-top: 50px;
   }
 }
-
+.vercode-mask {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  opacity: 0.8;
+  text-align:center;
+  line-height: 40px;
+  color:#fff;
+  &:hover {
+    cursor: pointer;
+  }
+}
 </style>

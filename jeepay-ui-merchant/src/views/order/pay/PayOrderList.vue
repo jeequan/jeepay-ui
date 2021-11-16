@@ -14,8 +14,9 @@
                 <a-icon slot="suffixIcon" type="sync" />
               </a-range-picker>
             </a-form-item>
-            <jeepay-text-up :placeholder="'支付订单号'" :msg="searchData.payOrderId" v-model="searchData.payOrderId" />
-            <jeepay-text-up :placeholder="'商户订单号'" :msg="searchData.mchOrderNo" v-model="searchData.mchOrderNo" />
+            <jeepay-text-up :placeholder="'支付/商户/渠道订单号'" :msg="searchData.unionOrderId" v-model="searchData.unionOrderId" />
+<!--            <jeepay-text-up :placeholder="'支付订单号'" :msg="searchData.payOrderId" v-model="searchData.payOrderId" />-->
+<!--            <jeepay-text-up :placeholder="'商户订单号'" :msg="searchData.mchOrderNo" v-model="searchData.mchOrderNo" />-->
             <jeepay-text-up :placeholder="'应用AppId'" :msg="searchData.appId" v-model="searchData.appId"/>
             <a-form-item label="" class="table-head-layout">
               <a-select v-model="searchData.state" placeholder="支付状态" default-value="">
@@ -84,6 +85,14 @@
           <a-tag color="red" v-else-if="record.divisionState == 2">分账处理中</a-tag>
           <a-tag color="green" v-else-if="record.divisionState == 3">任务已结束</a-tag>
           <a-tag color="#f50" v-else>未知</a-tag>
+        </template>
+
+        <template slot="orderSlot" slot-scope="{record}">
+          <div class="order-list">
+            <p><span style="color:#729ED5;background:#e7f5f7">支付</span>{{ record.payOrderId }}</p>
+            <p><span style="color:#56cf56;background:#d8eadf">商户</span>{{ record.mchOrderNo }}</p>
+            <p v-if="record.channelOrderNo"><span style="color:#fff;background:#E09C4D">渠道</span>{{ record.channelOrderNo }}</p>
+          </div>
         </template>
 
         <template slot="opSlot" slot-scope="{record}">  <!-- 操作列插槽 -->
@@ -316,11 +325,11 @@
           </a-col>
           <a-col :sm="12">
             <a-descriptions><a-descriptions-item label="分账状态">
-                <a-tag color="blue" v-if="detailData.divisionState == 0">未发生分账</a-tag>
-                <a-tag color="orange" v-else-if="detailData.divisionState == 1">待分账</a-tag>
-                <a-tag color="red" v-else-if="detailData.divisionState == 2">分账处理中</a-tag>
-                <a-tag color="green" v-else-if="detailData.divisionState == 3">任务已结束</a-tag>
-                <a-tag color="#f50" v-else>未知</a-tag>
+              <a-tag color="blue" v-if="detailData.divisionState == 0">未发生分账</a-tag>
+              <a-tag color="orange" v-else-if="detailData.divisionState == 1">待分账</a-tag>
+              <a-tag color="red" v-else-if="detailData.divisionState == 2">分账处理中</a-tag>
+              <a-tag color="green" v-else-if="detailData.divisionState == 3">任务已结束</a-tag>
+              <a-tag color="#f50" v-else>未知</a-tag>
             </a-descriptions-item></a-descriptions>
           </a-col>
           <a-col :sm="12">
@@ -356,8 +365,9 @@ import moment from 'moment'
 const tableColumns = [
   { key: 'amount', title: '支付金额', scopedSlots: { customRender: 'amountSlot' } },
   { key: 'mchFeeAmount', dataIndex: 'mchFeeAmount', title: '手续费', customRender: (text) => '￥' + (text / 100).toFixed(2) },
-  { key: 'payOrderId', title: '支付订单号', dataIndex: 'payOrderId' },
-  { key: 'mchOrderNo', title: '商户订单号', dataIndex: 'mchOrderNo' },
+  { key: 'orderNo', title: '订单号', scopedSlots: { customRender: 'orderSlot' }, width: '260px' },
+  // { key: 'payOrderId', title: '支付订单号', dataIndex: 'payOrderId' },
+  // { key: 'mchOrderNo', title: '商户订单号', dataIndex: 'mchOrderNo' },
   { key: 'wayName', title: '支付方式', dataIndex: 'wayName', width: 150 },
   { key: 'state', title: '支付状态', scopedSlots: { customRender: 'stateSlot' } },
   { key: 'divisionState', title: '分账状态', scopedSlots: { customRender: 'divisionStateSlot' } },
@@ -433,3 +443,25 @@ export default {
   }
 }
 </script>
+<style lang="less" scoped>
+.order-list {
+  -webkit-text-size-adjust:none;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+
+  p {
+    white-space:nowrap;
+    span {
+      display: inline-block;
+      font-weight: 800;
+      height: 16px;
+      line-height: 16px;
+      width: 35px;
+      border-radius: 5px;
+      text-align: center;
+      margin-right: 2px;
+    }
+  }
+}
+</style>
