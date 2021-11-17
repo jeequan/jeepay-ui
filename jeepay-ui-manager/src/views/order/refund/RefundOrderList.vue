@@ -312,7 +312,7 @@
     { key: 'payAmount', title: '支付金额', fixed: 'left', scopedSlots: { customRender: 'payAmountSlot' } },
     { key: 'refundAmount', title: '退款金额', scopedSlots: { customRender: 'refundAmountSlot' } },
     { key: 'pay', title: '退款订单号', scopedSlots: { customRender: 'refundOrderSlot' }, width: '260px' },
-    { key: 'refund', title: '支付订单号', scopedSlots: { customRender: 'payOrderSlot' }, width: '260px' },
+    { key: 'refund', title: '支付订单号', scopedSlots: { customRender: 'payOrderSlot' }, width: '280px' },
     // { key: 'refundOrderId', title: '退款订单号', dataIndex: 'refundOrderId' },
     // { key: 'payOrderId', title: '支付订单号', dataIndex: 'payOrderId' },
     // { key: 'mchRefundNo', title: '商户退款单号', dataIndex: 'mchRefundNo' },
