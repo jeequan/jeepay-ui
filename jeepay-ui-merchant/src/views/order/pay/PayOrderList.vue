@@ -383,7 +383,7 @@ import moment from 'moment'
 // eslint-disable-next-line no-unused-vars
 const tableColumns = [
   { key: 'amount', title: '支付金额', scopedSlots: { customRender: 'amountSlot' } },
-  { key: 'refundAmount', title: '退款', scopedSlots: { customRender: 'refundAmountSlot' } },
+  { key: 'refundAmount', title: '退款金额', scopedSlots: { customRender: 'refundAmountSlot' } },
   { key: 'mchFeeAmount', dataIndex: 'mchFeeAmount', title: '手续费', customRender: (text) => '￥' + (text / 100).toFixed(2) },
   { key: 'orderNo', title: '订单号', scopedSlots: { customRender: 'orderSlot' }, width: '260px' },
   // { key: 'payOrderId', title: '支付订单号', dataIndex: 'payOrderId' },
