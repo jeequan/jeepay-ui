@@ -18,6 +18,14 @@
 <!--            <jeepay-text-up :placeholder="'支付订单号'" :msg="searchData.payOrderId" v-model="searchData.payOrderId" />-->
 <!--            <jeepay-text-up :placeholder="'商户订单号'" :msg="searchData.mchOrderNo" v-model="searchData.mchOrderNo" />-->
             <jeepay-text-up :placeholder="'应用AppId'" :msg="searchData.appId" v-model="searchData.appId"/>
+            <a-form-item v-if="$access('ENT_PAY_ORDER_SEARCH_PAY_WAY')" label="" class="table-head-layout">
+              <a-select v-model="searchData.wayCode" placeholder="支付方式" default-value="">
+                <a-select-option value="">全部</a-select-option>
+                <a-select-option :key="item.wayCode" v-for="item in payWayList" :value="item.wayCode">
+                  {{ item.wayName }}
+                </a-select-option>
+              </a-select>
+            </a-form-item>
             <a-form-item label="" class="table-head-layout">
               <a-select v-model="searchData.state" placeholder="支付状态" default-value="">
                 <a-select-option value="">全部</a-select-option>
@@ -28,15 +36,6 @@
                 <a-select-option value="4">已撤销</a-select-option>
                 <a-select-option value="5">已退款</a-select-option>
                 <a-select-option value="6">订单关闭</a-select-option>
-              </a-select>
-            </a-form-item>
-
-            <a-form-item v-if="$access('ENT_PAY_ORDER_SEARCH_PAY_WAY')" label="" class="table-head-layout">
-              <a-select v-model="searchData.wayCode" placeholder="支付方式" default-value="">
-                <a-select-option value="">全部</a-select-option>
-                <a-select-option :key="item.wayCode" v-for="item in payWayList" :value="item.wayCode">
-                  {{ item.wayName }}
-                </a-select-option>
               </a-select>
             </a-form-item>
 
@@ -82,11 +81,11 @@
         </template>
 
         <template slot="divisionStateSlot" slot-scope="{record}">
-          <span color="blue" v-if="record.divisionState == 0">-</span>
-          <span color="orange" v-else-if="record.divisionState == 1">待分账</span>
-          <span color="red" v-else-if="record.divisionState == 2">分账处理中</span>
-          <span color="green" v-else-if="record.divisionState == 3">任务已结束</span>
-          <span color="#f50" v-else>未知</span>
+          <span v-if="record.divisionState == 0">-</span>
+          <a-tag color="orange" v-else-if="record.divisionState == 1">待分账</a-tag>
+          <a-tag color="red" v-else-if="record.divisionState == 2">分账处理中</a-tag>
+          <a-tag color="green" v-else-if="record.divisionState == 3">任务已结束</a-tag>
+          <span v-else>未知</span>
         </template>
 
         <template slot="orderSlot" slot-scope="{record}">
@@ -94,21 +93,23 @@
             <p><span style="color:#729ED5;background:#e7f5f7">支付</span>{{ record.payOrderId }}</p>
             <p style="margin-bottom: 0">
               <span style="color:#56cf56;background:#d8eadf">商户</span>
-              <a-tooltip placement="bottom" style="font-weight: normal;">
+              <a-tooltip placement="bottom" style="font-weight: normal;" v-if="record.mchOrderNo.length > record.payOrderId.length">
                 <template slot="title">
                   <span>{{ record.mchOrderNo }}</span>
                 </template>
-                {{ record.mchOrderNo.length <= record.payOrderId.length ? record.mchOrderNo:record.mchOrderNo.substring(0, record.payOrderId.length) + "..." }}
+                {{ changeStr2ellipsis(record.mchOrderNo, record.payOrderId.length) }}
               </a-tooltip>
+              <span style="font-weight: normal;" v-else>{{ record.mchOrderNo }}</span>
             </p>
             <p v-if="record.channelOrderNo" style="margin-bottom: 0;margin-top: 10px">
               <span style="color:#fff;background:#E09C4D">渠道</span>
-              <a-tooltip placement="bottom" style="font-weight: normal;">
+              <a-tooltip placement="bottom" style="font-weight: normal;" v-if="record.channelOrderNo.length > record.payOrderId.length">
                 <template slot="title">
                   <span>{{ record.channelOrderNo }}</span>
                 </template>
-                {{ record.channelOrderNo.length <= record.payOrderId.length ? record.channelOrderNo:record.channelOrderNo.substring(0, record.payOrderId.length) + "..." }}
+                {{ changeStr2ellipsis(record.channelOrderNo, record.payOrderId.length) }}
               </a-tooltip>
+              <span style="font-weight: normal;" v-else>{{ record.channelOrderNo }}</span>
             </p>
           </div>
         </template>
@@ -458,6 +459,10 @@ export default {
       req.list(API_URL_PAYWAYS_LIST, { 'pageSize': -1 }).then(res => { // 支付方式下拉列表
         that.payWayList = res.records
       })
+    },
+    changeStr2ellipsis (orderNo, baseLength) {
+      const halfLengh = parseInt(baseLength / 2)
+      return orderNo.substring(0, halfLengh - 1) + '...' + orderNo.substring(orderNo.length - halfLengh, orderNo.length)
     }
   }
 }
