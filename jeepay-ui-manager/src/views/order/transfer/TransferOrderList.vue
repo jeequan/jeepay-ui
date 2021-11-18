@@ -60,8 +60,24 @@
         <template slot="orderSlot" slot-scope="{record}">
           <div class="order-list">
             <p><span style="color:#729ED5;background:#e7f5f7">转账</span>{{ record.transferId }}</p>
-            <p><span style="color:#56cf56;background:#d8eadf">商户</span>{{ record.mchOrderNo }}</p>
-            <p v-if="record.channelOrderNo"><span style="color:#fff;background:#E09C4D">渠道</span>{{ record.channelOrderNo }}</p>
+            <p>
+              <span style="color:#56cf56;background:#d8eadf">商户</span>
+              <a-tooltip placement="bottom" style="font-weight: normal;">
+                <template slot="title">
+                  <span>{{ record.mchOrderNo }}</span>
+                </template>
+                {{ record.mchOrderNo.length <= record.transferId.length ? record.mchOrderNo:record.mchOrderNo.substring(0, record.transferId.length) + "..." }}
+              </a-tooltip>
+            </p>
+            <p v-if="record.channelOrderNo">
+              <span style="color:#fff;background:#E09C4D">渠道</span>
+              <a-tooltip placement="bottom" style="font-weight: normal;">
+                <template slot="title">
+                  <span>{{ record.channelOrderNo }}</span>
+                </template>
+                {{ record.channelOrderNo.length <= record.transferId.length ? record.channelOrderNo:record.channelOrderNo.substring(0, record.transferId.length) + "..." }}
+              </a-tooltip>
+            </p>
           </div>
         </template>
         <template slot="opSlot" slot-scope="{record}">  <!-- 操作列插槽 -->

@@ -72,14 +72,30 @@
         <template slot="payOrderSlot" slot-scope="{record}">
           <div class="order-list">
             <p><span style="color:#729ED5;background:#e7f5f7">支付</span>{{ record.payOrderId }}</p>
-            <p v-if="record.channelPayOrderNo"><span style="color:#fff;background:#E09C4D">渠道</span>{{ record.channelPayOrderNo }}</p>
+            <p v-if="record.channelPayOrderNo">
+              <span style="color:#fff;background:#E09C4D">渠道</span>
+              <a-tooltip placement="bottom" style="font-weight: normal;">
+                <template slot="title">
+                  <span>{{ record.channelPayOrderNo }}</span>
+                </template>
+                {{ record.channelPayOrderNo.length <= record.payOrderId.length ? record.channelPayOrderNo:record.channelPayOrderNo.substring(0, record.payOrderId.length) + "..." }}
+              </a-tooltip>
+            </p>
           </div>
         </template>
 
         <template slot="refundOrderSlot" slot-scope="{record}">
           <div class="order-list">
             <p><span style="color:#729ED5;background:#e7f5f7">退款</span>{{ record.refundOrderId }}</p>
-            <p><span style="color:#56cf56;background:#d8eadf">商户</span>{{ record.mchRefundNo }}</p>
+            <p>
+              <span style="color:#56cf56;background:#d8eadf">商户</span>
+              <a-tooltip placement="bottom" style="font-weight: normal;">
+                <template slot="title">
+                  <span>{{ record.mchRefundNo }}</span>
+                </template>
+                {{ record.mchRefundNo.length <= record.payOrderId.length ? record.mchRefundNo:record.mchRefundNo.substring(0, record.payOrderId.length) + "..." }}
+              </a-tooltip>
+            </p>
           </div>
         </template>
         <template slot="opSlot" slot-scope="{record}">  <!-- 操作列插槽 -->
@@ -309,14 +325,14 @@
 
   // eslint-disable-next-line no-unused-vars
   const tableColumns = [
-    { key: 'payAmount', title: '支付金额', fixed: 'left', scopedSlots: { customRender: 'payAmountSlot' } },
-    { key: 'refundAmount', title: '退款金额', scopedSlots: { customRender: 'refundAmountSlot' } },
+    { key: 'payAmount', title: '支付金额', ellipsis: true, fixed: 'left', scopedSlots: { customRender: 'payAmountSlot' }, width: '150px' },
+    { key: 'refundAmount', title: '退款金额', ellipsis: true, scopedSlots: { customRender: 'refundAmountSlot' }, width: '150px' },
     { key: 'pay', title: '退款订单号', scopedSlots: { customRender: 'refundOrderSlot' }, width: '260px' },
     { key: 'refund', title: '支付订单号', scopedSlots: { customRender: 'payOrderSlot' }, width: '280px' },
     // { key: 'refundOrderId', title: '退款订单号', dataIndex: 'refundOrderId' },
     // { key: 'payOrderId', title: '支付订单号', dataIndex: 'payOrderId' },
     // { key: 'mchRefundNo', title: '商户退款单号', dataIndex: 'mchRefundNo' },
-    { key: 'state', title: '状态', scopedSlots: { customRender: 'stateSlot' }, width: 100 },
+    { key: 'state', title: '状态', scopedSlots: { customRender: 'stateSlot' } },
     { key: 'createdAt', dataIndex: 'createdAt', title: '创建日期' },
     { key: 'op', title: '操作', width: '100px', fixed: 'right', align: 'center', scopedSlots: { customRender: 'opSlot' } }
   ]

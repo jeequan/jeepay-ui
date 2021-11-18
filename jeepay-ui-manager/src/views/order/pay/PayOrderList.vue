@@ -76,6 +76,7 @@
         :scrollX="1350"
       >
         <template slot="amountSlot" slot-scope="{record}"><b>￥{{ record.amount/100 }}</b></template> <!-- 自定义插槽 -->
+        <template slot="refundAmountSlot" slot-scope="{record}">￥{{ record.refundAmount/100 }}</template> <!-- 自定义插槽 -->
         <template slot="stateSlot" slot-scope="{record}">
           <a-tag
             :key="record.state"
@@ -84,20 +85,12 @@
             {{ record.state === 0?'订单生成':record.state === 1?'支付中':record.state === 2?'支付成功':record.state === 3?'支付失败':record.state === 4?'已撤销':record.state === 5?'已退款':record.state === 6?'订单关闭':'未知' }}
           </a-tag>
         </template>
-        <template slot="refundStateSlot" slot-scope="{record}">
-          <a-tag
-            :key="record.refundState"
-            :color="record.refundState === 0?'blue':record.refundState === 1?'orange':record.refundState === 2?'green':'volcano'"
-          >
-            {{ record.refundState === 0?'未发起':record.refundState === 1?'部分退款':record.refundState === 2?'全额退款':'未知' }}
-          </a-tag>
-        </template>
         <template slot="divisionStateSlot" slot-scope="{record}">
-          <a-tag color="blue" v-if="record.divisionState == 0">未发生分账</a-tag>
-          <a-tag color="orange" v-else-if="record.divisionState == 1">待分账</a-tag>
-          <a-tag color="red" v-else-if="record.divisionState == 2">分账处理中</a-tag>
-          <a-tag color="green" v-else-if="record.divisionState == 3">任务已结束</a-tag>
-          <a-tag color="#f50" v-else>未知</a-tag>
+          <span color="blue" v-if="record.divisionState == 0"> - </span>
+          <span color="orange" v-else-if="record.divisionState == 1">待分账</span>
+          <span color="red" v-else-if="record.divisionState == 2">分账处理中</span>
+          <span color="green" v-else-if="record.divisionState == 3">任务已结束</span>
+          <span color="#f50" v-else>未知</span>
         </template>
         <template slot="notifySlot" slot-scope="{record}">
           <a-badge :status="record.notifyState === 1?'processing':'error'" :text="record.notifyState === 1?'已发送':'未发送'" />
@@ -105,14 +98,29 @@
         <template slot="orderSlot" slot-scope="{record}">
           <div class="order-list">
             <p><span style="color:#729ED5;background:#e7f5f7">支付</span>{{ record.payOrderId }}</p>
-            <p><span style="color:#56cf56;background:#d8eadf">商户</span>{{ record.mchOrderNo }}</p>
-            <p v-if="record.channelOrderNo"><span style="color:#fff;background:#E09C4D">渠道</span>{{ record.channelOrderNo }}</p>
+            <p>
+              <span style="color:#56cf56;background:#d8eadf">商户</span>
+              <a-tooltip placement="bottom" style="font-weight: normal;">
+                <template slot="title">
+                  <span>{{ record.mchOrderNo }}</span>
+                </template>
+                {{ record.mchOrderNo.length <= record.payOrderId.length ? record.mchOrderNo:record.mchOrderNo.substring(0, record.payOrderId.length) + "..." }}
+              </a-tooltip>
+            </p>
+            <p v-if="record.channelOrderNo">
+              <span style="color:#fff;background:#E09C4D;">渠道</span>
+              <a-tooltip placement="bottom" style="font-weight: normal;">
+                <template slot="title">
+                  <span>{{ record.channelOrderNo }}</span>
+                </template>
+                {{ record.channelOrderNo.length <= record.payOrderId.length ? record.channelOrderNo:record.channelOrderNo.substring(0, record.payOrderId.length) + "..." }}
+              </a-tooltip>
+            </p>
           </div>
         </template>
         <template slot="opSlot" slot-scope="{record}">  <!-- 操作列插槽 -->
           <JeepayTableColumns>
             <a-button type="link" v-if="$access('ENT_PAY_ORDER_VIEW')" @click="detailFunc(record.payOrderId)">详情</a-button>
-
             <a-button type="link" v-if="$access('ENT_PAY_ORDER_REFUND')" style="color: red" v-show="(record.state === 2 && record.refundState !== 2)" @click="openFunc(record, record.payOrderId)">退款</a-button>
           </JeepayTableColumns>
         </template>
@@ -403,6 +411,7 @@ import moment from 'moment'
 // eslint-disable-next-line no-unused-vars
 const tableColumns = [
   { key: 'amount', title: '支付金额', ellipsis: true, width: '130px', fixed: 'left', scopedSlots: { customRender: 'amountSlot' } },
+  { key: 'refundAmount', title: '退款金额', width: '130px', scopedSlots: { customRender: 'refundAmountSlot' } },
   { key: 'mchFeeAmount', dataIndex: 'mchFeeAmount', title: '手续费', customRender: (text) => '￥' + (text / 100).toFixed(2) },
   { key: 'mchName', title: '商户名称', dataIndex: 'mchName', ellipsis: true, width: '100px' },
   { key: 'orderNo', title: '订单号', scopedSlots: { customRender: 'orderSlot' }, width: '260px' },
@@ -410,8 +419,7 @@ const tableColumns = [
   // { key: 'mchOrderNo', title: '商户订单号', dataIndex: 'mchOrderNo' },
   { key: 'wayName', title: '支付方式', dataIndex: 'wayName', width: 150 },
   { key: 'state', title: '支付状态', scopedSlots: { customRender: 'stateSlot' }, width: 100 },
-  { key: 'refundState', title: '退款状态', scopedSlots: { customRender: 'refundStateSlot' }, width: 100 },
-  { key: 'divisionState', title: '分账状态', scopedSlots: { customRender: 'divisionStateSlot' } },
+  { key: 'divisionState', title: '分账状态', scopedSlots: { customRender: 'divisionStateSlot' }, align: 'center' },
   { key: 'notifyState', title: '回调状态', scopedSlots: { customRender: 'notifySlot' }, width: 100 },
   { key: 'createdAt', dataIndex: 'createdAt', title: '创建日期', width: 180 },
   { key: 'op', title: '操作', width: '160px', fixed: 'right', align: 'center', scopedSlots: { customRender: 'opSlot' } }
