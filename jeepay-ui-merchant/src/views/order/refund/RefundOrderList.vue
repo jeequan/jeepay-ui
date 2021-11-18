@@ -65,7 +65,7 @@
         <template slot="payOrderSlot" slot-scope="{record}">
           <div class="order-list">
             <p><span style="color:#729ED5;background:#e7f5f7">支付</span>{{ record.payOrderId }}</p>
-            <p v-if="record.channelPayOrderNo">
+            <p v-if="record.channelPayOrderNo" style="margin-bottom: 0;">
               <span style="color:#fff;background:#E09C4D">渠道</span>
               <a-tooltip placement="bottom" style="font-weight: normal;">
                 <template slot="title">
@@ -80,7 +80,7 @@
         <template slot="refundOrderSlot" slot-scope="{record}">
           <div class="order-list">
             <p><span style="color:#729ED5;background:#e7f5f7">退款</span>{{ record.refundOrderId }}</p>
-            <p>
+            <p style="margin-bottom: 0;">
               <span style="color:#56cf56;background:#d8eadf">商户</span>
               <a-tooltip placement="bottom" style="font-weight: normal;">
                 <template slot="title">

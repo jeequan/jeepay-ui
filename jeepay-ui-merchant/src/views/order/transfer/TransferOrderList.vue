@@ -59,7 +59,7 @@
         <template slot="orderSlot" slot-scope="{record}">
           <div class="order-list">
             <p><span style="color:#729ED5;background:#e7f5f7">转账</span>{{ record.transferId }}</p>
-            <p>
+            <p style="margin-bottom: 0">
               <span style="color:#56cf56;background:#d8eadf">商户</span>
               <a-tooltip placement="bottom" style="font-weight: normal;">
                 <template slot="title">
@@ -68,7 +68,7 @@
                 {{ record.mchOrderNo.length <= record.transferId.length ? record.mchOrderNo:record.mchOrderNo.substring(0, record.transferId.length) + "..." }}
               </a-tooltip>
             </p>
-            <p v-if="record.channelOrderNo">
+            <p v-if="record.channelOrderNo" style="margin-bottom: 0;margin-top: 10px">
               <span style="color:#fff;background:#E09C4D">渠道</span>
               <a-tooltip placement="bottom" style="font-weight: normal;">
                 <template slot="title">
