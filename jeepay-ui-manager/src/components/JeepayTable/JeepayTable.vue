@@ -117,3 +117,16 @@ export default {
   }
 }
 </script>
+<style lang="less">
+// 调整antdv 的table默认padding高度
+.ant-table-fixed{
+  tr{
+    th{
+      padding: 8px 16px !important;
+    }
+    td{
+      padding: 8px 16px !important;
+    }
+  }
+}
+</style>

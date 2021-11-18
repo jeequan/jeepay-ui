@@ -41,3 +41,9 @@ export default {
   }
 }
 </script>
+<style lang="less" scoped>
+
+//当前页面的按钮， 减少padding
+button { padding:  8px !important;}
+
+</style>
