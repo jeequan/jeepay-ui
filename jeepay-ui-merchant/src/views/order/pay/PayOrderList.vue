@@ -70,6 +70,7 @@
         :scrollX="1000"
       >
         <template slot="amountSlot" slot-scope="{record}"><b>￥{{ record.amount/100 }}</b></template> <!-- 自定义插槽 -->
+        <template slot="refundAmountSlot" slot-scope="{record}"><b>￥{{ record.refundAmount/100 }}</b></template> <!-- 自定义插槽 -->
         <template slot="stateSlot" slot-scope="{record}">
           <a-tag
             :key="record.state"
@@ -364,6 +365,7 @@ import moment from 'moment'
 // eslint-disable-next-line no-unused-vars
 const tableColumns = [
   { key: 'amount', title: '支付金额', scopedSlots: { customRender: 'amountSlot' } },
+  { key: 'refundAmount', title: '退款', scopedSlots: { customRender: 'refundAmountSlot' } },
   { key: 'mchFeeAmount', dataIndex: 'mchFeeAmount', title: '手续费', customRender: (text) => '￥' + (text / 100).toFixed(2) },
   { key: 'orderNo', title: '订单号', scopedSlots: { customRender: 'orderSlot' }, width: '260px' },
   // { key: 'payOrderId', title: '支付订单号', dataIndex: 'payOrderId' },
@@ -372,7 +374,7 @@ const tableColumns = [
   { key: 'state', title: '支付状态', scopedSlots: { customRender: 'stateSlot' } },
   { key: 'divisionState', title: '分账状态', scopedSlots: { customRender: 'divisionStateSlot' } },
   { key: 'createdAt', dataIndex: 'createdAt', title: '创建日期' },
-  { key: 'op', title: '操作', width: '100px', fixed: 'right', align: 'center', scopedSlots: { customRender: 'opSlot' } }
+  { key: 'op', title: '操作', width: '120px', fixed: 'right', align: 'center', scopedSlots: { customRender: 'opSlot' } }
 ]
 
 export default {
@@ -444,6 +446,15 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+
+///deep/ .ant-table-fixed{
+//  tr{
+//    th{
+//      padding: 0px 0px;
+//    }
+//  }
+//  }
+
 .order-list {
   -webkit-text-size-adjust:none;
   font-size: 12px;
