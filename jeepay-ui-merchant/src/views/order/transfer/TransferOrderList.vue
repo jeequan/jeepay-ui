@@ -46,6 +46,7 @@
         :searchData="searchData"
         rowKey="transferId"
         :scrollX="1350"
+        :tableRowCrossColor="true"
       >
         <template slot="transferAmountSlot" slot-scope="{record}"><b>￥{{ record.amount/100 }}</b></template> <!-- 自定义插槽 -->
         <template slot="stateSlot" slot-scope="{record}">
