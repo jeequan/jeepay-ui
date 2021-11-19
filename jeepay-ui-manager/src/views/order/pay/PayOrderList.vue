@@ -73,7 +73,6 @@
         :tableColumns="tableColumns"
         :searchData="searchData"
         rowKey="payOrderId"
-        :scrollX="1250"
         :tableRowCrossColor="true"
       >
         <template slot="amountSlot" slot-scope="{record}"><b>￥{{ record.amount/100 }}</b></template> <!-- 自定义插槽 -->

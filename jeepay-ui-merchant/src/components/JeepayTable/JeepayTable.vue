@@ -47,7 +47,7 @@ export default {
     pageSize: { type: Number, default: 10 }, // 默认每页条数
     rowSelection: Object, // checkbox选择
     rowKey: { type: [String, Function] }, // 定义rowKey 如果不定义将会出现（树状结构出问题， checkbox不消失等）
-    scrollX: { type: Number, default: 980 }, // 定义表格的最小宽度，在小就会出现横向的滚动条
+    scrollX: { type: Number, default: 800 }, // 定义表格的最小宽度，在小就会出现横向的滚动条
     tableRowCrossColor: { type: Boolean, default: false } // 是隔行换色
   },
 

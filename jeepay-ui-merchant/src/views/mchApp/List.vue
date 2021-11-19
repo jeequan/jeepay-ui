@@ -33,7 +33,6 @@
         :reqTableDataFunc="reqTableDataFunc"
         :tableColumns="tableColumns"
         :searchData="searchData"
-        :scrollX="1200"
         rowKey="appId"
       >
         <template slot="appIdSlot" slot-scope="{record}">

@@ -55,7 +55,6 @@
         :tableColumns="tableColumns"
         :searchData="searchData"
         rowKey="refundOrderId"
-        :scrollX="1250"
         :tableRowCrossColor="true"
       >
         <template slot="payAmountSlot" slot-scope="{record}"><b>￥{{ record.payAmount/100 }}</b></template> <!-- 自定义插槽 -->

@@ -40,7 +40,6 @@
         :reqTableDataFunc="reqTableDataFunc"
         :tableColumns="tableColumns"
         :searchData="searchData"
-        :scrollX="1200"
         rowKey="mchNo"
       >
         <template slot="mchNameSlot" slot-scope="{record}">
