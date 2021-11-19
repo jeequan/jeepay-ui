@@ -105,7 +105,7 @@
   // eslint-disable-next-line no-unused-vars
   const tableColumns = [
     { title: '转账金额', scopedSlots: { customRender: 'transferAmountSlot' } },
-    { key: 'orderNo', title: '订单号', scopedSlots: { customRender: 'orderSlot' }, width: 210 },
+    { key: 'orderNo', title: '订单号', scopedSlots: { customRender: 'orderSlot' }, width: 260 },
     // { title: '转账订单号', dataIndex: 'transferId' },
     // { title: '商户转账单号', dataIndex: 'mchOrderNo' },
     // { title: '渠道订单号', dataIndex: 'channelOrderNo' },

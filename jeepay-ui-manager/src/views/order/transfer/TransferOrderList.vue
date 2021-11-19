@@ -107,7 +107,7 @@
   const tableColumns = [
     { title: '转账金额', scopedSlots: { customRender: 'transferAmountSlot' }, width: 108 },
     { title: '商户名称', dataIndex: 'mchName' },
-    { key: 'orderNo', title: '订单号', scopedSlots: { customRender: 'orderSlot' }, width: 210 },
+    { key: 'orderNo', title: '订单号', scopedSlots: { customRender: 'orderSlot' }, width: 260 },
     // { title: '渠道订单号', dataIndex: 'channelOrderNo' },
     { title: '收款账号', dataIndex: 'accountNo', width: 200 },
     { title: '收款人姓名', dataIndex: 'accountName' },
