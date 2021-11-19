@@ -45,7 +45,6 @@
         :tableColumns="tableColumns"
         :searchData="searchData"
         @btnLoadClose="btnLoading=false"
-        :scrollX="500"
         rowKey="receiverId"
       >
 

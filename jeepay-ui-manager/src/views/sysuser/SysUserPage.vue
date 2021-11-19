@@ -27,7 +27,6 @@
         :tableColumns="tableColumns"
         :searchData="searchData"
         rowKey="sysUserId"
-        :scrollX="1350"
       >
 
         <template slot="avatarSlot" slot-scope="{record}">

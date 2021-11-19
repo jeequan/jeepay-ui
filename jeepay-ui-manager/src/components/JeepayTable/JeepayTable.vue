@@ -16,6 +16,12 @@
       :row-selection="rowSelection"
       :rowKey="rowKey"
       :scroll="{ x: scrollX }"
+      :customRow="(record, index) => {
+        if(!tableRowCrossColor){
+          return {};
+        }
+        return { style: { 'background-color': index % 2 == 0 ? '#FCFCFC' : '#FFFFFF'} }
+      }"
     >
       <!-- 自定义列插槽， 参考：https://github.com/feseed/admin-antd-vue/blob/master/src/components/ShTable.vue  -->
       <!--  eslint-disable-next-line -->
@@ -41,7 +47,8 @@ export default {
     pageSize: { type: Number, default: 10 }, // 默认每页条数
     rowSelection: Object, // checkbox选择
     rowKey: { type: [String, Function] }, // 定义rowKey 如果不定义将会出现（树状结构出问题， checkbox不消失等）
-    scrollX: { type: Number, default: 800 } // 表格显示滚动条的宽度
+    scrollX: { type: Number, default: 500 }, // 表格显示滚动条的宽度
+    tableRowCrossColor: { type: Boolean, default: false } // 是隔行换色
   },
 
   data () {
@@ -117,3 +124,23 @@ export default {
   }
 }
 </script>
+<style lang="less">
+
+// 调整antdv 的table默认padding高度
+.ant-table-fixed{
+  tr{
+    th{
+      padding: 8px 8px !important;
+    }
+    th:first-child{ // 第一个表格 左填充16， 其他为8
+      padding-left: 16px !important;
+    }
+    td{
+      padding: 8px 8px !important;
+    }
+    td:first-child{
+      padding-left: 16px !important;
+    }
+  }
+}
+</style>

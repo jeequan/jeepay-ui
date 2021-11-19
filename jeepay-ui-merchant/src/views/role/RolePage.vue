@@ -27,7 +27,6 @@
         :tableColumns="tableColumns"
         :searchData="searchData"
         @btnLoadClose="btnLoading=false"
-        :scrollX="500"
         rowKey="roleId"
       >
         <template slot="roleIdSlot" slot-scope="{record}"><b>{{ record.roleId }}</b></template> <!-- 自定义插槽 -->

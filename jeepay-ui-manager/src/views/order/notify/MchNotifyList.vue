@@ -55,7 +55,6 @@
         :searchData="searchData"
         :rowSelection="rowSelection"
         rowKey="orderId"
-        :scrollX="1050"
       >
         <template slot="stateSlot" slot-scope="{record}">
           <a-tag

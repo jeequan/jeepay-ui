@@ -27,7 +27,6 @@
           :tableColumns="tableColumns"
           :searchData="searchData"
           @btnLoadClose="btnLoading=false"
-          :scrollX="500"
           rowKey="receiverGroupId"
       >
         <template slot="opSlot" slot-scope="{record}">  <!-- 操作列插槽 -->

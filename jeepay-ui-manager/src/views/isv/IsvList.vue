@@ -32,7 +32,6 @@
         :reqTableDataFunc="reqTableDataFunc"
         :tableColumns="tableColumns"
         :searchData="searchData"
-        :scrollX="1100"
         rowKey="isvNo"
       >
         <template slot="isvNameSlot" slot-scope="{record}"><b>{{ record.isvName }}</b></template> <!-- 自定义插槽 -->

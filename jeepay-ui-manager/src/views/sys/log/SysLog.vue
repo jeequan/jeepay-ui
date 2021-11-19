@@ -45,7 +45,6 @@
         :searchData="searchData"
         :rowSelection="rowSelection"
         rowKey="sysLogId"
-        :scrollX="1200"
       >
         <template slot="userNameSlot" slot-scope="{record}"><b>{{ record.userName }}</b></template> <!-- 自定义插槽 -->
         <template slot="sysTypeSlot" slot-scope="{record}">

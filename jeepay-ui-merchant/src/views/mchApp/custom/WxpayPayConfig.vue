@@ -11,11 +11,6 @@
     <a-form-model ref="infoFormModel" :model="saveObject" layout="vertical" :rules="rules">
       <a-row :gutter="16">
         <a-col :span="12">
-          <a-form-model-item label="支付接口费率" prop="ifRate">
-            <a-input v-model="saveObject.ifRate" placeholder="请输入" suffix="%" />
-          </a-form-model-item>
-        </a-col>
-        <a-col :span="12">
           <a-form-model-item label="状态" prop="state">
             <a-radio-group v-model="saveObject.state">
               <a-radio :value="1">
@@ -157,7 +152,7 @@ export default {
       saveObject: {}, // 保存的对象
       ifParams: { apiVersion: 'V2' }, // 参数配置对象
       rules: {
-        ifRate: [{ required: false, pattern: /^(([1-9]{1}\d{0,1})|(0{1}))(\.\d{1,4})?$/, message: '请输入0-100之间的数字，最多四位小数', trigger: 'blur' }]
+        // ifRate: [{ required: false, pattern: /^(([1-9]{1}\d{0,1})|(0{1}))(\.\d{1,4})?$/, message: '请输入0-100之间的数字，最多四位小数', trigger: 'blur' }]
       },
       ifParamsRules: {
         mchId: [{ trigger: 'blur',
@@ -290,7 +285,7 @@ export default {
             const reqParams = {}
             reqParams.infoId = that.saveObject.infoId
             reqParams.ifCode = that.saveObject.ifCode
-            reqParams.ifRate = that.saveObject.ifRate
+            // reqParams.ifRate = that.saveObject.ifRate
             reqParams.state = that.saveObject.state
             reqParams.remark = that.saveObject.remark
             // 支付参数配置不能为空

@@ -30,7 +30,7 @@ export default {
       }
       return <div style="display:flex; justify-content: space-evenly;"> {firstEL}
                   <a-dropdown>
-                      <a-button style="line-height:32px" type="link" class="ant-dropdown-link">更多<a-icon type="down" /></a-button>
+                      <a-button style="" type="link" class="ant-dropdown-link">更多<a-icon type="down" /></a-button>
                       <a-menu slot="overlay">
                         {menuEL}
                       </a-menu>
@@ -40,3 +40,9 @@ export default {
   }
 }
 </script>
+<style lang="less" scoped>
+
+//当前页面的按钮， 减少padding
+button { padding:  8px !important;}
+
+</style>

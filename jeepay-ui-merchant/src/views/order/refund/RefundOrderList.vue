@@ -48,7 +48,7 @@
         :reqTableDataFunc="reqTableDataFunc"
         :tableColumns="tableColumns"
         rowKey="refundOrderId"
-        :scrollX="1300"
+        :tableRowCrossColor="true"
       >
         <template slot="payAmountSlot" slot-scope="{record}"><b>￥{{ record.payAmount/100 }}</b></template> <!-- 自定义插槽 -->
         <template slot="refundAmountSlot" slot-scope="{record}"><b>￥{{ record.refundAmount/100 }}</b></template> <!-- 自定义插槽 -->
@@ -65,14 +65,32 @@
         <template slot="payOrderSlot" slot-scope="{record}">
           <div class="order-list">
             <p><span style="color:#729ED5;background:#e7f5f7">支付</span>{{ record.payOrderId }}</p>
-            <p v-if="record.channelPayOrderNo"><span style="color:#fff;background:#E09C4D">渠道</span>{{ record.channelPayOrderNo }}</p>
+            <p v-if="record.channelPayOrderNo" style="margin-bottom: 0;">
+              <span style="color:#fff;background:#E09C4D">渠道</span>
+              <a-tooltip placement="bottom" style="font-weight: normal;" v-if="record.channelPayOrderNo.length > record.payOrderId.length">
+                <template slot="title">
+                  <span>{{ record.channelPayOrderNo }}</span>
+                </template>
+                {{ changeStr2ellipsis(record.channelPayOrderNo, record.payOrderId.length) }}
+              </a-tooltip>
+              <span style="font-weight: normal;" v-else>{{ record.channelPayOrderNo }}</span>
+            </p>
           </div>
         </template>
 
         <template slot="refundOrderSlot" slot-scope="{record}">
           <div class="order-list">
             <p><span style="color:#729ED5;background:#e7f5f7">退款</span>{{ record.refundOrderId }}</p>
-            <p><span style="color:#56cf56;background:#d8eadf">商户</span>{{ record.mchRefundNo }}</p>
+            <p style="margin-bottom: 0;">
+              <span style="color:#56cf56;background:#d8eadf">商户</span>
+              <a-tooltip placement="bottom" style="font-weight: normal;" v-if="record.mchRefundNo.length > record.refundOrderId.length">
+                <template slot="title">
+                  <span>{{ record.mchRefundNo }}</span>
+                </template>
+                {{ changeStr2ellipsis(record.mchRefundNo, record.refundOrderId.length) }}
+              </a-tooltip>
+              <span style="font-weight: normal;" v-else>{{ record.mchRefundNo }}</span>
+            </p>
           </div>
         </template>
         <template slot="opSlot" slot-scope="{record}">  <!-- 操作列插槽 -->
@@ -362,6 +380,10 @@
       },
       onClose () {
         this.visible = false
+      },
+      changeStr2ellipsis (orderNo, baseLength) {
+        const halfLengh = parseInt(baseLength / 2)
+        return orderNo.substring(0, halfLengh - 1) + '...' + orderNo.substring(orderNo.length - halfLengh, orderNo.length)
       }
     }
   }

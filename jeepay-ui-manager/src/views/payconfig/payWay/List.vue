@@ -24,7 +24,6 @@
         :tableColumns="tableColumns"
         :searchData="searchData"
         rowKey="wayCode"
-        :scrollX="500"
       >
         <template slot="wayCodeSlot" slot-scope="{record}"><b>{{ record.wayCode }}</b></template> <!-- 自定义插槽 -->
         <template slot="opSlot" slot-scope="{record}">  <!-- 操作列插槽 -->

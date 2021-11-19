@@ -20,6 +20,14 @@
             <jeepay-text-up :placeholder="'商户号'" :msg="searchData.mchNo" v-model="searchData.mchNo" />
             <jeepay-text-up :placeholder="'服务商号'" :msg="searchData.isvNo" v-model="searchData.isvNo" />
             <jeepay-text-up :placeholder="'应用AppId'" :msg="searchData.appId" v-model="searchData.appId"/>
+            <a-form-item v-if="$access('ENT_PAY_ORDER_SEARCH_PAY_WAY')" label="" class="table-head-layout">
+              <a-select v-model="searchData.wayCode" placeholder="支付方式" default-value="">
+                <a-select-option value="">全部</a-select-option>
+                <a-select-option :key="item.wayCode" v-for="item in payWayList" :value="item.wayCode">
+                  {{ item.wayName }}
+                </a-select-option>
+              </a-select>
+            </a-form-item>
             <a-form-item label="" class="table-head-layout">
               <a-select v-model="searchData.state" placeholder="支付状态" default-value="">
                 <a-select-option value="">全部</a-select-option>
@@ -37,14 +45,6 @@
                 <a-select-option value="">全部</a-select-option>
                 <a-select-option value="0">未发送</a-select-option>
                 <a-select-option value="1">已发送</a-select-option>
-              </a-select>
-            </a-form-item>
-            <a-form-item v-if="$access('ENT_PAY_ORDER_SEARCH_PAY_WAY')" label="" class="table-head-layout">
-              <a-select v-model="searchData.wayCode" placeholder="支付方式" default-value="">
-                <a-select-option value="">全部</a-select-option>
-                <a-select-option :key="item.wayCode" v-for="item in payWayList" :value="item.wayCode">
-                  {{ item.wayName }}
-                </a-select-option>
               </a-select>
             </a-form-item>
             <a-form-item label="" class="table-head-layout">
@@ -73,31 +73,24 @@
         :tableColumns="tableColumns"
         :searchData="searchData"
         rowKey="payOrderId"
-        :scrollX="1350"
+        :tableRowCrossColor="true"
       >
         <template slot="amountSlot" slot-scope="{record}"><b>￥{{ record.amount/100 }}</b></template> <!-- 自定义插槽 -->
+        <template slot="refundAmountSlot" slot-scope="{record}">￥{{ record.refundAmount/100 }}</template> <!-- 自定义插槽 -->
         <template slot="stateSlot" slot-scope="{record}">
           <a-tag
             :key="record.state"
-            :color="record.state === 0?'blue':record.state === 1?'orange':record.state === 2?'green':'volcano'"
+            :color="record.state === 0?'blue':record.state === 1?'orange':record.state === 2?'green':record.state === 6?'':'volcano'"
           >
             {{ record.state === 0?'订单生成':record.state === 1?'支付中':record.state === 2?'支付成功':record.state === 3?'支付失败':record.state === 4?'已撤销':record.state === 5?'已退款':record.state === 6?'订单关闭':'未知' }}
           </a-tag>
         </template>
-        <template slot="refundStateSlot" slot-scope="{record}">
-          <a-tag
-            :key="record.refundState"
-            :color="record.refundState === 0?'blue':record.refundState === 1?'orange':record.refundState === 2?'green':'volcano'"
-          >
-            {{ record.refundState === 0?'未发起':record.refundState === 1?'部分退款':record.refundState === 2?'全额退款':'未知' }}
-          </a-tag>
-        </template>
         <template slot="divisionStateSlot" slot-scope="{record}">
-          <a-tag color="blue" v-if="record.divisionState == 0">未发生分账</a-tag>
+          <span v-if="record.divisionState == 0"> - </span>
           <a-tag color="orange" v-else-if="record.divisionState == 1">待分账</a-tag>
           <a-tag color="red" v-else-if="record.divisionState == 2">分账处理中</a-tag>
           <a-tag color="green" v-else-if="record.divisionState == 3">任务已结束</a-tag>
-          <a-tag color="#f50" v-else>未知</a-tag>
+          <span v-else>未知</span>
         </template>
         <template slot="notifySlot" slot-scope="{record}">
           <a-badge :status="record.notifyState === 1?'processing':'error'" :text="record.notifyState === 1?'已发送':'未发送'" />
@@ -105,14 +98,31 @@
         <template slot="orderSlot" slot-scope="{record}">
           <div class="order-list">
             <p><span style="color:#729ED5;background:#e7f5f7">支付</span>{{ record.payOrderId }}</p>
-            <p><span style="color:#56cf56;background:#d8eadf">商户</span>{{ record.mchOrderNo }}</p>
-            <p v-if="record.channelOrderNo"><span style="color:#fff;background:#E09C4D">渠道</span>{{ record.channelOrderNo }}</p>
+            <p style="margin-bottom: 0">
+              <span style="color:#56cf56;background:#d8eadf">商户</span>
+              <a-tooltip placement="bottom" style="font-weight: normal;" v-if="record.mchOrderNo.length > record.payOrderId.length">
+                <template slot="title">
+                  <span>{{ record.mchOrderNo }}</span>
+                </template>
+                {{ changeStr2ellipsis(record.mchOrderNo, record.payOrderId.length) }}
+              </a-tooltip>
+              <span style="font-weight: normal;" v-else>{{ record.mchOrderNo }}</span>
+            </p>
+            <p v-if="record.channelOrderNo" style="margin-bottom: 0;margin-top: 10px">
+              <span style="color:#fff;background:#E09C4D;">渠道</span>
+              <a-tooltip placement="bottom" style="font-weight: normal;" v-if="record.channelOrderNo.length > record.payOrderId.length">
+                <template slot="title">
+                  <span>{{ record.channelOrderNo }}</span>
+                </template>
+                {{ changeStr2ellipsis(record.channelOrderNo, record.payOrderId.length) }}
+              </a-tooltip>
+              <span style="font-weight: normal;" v-else>{{ record.channelOrderNo }}</span>
+            </p>
           </div>
         </template>
         <template slot="opSlot" slot-scope="{record}">  <!-- 操作列插槽 -->
           <JeepayTableColumns>
             <a-button type="link" v-if="$access('ENT_PAY_ORDER_VIEW')" @click="detailFunc(record.payOrderId)">详情</a-button>
-
             <a-button type="link" v-if="$access('ENT_PAY_ORDER_REFUND')" style="color: red" v-show="(record.state === 2 && record.refundState !== 2)" @click="openFunc(record, record.payOrderId)">退款</a-button>
           </JeepayTableColumns>
         </template>
@@ -193,7 +203,7 @@
           <a-col :sm="12">
             <a-descriptions>
               <a-descriptions-item label="订单状态">
-                <a-tag :color="detailData.state === 0?'blue':detailData.state === 1?'orange':detailData.state === 2?'green':'volcano'">
+                <a-tag :color="detailData.state === 0?'blue':detailData.state === 1?'orange':detailData.state === 2?'green':detailData.state === 6?'':'volcano'">
                   {{ detailData.state === 0?'订单生成':detailData.state === 1?'支付中':detailData.state === 2?'支付成功':detailData.state === 3?'支付失败':detailData.state === 4?'已撤销':detailData.state === 5?'已退款':detailData.state === 6?'订单关闭':'未知' }}
                 </a-tag>
               </a-descriptions-item>
@@ -402,19 +412,19 @@ import moment from 'moment'
 
 // eslint-disable-next-line no-unused-vars
 const tableColumns = [
-  { key: 'amount', title: '支付金额', ellipsis: true, width: '130px', fixed: 'left', scopedSlots: { customRender: 'amountSlot' } },
-  { key: 'mchFeeAmount', dataIndex: 'mchFeeAmount', title: '手续费', customRender: (text) => '￥' + (text / 100).toFixed(2) },
-  { key: 'mchName', title: '商户名称', dataIndex: 'mchName', ellipsis: true, width: '100px' },
-  { key: 'orderNo', title: '订单号', scopedSlots: { customRender: 'orderSlot' }, width: '260px' },
+  { key: 'amount', title: '支付金额', ellipsis: true, width: 108, fixed: 'left', scopedSlots: { customRender: 'amountSlot' } },
+  { key: 'refundAmount', title: '退款金额', width: 108, scopedSlots: { customRender: 'refundAmountSlot' } },
+  { key: 'mchFeeAmount', dataIndex: 'mchFeeAmount', title: '手续费', customRender: (text) => '￥' + (text / 100).toFixed(2), width: 100 },
+  { key: 'mchName', title: '商户名称', dataIndex: 'mchName', ellipsis: true, width: 100 },
+  { key: 'orderNo', title: '订单号', scopedSlots: { customRender: 'orderSlot' }, width: 210 },
   // { key: 'payOrderId', title: '支付订单号', dataIndex: 'payOrderId' },
   // { key: 'mchOrderNo', title: '商户订单号', dataIndex: 'mchOrderNo' },
-  { key: 'wayName', title: '支付方式', dataIndex: 'wayName', width: 150 },
+  { key: 'wayName', title: '支付方式', dataIndex: 'wayName', width: 120 },
   { key: 'state', title: '支付状态', scopedSlots: { customRender: 'stateSlot' }, width: 100 },
-  { key: 'refundState', title: '退款状态', scopedSlots: { customRender: 'refundStateSlot' }, width: 100 },
-  { key: 'divisionState', title: '分账状态', scopedSlots: { customRender: 'divisionStateSlot' } },
   { key: 'notifyState', title: '回调状态', scopedSlots: { customRender: 'notifySlot' }, width: 100 },
-  { key: 'createdAt', dataIndex: 'createdAt', title: '创建日期', width: 180 },
-  { key: 'op', title: '操作', width: '160px', fixed: 'right', align: 'center', scopedSlots: { customRender: 'opSlot' } }
+  { key: 'divisionState', title: '分账状态', scopedSlots: { customRender: 'divisionStateSlot' }, width: 100 },
+  { key: 'createdAt', dataIndex: 'createdAt', title: '创建日期', width: 120 },
+  { key: 'op', title: '操作', width: 120, fixed: 'right', align: 'center', scopedSlots: { customRender: 'opSlot' } }
 ]
 
 export default {
@@ -482,6 +492,10 @@ export default {
       req.list(API_URL_PAYWAYS_LIST, { 'pageSize': -1 }).then(res => { // 支付方式下拉列表
         that.payWayList = res.records
       })
+    },
+    changeStr2ellipsis (orderNo, baseLength) {
+      const halfLengh = parseInt(baseLength / 2)
+      return orderNo.substring(0, halfLengh - 1) + '...' + orderNo.substring(orderNo.length - halfLengh, orderNo.length)
     }
   }
 }
