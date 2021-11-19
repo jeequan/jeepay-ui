@@ -126,17 +126,20 @@ export default {
 </script>
 <style lang="less">
 
-// 表格默认左侧10px, 表格内padding 8px
-.ant-table-body-outer { margin-left: 10px }
-
 // 调整antdv 的table默认padding高度
 .ant-table-fixed{
   tr{
     th{
       padding: 8px 8px !important;
     }
+    th:first-child{ // 第一个表格 左填充16， 其他为8
+      padding-left: 16px !important;
+    }
     td{
       padding: 8px 8px !important;
+    }
+    td:first-child{
+      padding-left: 16px !important;
     }
   }
 }
