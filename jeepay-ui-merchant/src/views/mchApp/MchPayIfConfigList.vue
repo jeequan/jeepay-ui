@@ -169,7 +169,9 @@ export default {
     },
     // 刷新支付接口card列表
     refCardList () {
-      this.$refs.infoCard.refCardList()
+      if (this.$refs.infoCard) {
+        this.$refs.infoCard.refCardList()
+      }
     },
     // 请求支付通道数据
     reqTableDataFunc (params) {
