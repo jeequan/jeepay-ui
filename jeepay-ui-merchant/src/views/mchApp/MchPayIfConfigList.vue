@@ -75,6 +75,7 @@
           :reqTableDataFunc="reqTableDataFunc"
           :tableColumns="tableColumns"
           :searchData="searchData2"
+          rowKey="wayCode"
         >
           <template slot="stateSlot" slot-scope="{record}">
             <a-badge :status="record.passageState === 0?'error':'processing'" :text="record.passageState === 0?'禁用':'启用'" />
