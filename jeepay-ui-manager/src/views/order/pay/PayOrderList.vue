@@ -73,7 +73,7 @@
         :tableColumns="tableColumns"
         :searchData="searchData"
         rowKey="payOrderId"
-        :scrollX="1350"
+        :scrollX="1250"
         :tableRowCrossColor="true"
       >
         <template slot="amountSlot" slot-scope="{record}"><b>￥{{ record.amount/100 }}</b></template> <!-- 自定义插槽 -->
@@ -413,19 +413,19 @@ import moment from 'moment'
 
 // eslint-disable-next-line no-unused-vars
 const tableColumns = [
-  { key: 'amount', title: '支付金额', ellipsis: true, width: '130px', fixed: 'left', scopedSlots: { customRender: 'amountSlot' } },
-  { key: 'refundAmount', title: '退款金额', width: '130px', scopedSlots: { customRender: 'refundAmountSlot' } },
-  { key: 'mchFeeAmount', dataIndex: 'mchFeeAmount', title: '手续费', customRender: (text) => '￥' + (text / 100).toFixed(2) },
-  { key: 'mchName', title: '商户名称', dataIndex: 'mchName', ellipsis: true, width: '100px' },
-  { key: 'orderNo', title: '订单号', scopedSlots: { customRender: 'orderSlot' }, width: '260px' },
+  { key: 'amount', title: '支付金额', ellipsis: true, width: 108, fixed: 'left', scopedSlots: { customRender: 'amountSlot' } },
+  { key: 'refundAmount', title: '退款金额', width: 108, scopedSlots: { customRender: 'refundAmountSlot' } },
+  { key: 'mchFeeAmount', dataIndex: 'mchFeeAmount', title: '手续费', customRender: (text) => '￥' + (text / 100).toFixed(2), width: 100 },
+  { key: 'mchName', title: '商户名称', dataIndex: 'mchName', ellipsis: true, width: 100 },
+  { key: 'orderNo', title: '订单号', scopedSlots: { customRender: 'orderSlot' }, width: 210 },
   // { key: 'payOrderId', title: '支付订单号', dataIndex: 'payOrderId' },
   // { key: 'mchOrderNo', title: '商户订单号', dataIndex: 'mchOrderNo' },
-  { key: 'wayName', title: '支付方式', dataIndex: 'wayName', width: 150 },
+  { key: 'wayName', title: '支付方式', dataIndex: 'wayName', width: 120 },
   { key: 'state', title: '支付状态', scopedSlots: { customRender: 'stateSlot' }, width: 100 },
-  { key: 'divisionState', title: '分账状态', scopedSlots: { customRender: 'divisionStateSlot' }, align: 'center' },
   { key: 'notifyState', title: '回调状态', scopedSlots: { customRender: 'notifySlot' }, width: 100 },
-  { key: 'createdAt', dataIndex: 'createdAt', title: '创建日期', width: 180 },
-  { key: 'op', title: '操作', width: '160px', fixed: 'right', align: 'center', scopedSlots: { customRender: 'opSlot' } }
+  { key: 'divisionState', title: '分账状态', scopedSlots: { customRender: 'divisionStateSlot' }, width: 100 },
+  { key: 'createdAt', dataIndex: 'createdAt', title: '创建日期', width: 120 },
+  { key: 'op', title: '操作', width: 120, fixed: 'right', align: 'center', scopedSlots: { customRender: 'opSlot' } }
 ]
 
 export default {

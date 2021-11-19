@@ -18,8 +18,8 @@
       :scroll="{ x: scrollX }"
       :customRow="(record, index) => {
         if(!tableRowCrossColor){
-            return {};
-         }
+          return {};
+        }
         return { style: { 'background-color': index % 2 == 0 ? '#FCFCFC' : '#FFFFFF'} }
       }"
     >
@@ -125,14 +125,18 @@ export default {
 }
 </script>
 <style lang="less">
+
+// 表格默认左侧10px, 表格内padding 8px
+.ant-table-body-outer { margin-left: 10px }
+
 // 调整antdv 的table默认padding高度
 .ant-table-fixed{
   tr{
     th{
-      padding: 8px 16px !important;
+      padding: 8px 8px !important;
     }
     td{
-      padding: 8px 16px !important;
+      padding: 8px 8px !important;
     }
   }
 }

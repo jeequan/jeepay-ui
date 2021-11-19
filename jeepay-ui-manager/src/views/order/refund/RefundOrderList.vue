@@ -54,9 +54,8 @@
         :reqTableDataFunc="reqTableDataFunc"
         :tableColumns="tableColumns"
         :searchData="searchData"
-        :rowSelection="rowSelection"
         rowKey="refundOrderId"
-        :scrollX="1350"
+        :scrollX="1250"
         :tableRowCrossColor="true"
       >
         <template slot="payAmountSlot" slot-scope="{record}"><b>￥{{ record.payAmount/100 }}</b></template> <!-- 自定义插槽 -->
@@ -328,16 +327,13 @@
 
   // eslint-disable-next-line no-unused-vars
   const tableColumns = [
-    { key: 'payAmount', title: '支付金额', ellipsis: true, fixed: 'left', scopedSlots: { customRender: 'payAmountSlot' }, width: '150px' },
-    { key: 'refundAmount', title: '退款金额', ellipsis: true, scopedSlots: { customRender: 'refundAmountSlot' }, width: '150px' },
-    { key: 'pay', title: '退款订单号', scopedSlots: { customRender: 'refundOrderSlot' }, width: '260px' },
-    { key: 'refund', title: '支付订单号', scopedSlots: { customRender: 'payOrderSlot' }, width: '280px' },
-    // { key: 'refundOrderId', title: '退款订单号', dataIndex: 'refundOrderId' },
-    // { key: 'payOrderId', title: '支付订单号', dataIndex: 'payOrderId' },
-    // { key: 'mchRefundNo', title: '商户退款单号', dataIndex: 'mchRefundNo' },
-    { key: 'state', title: '状态', scopedSlots: { customRender: 'stateSlot' } },
-    { key: 'createdAt', dataIndex: 'createdAt', title: '创建日期' },
-    { key: 'op', title: '操作', width: '100px', fixed: 'right', align: 'center', scopedSlots: { customRender: 'opSlot' } }
+    { key: 'payAmount', title: '支付金额', ellipsis: true, fixed: 'left', scopedSlots: { customRender: 'payAmountSlot' }, width: 100 },
+    { key: 'refundAmount', title: '退款金额', ellipsis: true, scopedSlots: { customRender: 'refundAmountSlot' }, width: 100 },
+    { key: 'pay', title: '退款订单号', scopedSlots: { customRender: 'refundOrderSlot' }, width: 220 },
+    { key: 'refund', title: '支付订单号', scopedSlots: { customRender: 'payOrderSlot' }, width: 220 },
+    { key: 'state', title: '状态', scopedSlots: { customRender: 'stateSlot' }, width: 100 },
+    { key: 'createdAt', dataIndex: 'createdAt', title: '创建日期', width: 120 },
+    { key: 'op', title: '操作', width: 100, fixed: 'right', scopedSlots: { customRender: 'opSlot' } }
   ]
 
   export default {
@@ -356,17 +352,6 @@
       }
     },
     computed: {
-      rowSelection () {
-        const that = this
-        return {
-          onChange: (selectedRowKeys, selectedRows) => {
-            that.selectedIds = [] // 清空选中数组
-            selectedRows.forEach(function (data) { // 赋值选中参数
-              that.selectedIds.push(data.payOrderId)
-            })
-          }
-        }
-      }
     },
     mounted () {
     },
