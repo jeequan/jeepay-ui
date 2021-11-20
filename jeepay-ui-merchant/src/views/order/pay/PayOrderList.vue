@@ -113,14 +113,6 @@
           </div>
         </template>
 
-        <template slot="orderSlot" slot-scope="{record}">
-          <div class="order-list">
-            <p><span style="color:#729ED5;background:#e7f5f7">支付</span>{{ record.payOrderId }}</p>
-            <p><span style="color:#56cf56;background:#d8eadf">商户</span>{{ record.mchOrderNo }}</p>
-            <p v-if="record.channelOrderNo"><span style="color:#fff;background:#E09C4D">渠道</span>{{ record.channelOrderNo }}</p>
-          </div>
-        </template>
-
         <template slot="opSlot" slot-scope="{record}">  <!-- 操作列插槽 -->
           <JeepayTableColumns>
             <a-button type="link" v-if="$access('ENT_PAY_ORDER_VIEW')" @click="detailFunc(record.payOrderId)">详情</a-button>
