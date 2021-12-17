@@ -69,14 +69,18 @@
             </div>
           </div>
 
-          <div class="paydemo-type-name article-title" v-show="showJhTitle()">聚合支付</div>
+          <div class="paydemo-type-name article-title" v-show="showQtTitle()">其它支付</div>
           <div class="paydemo-type-body">
             <div class="paydemo-type color-change" v-show="appPaywayList.indexOf('WX_JSAPI') >= 0 || appPaywayList.indexOf('ALI_JSAPI') >= 0" @click="changeCurrentWayCode('QR_CASHIER', 'codeImgUrl')" :class="{this:(currentWayCode === 'QR_CASHIER')}">
-              <img src="@/assets/payTestImg/qr_cashier.svg" class="paydemo-type-img"><span class="color-change">聚合扫码(用户扫商家)</span>
+              <img src="@/assets/payTestImg/qr_cashier.svg" class="paydemo-type-img"><span class="color-change">聚合主扫</span>
             </div>
 
             <div class="paydemo-type color-change" v-show="appPaywayList.indexOf('WX_BAR') >= 0 || appPaywayList.indexOf('ALI_BAR') >= 0" @click="changeCurrentWayCode('AUTO_BAR', 'codeImgUrl')" :class="{this:(currentWayCode === 'AUTO_BAR')}">
-              <img src="@/assets/payTestImg/auto_bar.svg" class="paydemo-type-img"><span class="color-change">聚合条码(商家扫用户)</span>
+              <img src="@/assets/payTestImg/auto_bar.svg" class="paydemo-type-img"><span class="color-change">聚合被扫</span>
+            </div>
+
+            <div class="paydemo-type color-change" v-show="appPaywayList.indexOf('PP_PC') >= 0" @click="changeCurrentWayCode('PP_PC', 'payurl')" :class="{this:(currentWayCode === 'PP_PC')}">
+              <img src="@/assets/payTestImg/pp_pc.svg" class="paydemo-type-img"><span class="color-change">PayPal支付</span>
             </div>
 
           </div>
@@ -298,8 +302,8 @@ export default {
         }
     },
     // 聚合支付标题显示
-    showJhTitle () {
-      if (this.appPaywayList.toString().indexOf('WX') !== -1 || this.appPaywayList.toString().indexOf('ALI') !== -1) {
+    showQtTitle () {
+      if (this.appPaywayList.toString().indexOf('WX') !== -1 || this.appPaywayList.toString().indexOf('ALI') !== -1 || this.appPaywayList.toString().indexOf('PP_PC') !== -1) {
           return true
         } else {
           return false
