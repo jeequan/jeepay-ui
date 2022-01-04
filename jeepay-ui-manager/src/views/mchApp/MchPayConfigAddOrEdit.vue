@@ -38,8 +38,7 @@
       <a-row :gutter="16">
         <a-col v-for="(item, key) in mchParams" :key="key" :span="item.type === 'text' ? 12 : 24">
           <a-form-model-item :label="item.desc" :prop="item.name" v-if="item.type === 'text' || item.type === 'textarea'">
-            <a-input v-if="item.star === '1'" v-model="ifParams[item.name]" :placeholder="ifParams[item.name + '_ph']" :type="item.type" />
-            <a-input v-else v-model="ifParams[item.name]" placeholder="请输入" :type="item.type" />
+            <a-input v-model="ifParams[item.name]" :placeholder="item.star === '1' ? ifParams[item.name + '_ph'] : '请输入'" :type="item.type" />
           </a-form-model-item>
           <a-form-model-item :label="item.desc" :prop="item.name" v-else-if="item.type === 'radio'">
             <a-radio-group v-model="ifParams[item.name]">
@@ -156,7 +155,9 @@ export default {
 
           if (item.star === '1') {
             that.ifParams[item.name + '_ph'] = that.ifParams[item.name] ? that.ifParams[item.name] : '请输入'
-            that.ifParams[item.name] = ''
+            if (that.ifParams[item.name]) {
+              that.ifParams[item.name] = ''
+            }
           }
 
           newItems.push({

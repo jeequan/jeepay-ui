@@ -244,7 +244,9 @@ export default {
 
             if (item.star === '1') {
               that.ifParams[item.name + '_ph'] = that.ifParams[item.name] ? that.ifParams[item.name] : '请输入'
-              that.ifParams[item.name] = ''
+              if (that.ifParams[item.name]) {
+                that.ifParams[item.name] = ''
+              }
             }
 
             newItems.push({
