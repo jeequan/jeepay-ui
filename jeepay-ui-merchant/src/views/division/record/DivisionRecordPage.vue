@@ -128,7 +128,7 @@ export default {
     // 重新发起分账
     redivFunc: function (recordId) {
       const that = this
-      this.$infoBox.confirmPrimary('确认重新分账?', '重新分账将按照订单纬度重新发起（仅限分账失败订单）。', () => {
+      this.$infoBox.confirmPrimary('确认重新分账?', '重新分账将按照订单维度重新发起（仅限分账失败订单）。', () => {
         resendDivision(recordId).then(res => {
           that.$refs.infoTable.refTable(false)
           that.$message.warning('请等待接口最新状态')
