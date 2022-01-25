@@ -59,6 +59,7 @@
         <template slot="opSlot" slot-scope="{record}">  <!-- 操作列插槽 -->
           <JeepayTableColumns>
             <a-button type="link" v-if="$access('ENT_DIVISION_RECORD_VIEW')" @click="detailFunc(record.recordId)">详情</a-button>
+            <a-button type="link" v-if="record.state == 2 && $access('ENT_DIVISION_RECORD_RESEND')" @click="redivFunc(record.recordId)">重试</a-button>
           </JeepayTableColumns>
         </template>
       </JeepayTable>
@@ -72,7 +73,7 @@
 import JeepayTextUp from '@/components/JeepayTextUp/JeepayTextUp' // 文字上移组件
 import JeepayTable from '@/components/JeepayTable/JeepayTable'
 import JeepayTableColumns from '@/components/JeepayTable/JeepayTableColumns'
-import { API_URL_PAY_ORDER_DIVISION_RECORD_LIST, req } from '@/api/manage'
+import { API_URL_PAY_ORDER_DIVISION_RECORD_LIST, req, resendDivision } from '@/api/manage'
 import moment from 'moment'
 import Detail from './Detail'
 
@@ -123,6 +124,16 @@ export default {
     },
     detailFunc: function (recordId) {
       this.$refs.recordDetail.show(recordId)
+    },
+    // 重新发起分账
+    redivFunc: function (recordId) {
+      const that = this
+      this.$infoBox.confirmPrimary('确认重新分账?', '重新分账将按照订单纬度重新发起（仅限分账失败订单）。', () => {
+        resendDivision(recordId).then(res => {
+          that.$refs.infoTable.refTable(false)
+          that.$message.warning('请等待接口最新状态')
+        })
+      })
     },
     moment,
     onChange (date, dateString) {

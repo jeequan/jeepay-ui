@@ -297,3 +297,11 @@ export function payOrderRefund (payOrderId, refundAmount, refundReason) {
     data: { refundAmount, refundReason }
   })
 }
+
+/** 分账重试 */
+export function resendDivision (recordId) {
+  return request.request({
+    url: '/api/division/records/resend/' + recordId,
+    method: 'POST'
+  })
+}
