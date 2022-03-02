@@ -56,11 +56,6 @@
             <a-input v-model="ifParams.oauth2Url" placeholder="请输入" />
           </a-form-model-item>
         </a-col>
-        <a-col span="24">
-          <a-form-model-item label="API密钥" prop="key">
-            <a-input v-model="ifParams.key" :placeholder="ifParams.key_ph" type="textarea" />
-          </a-form-model-item>
-        </a-col>
         <a-col span="12">
           <a-form-model-item label="微信支付API版本" prop="apiVersion">
             <a-radio-group v-model="ifParams.apiVersion" defaultValue="V2">
@@ -70,7 +65,12 @@
           </a-form-model-item>
         </a-col>
         <a-col span="24">
-          <a-form-model-item label="API V3秘钥" prop="apiV3Key">
+          <a-form-model-item label="APIv2密钥" prop="key">
+            <a-input v-model="ifParams.key" :placeholder="ifParams.key_ph" type="textarea" />
+          </a-form-model-item>
+        </a-col>
+        <a-col span="24">
+          <a-form-model-item label="APIv3秘钥" prop="apiV3Key">
             <a-input v-model="ifParams.apiV3Key" :placeholder="ifParams.apiV3Key_ph" type="textarea" />
           </a-form-model-item>
         </a-col>
@@ -80,7 +80,7 @@
           </a-form-model-item>
         </a-col>
         <a-col span="24">
-          <a-form-model-item label="API证书(.p12格式)" prop="cert">
+          <a-form-model-item label="API证书(apiclient_cert.p12)" prop="cert">
             <a-input v-model="ifParams.cert" disabled="disabled" />
             <JeepayUpload
               :action="action"
@@ -94,7 +94,21 @@
           </a-form-model-item>
         </a-col>
         <a-col span="24">
-          <a-form-model-item label="私钥文件(.pem格式)" prop="apiClientKey">
+          <a-form-model-item label="证书文件(apiclient_cert.pem)" prop="apiClientCert">
+            <a-input v-model="ifParams.apiClientCert" disabled="disabled" />
+            <JeepayUpload
+              :action="action"
+              :fileUrl="ifParams.apiClientCert"
+              @uploadSuccess="uploadSuccess($event, 'apiClientCert')"
+            >
+              <template slot="uploadSlot" slot-scope="{loading}">
+                <a-button style="marginTop:5px;"> <a-icon :type="loading ? 'loading' : 'upload'" /> {{ loading ? '正在上传' : '点击上传' }} </a-button>
+              </template>
+            </JeepayUpload>
+          </a-form-model-item>
+        </a-col>
+        <a-col span="24">
+          <a-form-model-item label="私钥文件(apiclient_key.pem)" prop="apiClientKey">
             <a-input v-model="ifParams.apiClientKey" disabled="disabled" />
             <JeepayUpload
               :action="action"
@@ -197,10 +211,24 @@ export default {
             }
             callback()
         } }],
+        cert: [{ trigger: 'blur',
+          validator: (rule, value, callback) => {
+            if (this.ifParams.apiVersion === 'V3' && this.isAdd && !value) {
+              callback(new Error('请上传API证书(apiclient_cert.p12)'))
+            }
+            callback()
+          } }],
+        apiClientCert: [{ trigger: 'blur',
+          validator: (rule, value, callback) => {
+            if (this.ifParams.apiVersion === 'V3' && this.isAdd && !value) {
+              callback(new Error('请上传证书文件(apiclient_cert.pem)'))
+            }
+            callback()
+          } }],
         apiClientKey: [{ trigger: 'blur',
           validator: (rule, value, callback) => {
             if (this.ifParams.apiVersion === 'V3' && this.mchType === 1 && !this.ifParams.apiClientKey) {
-              callback(new Error('请上传私钥文件'))
+              callback(new Error('请上传私钥文件(apiclient_key.pem)'))
             }
             callback()
         } }],
