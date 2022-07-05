@@ -15,8 +15,8 @@
               </a-range-picker>
             </a-form-item>
             <jeepay-text-up :placeholder="'支付/商户/渠道订单号'" :msg="searchData.unionOrderId" v-model="searchData.unionOrderId" />
-<!--            <jeepay-text-up :placeholder="'支付订单号'" :msg="searchData.payOrderId" v-model="searchData.payOrderId" />-->
-<!--            <jeepay-text-up :placeholder="'商户订单号'" :msg="searchData.mchOrderNo" v-model="searchData.mchOrderNo" />-->
+            <!--            <jeepay-text-up :placeholder="'支付订单号'" :msg="searchData.payOrderId" v-model="searchData.payOrderId" />-->
+            <!--            <jeepay-text-up :placeholder="'商户订单号'" :msg="searchData.mchOrderNo" v-model="searchData.mchOrderNo" />-->
             <jeepay-text-up :placeholder="'应用AppId'" :msg="searchData.appId" v-model="searchData.appId"/>
             <a-form-item v-if="$access('ENT_PAY_ORDER_SEARCH_PAY_WAY')" label="" class="table-head-layout">
               <a-select v-model="searchData.wayCode" placeholder="支付方式" default-value="">
@@ -426,7 +426,7 @@ export default {
       return req.list(API_URL_PAY_ORDER_LIST, params)
     },
     searchFunc: function () { // 点击【查询】按钮点击事件
-      this.$refs.infoTable.refTable(true)
+      this.$refs.infoTable.refTable(false)
     },
     // 打开退款弹出框
     openFunc (record, recordId) {

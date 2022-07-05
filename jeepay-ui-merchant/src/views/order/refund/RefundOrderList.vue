@@ -14,11 +14,11 @@
                 <a-icon slot="suffixIcon" type="sync" />
               </a-range-picker>
             </a-form-item>
-            <jeepay-text-up :placeholder="'退款/支付/渠道/商户退款订单号'" :msg="searchData.unionOrderId" v-model="searchData.unionOrderId" />
-<!--            <jeepay-text-up :placeholder="'退款订单号'" :msg="searchData.refundOrderId" v-model="searchData.refundOrderId" />-->
-<!--            <jeepay-text-up :placeholder="'商户退款单号'" :msg="searchData.mchRefundNo" v-model="searchData.mchRefundNo" />-->
-<!--            <jeepay-text-up :placeholder="'支付订单号'" :msg="searchData.payOrderId" v-model="searchData.payOrderId" />-->
-<!--            <jeepay-text-up :placeholder="'渠道订单号'" :msg="searchData.channelPayOrderNo" v-model="searchData.channelPayOrderNo" />-->
+            <jeepay-text-up :placeholder="'支付/退款列订单号'" :msg="searchData.unionOrderId" v-model="searchData.unionOrderId" />
+            <!--            <jeepay-text-up :placeholder="'退款订单号'" :msg="searchData.refundOrderId" v-model="searchData.refundOrderId" />-->
+            <!--            <jeepay-text-up :placeholder="'商户退款单号'" :msg="searchData.mchRefundNo" v-model="searchData.mchRefundNo" />-->
+            <!--            <jeepay-text-up :placeholder="'支付订单号'" :msg="searchData.payOrderId" v-model="searchData.payOrderId" />-->
+            <!--            <jeepay-text-up :placeholder="'渠道订单号'" :msg="searchData.channelPayOrderNo" v-model="searchData.channelPayOrderNo" />-->
             <jeepay-text-up :placeholder="'应用AppId'" :msg="searchData.appId" v-model="searchData.appId"/>
             <a-form-item label="" class="table-head-layout">
               <a-select v-model="searchData.state" placeholder="退款状态" default-value="">
