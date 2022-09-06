@@ -6,7 +6,7 @@ server {
 
     try_files $uri $uri/ /index.html;
 
-    location /api/ {
+    location ^~ /api/ {
         proxy_next_upstream http_502 http_504 error timeout invalid_header;
 
         proxy_pass http://$BACKEND_HOST;
