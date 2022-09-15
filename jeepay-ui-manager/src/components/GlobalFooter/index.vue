@@ -3,7 +3,7 @@
     <template v-slot:links>
     </template>
     <template v-slot:copyright>
-      <a href="http://www.jeequan.com" target="_blank">@计全科技</a>
+      Copyright © 2022 <a href="http://www.jeequan.com" target="_blank">jeequan.com</a>. All rights reserved.
     </template>
   </global-footer>
 </template>
