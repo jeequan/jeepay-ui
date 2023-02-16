@@ -117,7 +117,7 @@ export default {
    }
   .jeepay-card-add-text {
     padding-top: 5px;
-    font-size: 16px;
+    font-size: 13px;
     color: rgba(0, 0, 0, 0.35);
   }
 </style>

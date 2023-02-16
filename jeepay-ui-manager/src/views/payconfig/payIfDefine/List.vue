@@ -1,5 +1,17 @@
 <template>
   <page-header-wrapper>
+    <template>
+      <a-card style="width: calc(100% - 24px);margin-bottom: 20px;">
+        <a-alert message="" type="info">
+          <template #description>
+            <p style="display: flex; justify-content: space-between; margin: 0 0 4px;">
+              计全科技已开放支付接口购买渠道，由官方团队开发，质量有保障，下载解压后直接使用。接口下载，接口安装说明。
+              <a href="https://www.jeequan.com/goods/list.html" target="_blank">前往计全商城 ></a>
+            </p>
+          </template>
+        </a-alert>
+      </a-card>
+    </template>
     <JeepayCard
       ref="infoCard"
       :reqCardListFunc="reqCardListFunc"
@@ -53,8 +65,8 @@ export default {
     return {
       jeepayCard: {
         name: '支付接口',
-        height: 300,
-        span: { xxl: 6, xl: 4, lg: 4, md: 3, sm: 2, xs: 1 },
+        height: 200,
+        span: { xxl: 8, xl: 4, lg: 4, md: 3, sm: 2, xs: 1 },
         addAuthority: this.$access('ENT_PC_IF_DEFINE_ADD')
       }
     }
@@ -118,7 +130,7 @@ export default {
     align-items: center;
   }
   .title {
-    font-size: 16px;
+    font-size: 13px;
     font-family: PingFang SC, PingFang SC-Bold;
     font-weight: 700;
     color: #1a1a1a;
