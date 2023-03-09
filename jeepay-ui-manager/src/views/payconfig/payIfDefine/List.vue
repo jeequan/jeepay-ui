@@ -5,8 +5,8 @@
         <a-alert message="" type="info">
           <template #description>
             <p style="display: flex; justify-content: space-between; margin: 0 0 4px;">
-              计全科技已开放支付接口购买渠道，由官方团队开发，质量有保障，下载解压后直接使用。接口下载，接口安装说明。
-              <a href="https://www.jeequan.com/goods/list.html" target="_blank">前往计全商城 ></a>
+              计全科技已开放支付接口购买渠道，官方团队开发、源码提供、下载后直接使用。<a href="https://docs.jeequan.com/docs/jeepay/ifstore" target="_blank">接口下载、安装说明。</a>
+              <a href="https://www.jeequan.com/ifstore/list.html" target="_blank">前往接口市场 ></a>
             </p>
           </template>
         </a-alert>
