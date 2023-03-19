@@ -1,152 +1,42 @@
-<p align="center">
-	<a href="https://www.jeepay.vip"><img src="https://jeequan.oss-cn-beijing.aliyuncs.com/jeepay/img/jeepay_logo.svg"></a>
-</p>
-<p align="center">
-	<strong>适合互联网企业使用的开源支付系统</strong>
-</p>
-<p align="center">
-	👉 <a href="https://www.jeepay.vip">https://www.jeepay.vip</a> 👈
-</p>
+# Jeepay UI
+为Jeepay对应的前端项目，包括运营平台、商户系统、聚合码收银台。前端技术以vue为主，框架使用Ant Design Vue开发。
 
-<p align="center">
-	<a target="_blank" href="https://spring.io/projects/spring-boot">
-		<img src="https://img.shields.io/badge/spring%20boot-2.4.5-yellowgreen" />
-	</a>
-    <a target="_blank" href="https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html">
-		<img src="https://img.shields.io/badge/JDK-8+-green.svg" />
-	</a>
-	<a target="_blank" href="http://www.gnu.org/licenses/lgpl.html">
-		<img src="https://img.shields.io/badge/license-LGPL--3.0-blue" />
-	</a>
-	<a href='https://gitee.com/jeequan/jeepay/stargazers' target="_blank">
-        <img src='https://gitee.com/jeequan/jeepay/badge/star.svg?theme=gvp' alt='star'></img>
-    </a>
-	<a target="_blank" href='https://github.com/jeequan/jeepay'>
-		<img src="https://img.shields.io/github/stars/jeequan/jeepay.svg?style=social" alt="github star"/>
-	</a>
-</p>
+Java服务端项目：https://gitee.com/jeequan/jeepay
 
-<br/>
-<p align="center">
-	<a href="https://jq.qq.com/?_wv=1027&k=94WnXmdL">
-        <img src="https://img.shields.io/badge/qq%E7%BE%A4%E2%91%A0-635647058-critical"/>
-    </a>
-</p>
-
--------------------------------------------------------------------------------
-
-## 📚 项目介绍
-
-Jeepay是一套适合互联网企业使用的开源支付系统，支持多渠道服务商和普通商户模式。已对接`微信支付`，`支付宝`，`云闪付`官方接口，支持聚合码支付。
-
-Jeepay使用`Spring Boot`和`Ant Design Vue`开发，集成`Spring Security`实现权限管理功能，是一套非常实用的web开发框架。
-
-### 🎁 名称的由来
-
-Jeepay = Jee + pay，是由原XxPay支付系统作者带领团队开发，“Jee”是公司计全科技名称的表示，pay表示支付。中文名称为计全支付，释为：计出万全、支付安全，让支付更加方便安全。
-
-
-### 🍟 项目体验
-
-- Jeepay支付流程体验：[https://www.jeequan.com/demo/jeepay_cashier.html](https://www.jeequan.com/demo/jeepay_cashier.html "Jeepay支付体验")
-- Jeepay运营平台和商户系统演体验：[https://www.jeequan.com/doc/detail_84.html](https://www.jeequan.com/doc/detail_84.html "Jeepay支付系统体验")
-- Jeepay项目文档：[https://www.jeepay.vip](https://www.jeepay.vip "Jeepay项目文档")
-
-### 🍎 项目特点
-
-* 支持多渠道对接，支付网关自动路由
-* 已对接`微信`服务商和普通商户接口，支持`V2`和`V3`接口
-* 已对接`支付宝`服务商和普通商户接口，支持RSA和RSA2签名
-* 已对接`云闪付`服务商接口，可选择多家支付机构
-* 提供http形式接口，提供各语言的`sdk`实现，方便对接
-* 接口请求和响应数据采用签名机制，保证交易安全可靠
-* 系统安全，支持`分布式`部署，`高并发`
-* 管理端包括`运营平台`和`商户系统`
-* 管理平台操作界面简洁、易用
-* 支付平台到商户系统的订单通知使用MQ实现，保证了高可用，消息可达
-* 支付渠道的接口参数配置界面自动化生成
-* 使用`spring security`实现权限管理
-* 前后端分离架构，方便二次开发
-* 由原`XxPay`团队开发，有着多年支付系统开发经验
-
-## 🥞 系统架构
-
-> Jeepay计全支付系统架构图
-
-![Jeepay系统架构图](https://jeequan.oss-cn-beijing.aliyuncs.com/jeepay/img/jeepay_framework.png "Jeepay系统架构图")
-
-> 核心技术栈
-
-| 软件名称  | 描述 | 版本
-|---|---|---
-|Jdk | Java环境 | 1.8
-|Spring Boot | 开发框架 | 2.4.5
-|Redis | 分布式缓存 | 3.2.8 或 高版本
-|MySQL | 数据库 | 5.7.X
-|ActiveMQ | 消息中间件 | 5.15.8 或 高版本
-|[Ant Design Vue](https://www.antdv.com/docs/vue/introduce-cn/) | Ant Design的Vue实现，前端开发使用 | 2.1.2
-|[MyBatis-Plus](https://mp.baomidou.com/) | MyBatis增强工具 | 3.4.2
-|[WxJava](https://gitee.com/binary/weixin-java-tools) | 微新开发Java SDK | 4.0.0
-|[Hutool](https://www.hutool.cn/) | Java工具类库 | 5.6.6
-
-> 项目结构
+> 目录结构
 
 ```lua
-jeepay  -- https://gitee.com/jeequan/jeepay
-
 jeepay-ui
-├── jeepay-ui-manager -- 运营平台前端vue代码
-├── jeepay-ui-merchant -- 商户系统前端vue代码
-└── jeepay-ui-cashier -- 支付收银台vue代码
+├── jeepay-ui-cashier -- 聚合收银台项目
+├── jeepay-ui-manager -- 运营平台web管理端
+└── jeepay-ui-merchant -- 商户系统web管理端
 ```
+> 参考命令
 
-> 开发部署
+node版本要求：`<= 16 `
 
-- 系统开发：[https://www.jeepay.vip/#/develop/dev_serv](https://www.jeepay.vip/#/develop/dev_serv)
-- 通道对接：[https://www.jeepay.vip/#/develop/dev_channel](https://www.jeepay.vip/#/develop/dev_channel)
-- 线上部署：[https://www.jeepay.vip/#/develop/deploy](https://www.jeepay.vip/#/develop/deploy)
-- 接口文档：[https://www.jeepay.vip/#/interface/payment_api](https://www.jeepay.vip/#/interface/payment_api)
+#### 参考命令
 
-## 🍿 功能模块
+``` bash
+# 拉取源码完毕后请先安装依赖, 进入项目根目录命令行执行:
 
-> Jeepay运营平台功能
+> npm install
 
-![Jeepay运营平台功能](https://jeequan.oss-cn-beijing.aliyuncs.com/jeepay/img/jeepay_mgr.png "Jeepay运营平台功能")
+# 本地启动项目（开发环境）:
 
-> Jeepay商户系统功能
+1. 打开根目录下文件".env.development", 修改请求服务器地址"VUE_APP_API_BASE_URL"；
 
-![Jeepay商户系统功能](https://jeequan.oss-cn-beijing.aliyuncs.com/jeepay/img/jeepay_mch.png "Jeepay商户系统功能")
+2. 在项目根目录命令行执行:
 
-## 🍯 系统截图
+> npm run serve
 
-`以下截图是从实际已完成功能界面截取,截图时间为：2021-05-29 02:05`
+# 打包（生产环境）：
 
-![Jeepay演示界面](http://jeequan.oss-cn-beijing.aliyuncs.com/jeepay/img/yanshi/001.png "Jeepay演示界面")
+1. 打开根目录下文件".env", 修改请求服务器地址"VUE_APP_API_BASE_URL"；
 
-![Jeepay演示界面](http://jeequan.oss-cn-beijing.aliyuncs.com/jeepay/img/yanshi/002.png "Jeepay演示界面")
+2. 在项目根目录命令行执行：
 
-![Jeepay演示界面](http://jeequan.oss-cn-beijing.aliyuncs.com/jeepay/img/yanshi/005.png "Jeepay演示界面")
+> npm run build
 
-![Jeepay演示界面](http://jeequan.oss-cn-beijing.aliyuncs.com/jeepay/img/yanshi/006.png "Jeepay演示界面")
-
-![Jeepay演示界面](http://jeequan.oss-cn-beijing.aliyuncs.com/jeepay/img/yanshi/009.png "Jeepay演示界面")
-
-![Jeepay演示界面](http://jeequan.oss-cn-beijing.aliyuncs.com/jeepay/img/yanshi/010.png "Jeepay演示界面")
-
-![Jeepay演示界面](http://jeequan.oss-cn-beijing.aliyuncs.com/jeepay/img/yanshi/011.png "Jeepay演示界面")
-
-![Jeepay演示界面](http://jeequan.oss-cn-beijing.aliyuncs.com/jeepay/img/yanshi/012.png "Jeepay演示界面")
-
-![Jeepay演示界面](http://jeequan.oss-cn-beijing.aliyuncs.com/jeepay/img/yanshi/013.png "Jeepay演示界面")
-
-![Jeepay演示界面](http://jeequan.oss-cn-beijing.aliyuncs.com/jeepay/img/yanshi/014.png "Jeepay演示界面")
-
-![Jeepay演示界面](http://jeequan.oss-cn-beijing.aliyuncs.com/jeepay/img/yanshi/015.png "Jeepay演示界面")
-
-![Jeepay演示界面](http://jeequan.oss-cn-beijing.aliyuncs.com/jeepay/img/yanshi/022.png "Jeepay演示界面")
-
-## 🥪 关于我们
-***
-微信扫描下面二维码，关注官方公众号：计全科技，获取更多精彩内容。
-
-![计全科技公众号](http://jeequan.oss-cn-beijing.aliyuncs.com/jeepay/img/jee-qrcode.jpg "计全科技公众号")
+3. 文件将输出到 [/dist]目录， 拷贝到web服务器即可。
+```
