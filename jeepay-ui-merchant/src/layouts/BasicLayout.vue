@@ -35,7 +35,8 @@
 
     <template v-slot:rightContentRender>
       <right-content :top-menu="settings.layout === 'topmenu'" :is-mobile="isMobile" :theme="settings.theme" />
-      <a  style="color: red; float: right" href="https://www.jeequan.com/product/jeepay4plus.html" target="_blank">体验Plus商业版</a>
+      <a style="color: red; float: right; padding-right: 10px;" href="https://www.jeequan.com/product/jeepay4plus.html" target="_blank">Plus商业版</a>
+      <a style="color: red; float: right; padding-right: 10px;" href="https://www.jeequan.com/ifstore/list.html" target="_blank">接口市场</a>
     </template>
     <!-- custom footer / 自定义Footer -->
     <template v-slot:footerRender>
