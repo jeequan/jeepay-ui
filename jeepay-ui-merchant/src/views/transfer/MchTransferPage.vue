@@ -187,9 +187,13 @@ export default {
         if (apiRes.state === 2) {
           const succModal = that.$infoBox.modalSuccess('转账成功', <div>2s后自动关闭...</div>)
           setTimeout(() => { succModal.destroy() }, 2000)
-        } else {
-          that.$infoBox.modalError('支付失败', <div><div>错误码：{ apiRes.errCode}</div>
+        } else if (apiRes.state === 1) {
+          that.$infoBox.modalWarning('转账处理中', <div>请前往转账订单列表查看最终状态</div>)
+        } else if (apiRes.state === 3) {
+          that.$infoBox.modalError('转账处理失败', <div><div>错误码：{ apiRes.errCode}</div>
             <div>错误信息：{ apiRes.errMsg}</div></div>)
+        } else {
+          return this.$message.error('转账异常')
         }
       }).catch(() => {
         that.randomOrderNo() // 刷新订单号
