@@ -26,6 +26,7 @@
                 <a-select-option value="0">待分账</a-select-option>
                 <a-select-option value="1">分账成功</a-select-option>
                 <a-select-option value="2">分账失败</a-select-option>
+                <a-select-option value="3">已受理</a-select-option>
               </a-select>
             </a-form-item>
 
@@ -49,12 +50,12 @@
       >
         <template slot="amountSlot" slot-scope="{record}"><b>￥{{ record.calDivisionAmount/100 }}</b></template> <!-- 自定义插槽 -->
         <template slot="stateSlot" slot-scope="{record}">
-          <a-tag
-            :key="record.state"
-            :color="record.state === 0?'orange':record.state === 1?'blue':record.state === 2?'volcano':'volcano'"
-          >
-            {{ record.state === 0?'分账中':record.state === 1?'分账成功':record.state === 2?'分账失败' : '未知' }}
-          </a-tag>
+
+          <a-tag v-if="record.state === 0" :key="record.state" color="orange">分账中</a-tag>
+          <a-tag v-if="record.state === 1" :key="record.state" color="blue">分账成功</a-tag>
+          <a-tag v-if="record.state === 2" :key="record.state" color="volcano">分账失败</a-tag>
+          <a-tag v-if="record.state === 3" :key="record.state" color="purple">已受理</a-tag>
+
         </template>
         <template slot="opSlot" slot-scope="{record}">  <!-- 操作列插槽 -->
           <JeepayTableColumns>

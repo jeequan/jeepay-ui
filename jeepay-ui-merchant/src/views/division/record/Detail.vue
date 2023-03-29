@@ -14,14 +14,17 @@
       <a-col :sm="12"><a-descriptions><a-descriptions-item label="支付接口代码">{{ detailData.ifCode }}</a-descriptions-item></a-descriptions></a-col>
       <a-col :sm="12"><a-descriptions><a-descriptions-item label="系统支付订单号">{{ detailData.payOrderId }}</a-descriptions-item></a-descriptions></a-col>
       <a-col :sm="12"><a-descriptions><a-descriptions-item label="支付订单渠道支付订单号">{{ detailData.payOrderChannelOrderNo }}</a-descriptions-item></a-descriptions></a-col>
-      <a-col :sm="12"><a-descriptions><a-descriptions-item label="订单金额">{{ detailData.payOrderAmount / 100}}</a-descriptions-item></a-descriptions></a-col>
+      <a-col :sm="12"><a-descriptions><a-descriptions-item label="订单金额">{{ detailData.payOrderAmount / 100 }}</a-descriptions-item></a-descriptions></a-col>
       <a-col :sm="12"><a-descriptions><a-descriptions-item label="分账基数">{{ detailData.payOrderDivisionAmount / 100 }} （订单金额-手续费-退款金额）</a-descriptions-item></a-descriptions></a-col>
       <a-col :sm="12"><a-descriptions><a-descriptions-item label="系统分账批次号">{{ detailData.batchOrderId }}</a-descriptions-item></a-descriptions></a-col>
       <a-col :sm="12"><a-descriptions><a-descriptions-item label="上游分账批次号">{{ detailData.channelBatchOrderId }}</a-descriptions-item></a-descriptions></a-col>
       <a-col :sm="12"><a-descriptions><a-descriptions-item label="状态">
-        <a-tag :key="detailData.state" :color="detailData.state === 0?'orange':detailData.state === 1?'blue':detailData.state === 2?'volcano':'volcano'">
-          {{ detailData.state === 0?'分账中':detailData.state === 1?'分账成功':detailData.state === 2?'分账失败' : '未知' }}
-        </a-tag>
+
+        <a-tag v-if="detailData.state === 0" :key="detailData.state" color="orange">分账中</a-tag>
+        <a-tag v-if="detailData.state === 1" :key="detailData.state" color="blue">分账成功</a-tag>
+        <a-tag v-if="detailData.state === 2" :key="detailData.state" color="volcano">分账失败</a-tag>
+        <a-tag v-if="detailData.state === 3" :key="detailData.state" color="purple">已受理</a-tag>
+
       </a-descriptions-item></a-descriptions></a-col>
       <a-col :sm="12"><a-descriptions><a-descriptions-item label="分账接收者ID">{{ detailData.receiverId }}</a-descriptions-item></a-descriptions></a-col>
       <a-col :sm="12"><a-descriptions><a-descriptions-item label="收款账号组ID">{{ detailData.receiverGroupId }}</a-descriptions-item></a-descriptions></a-col>
