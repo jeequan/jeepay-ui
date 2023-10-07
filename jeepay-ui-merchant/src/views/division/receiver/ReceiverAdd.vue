@@ -129,7 +129,7 @@
         <template slot="accTypeSlot" slot-scope="record">
           <a-select style="width: 110px" v-model="record.accType" placeholder="账号类型" default-value="0">
             <a-select-option value="0">个人</a-select-option>
-            <a-select-option value="1">微信商户</a-select-option>
+            <a-select-option value="1">商户</a-select-option>
           </a-select>
         </template>
 
