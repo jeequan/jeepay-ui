@@ -55,7 +55,7 @@ export default {
       if (wayCode === 'WX_NATIVE' || wayCode === 'WX_JSAPI') { // 微信二维码
         this.wxApp = true
         this.payText = '请使用微信"扫一扫"扫码支付'
-      } else if (wayCode === 'ALI_QR' || wayCode === 'ALI_JSAPI') { // 支付宝二维码
+      } else if (wayCode === 'ALI_QR' || wayCode === 'ALI_JSAPI' || wayCode === 'ALI_OC') { // 支付宝二维码
         this.aliApp = true
         this.payText = '请使用支付宝"扫一扫"扫码支付'
       } else if (wayCode === 'QR_CASHIER') { // 聚合支付二维码
@@ -89,7 +89,6 @@ export default {
           window.open(apiRes.payData)
         }
       }
-
       // 如果上面未关闭条码框，则代表进入webScoket，那么先在此处关闭条码框
       that.$emit('closeBarCode') // 关闭条码框
       // 监听响应结果

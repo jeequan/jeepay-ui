@@ -67,6 +67,11 @@
                 <img src="@/assets/payTestImg/ali_wap.svg" class="paydemo-type-img"><span class="color-change">支付宝WAP</span>
               </div>
             </div>
+            <div>
+              <div class="paydemo-type-h5" v-show="appPaywayList.indexOf('ALI_OC') >= 0" @click="changeCurrentWayCode('ALI_OC', 'codeImgUrl')" :class="{this:(currentWayCode === 'ALI_OC')}">
+                <img src="@/assets/payTestImg/ali_qr.svg" class="paydemo-type-img"><span class="color-change">支付宝订单码</span>
+              </div>
+            </div>
           </div>
 
           <div class="paydemo-type-name article-title" v-show="showQtTitle()">其它支付</div>
