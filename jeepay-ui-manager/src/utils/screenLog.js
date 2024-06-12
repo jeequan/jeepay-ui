@@ -7,7 +7,7 @@ export const printANSI = () => {
 / /_/ //  __/  __/ /_/ / /_/ / /_/ /
 \\____/ \\___/\\___/ .___/\\__,_/\\__, /
                /_/          /____/
- :: Jeepay ::        (v2.2.2.RELEASE)
+ :: Jeepay ::        (v2.4.0.RELEASE)
  让支付接入更简单 : https://www.jeequan.com
 `
 
