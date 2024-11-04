@@ -23,6 +23,7 @@ export const asyncRouteDefine = {
   'MainPage': { defaultPath: '/main', component: () => import('@/views/dashboard/Analysis') },
   'SysUserPage': { defaultPath: '/users', component: () => import('@/views/sysuser/SysUserPage') },
   'RolePage': { defaultPath: '/roles', component: () => import('@/views/role/RolePage') },
+  'MchQrCodePage': { defaultPath: '/qrc', component: () => import('@/views/mchCode/MchCodePage') }, // 商户列表
 
   'MchAppPage': { defaultPath: '/apps', component: () => import ('@/views/mchApp/List') }, // 商户应用列表
   'PayTestPage': { defaultPath: '/paytest', component: () => import ('@/views/payTest/PayTest') }, // 支付测试

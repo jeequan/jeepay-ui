@@ -28,6 +28,7 @@ export const asyncRouteDefine = {
   'IfDefinePage': { defaultPath: '/ifdefines', component: () => import('@/views/payconfig/payIfDefine/List') },
   'IsvListPage': { defaultPath: '/isv', component: () => import('@/views/isv/IsvList') }, // 服务商列表
   'MchListPage': { defaultPath: '/mch', component: () => import('@/views/mch/MchList') }, // 商户列表
+  'QrcodeCardPage': { defaultPath: '/qrc', component: () => import('@/views/mchCode/MchCodePage') }, // 商户列表
   'MchAppPage': { defaultPath: '/apps', component: () => import ('@/views/mchApp/List') }, // 商户应用列表
   'PayOrderListPage': { defaultPath: '/payOrder', component: () => import('@/views/order/pay/PayOrderList') }, // 支付订单列表
   'RefundOrderListPage': { defaultPath: '/refundOrder', component: () => import('@/views/order/refund/RefundOrderList') }, // 退款订单列表

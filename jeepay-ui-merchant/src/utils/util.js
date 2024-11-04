@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 
 // 定义全局自增ID
 var atomicLong = 1
@@ -18,4 +19,9 @@ export function isIE () {
 /** 生成自增序列号（不重复） **/
 export function genRowKey () {
   return new Date().getTime() + '_' + (atomicLong++)
+}
+
+/** 格式化 **/
+export function formatDate (format) {
+  return dayjs().format(format)
 }

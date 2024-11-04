@@ -13,11 +13,12 @@
       </div>
 
       <!-- 手写输入框 -->
-      <div  class="input-c">
-        <div  class="input-c-div-1">{{ payOrderInfo.amount/100 }}</div>
+      <div  class="input-c" style="width: 100%">
+        <div  v-if="payOrderInfo.amount" class="input-c-div-1">{{ payOrderInfo.amount/100 }}</div>
+        <input type="number" style="height: 120px;" v-else v-model="amount" placeholder="请输入金额">
       </div>
       <!-- 手写输入框的提示文字 -->
-      <div v-show="!amount" class="placeholder">请输入金额</div>
+      <!-- <div v-show="!amount" class="placeholder">请输入金额</div> -->
     </div>
     <ul class="plus-ul" >
       <!-- 支付板块 -->
@@ -60,17 +61,18 @@ export default {
   },
 
   mounted() {
-     this.setPayOrderInfo(true); //获取订单信息 & 调起支付插件
+     this.setPayOrderInfo(); //获取订单信息 & 调起支付插件
   },
 
   methods: {
 
-    setPayOrderInfo(isAutoPay){
+    setPayOrderInfo(){
       const that = this
       getPayOrderInfo().then(res => {
         that.payOrderInfo = res
 
-        if(isAutoPay){
+        if(res.amount){
+          this.amount = res.amount / 100;
           that.pay()
         }
       }).catch(res => {
@@ -79,6 +81,10 @@ export default {
     },
 
     pay: function (){
+
+      if(isNaN(this.amount) || this.amount <= 0){
+        return alert('请输入金额');
+      }
 
       let that = this;
       getPayPackage(this.amount).then(res => {

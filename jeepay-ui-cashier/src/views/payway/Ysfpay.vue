@@ -66,6 +66,10 @@ export default {
 
     pay: function (){
 
+      if(isNaN(this.amount) || this.amount <= 0){
+        return alert('请输入金额');
+      }
+
       let that = this;
       getPayPackage(this.amount).then(res => {
 
