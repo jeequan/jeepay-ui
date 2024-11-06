@@ -53,7 +53,7 @@ export default {
     return {
       merchantName: 'jeepay',  // 付款的商户默认
       avatar: require("../../assets/images/zfb.jpeg"), // 商户头像默认
-      amount: 1,  // 支付金额默认
+      amount: null,  // 支付金额默认
       resData : {},
       wxImg: require("../../assets/images/zfb.jpeg"), // 微信支付图片
       payOrderInfo: {}, //订单信息
