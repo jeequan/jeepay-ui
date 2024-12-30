@@ -1,20 +1,22 @@
 <template>
   <div class="jee-text-up table-head-layout">
-    <a-input required="required" :value="msg" @input="$emit('input', $event.target.value)">
-    </a-input>
+    <a-input :value="value" required="required" @change="onChange($event)" />
     <label>{{ placeholder }}</label>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'JeepayTextUp',
-  // props: ['msg', 'placeholder']
-  props: {
-    msg: { type: String, default: '' },
+<script lang="ts" setup>
+
+  const props = defineProps({
+    value: { type: String, default: undefined },
     placeholder: { type: String, default: '' }
+  })
+
+  const emit = defineEmits(['update:value'])
+
+  const onChange = (e) => {
+    emit('update:value', e.target.value)
   }
-}
 </script>
 
 <style scoped lang="less">

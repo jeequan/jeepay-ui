@@ -4,332 +4,399 @@
     width="40%"
     :closable="true"
     :maskClosable="false"
-    :visible="visible"
+    v-model:open="vdata.open"
     :body-style="{ paddingBottom: '80px' }"
     @close="onClose"
   >
-    <a-form-model ref="infoFormModel" :model="saveObject" layout="vertical" :rules="rules">
+    <a-form ref="infoFormModel" :model="vdata.saveObject" layout="vertical" :rules="vdata.rules">
       <a-row :gutter="16">
         <a-col :span="12">
-          <a-form-model-item label="支付接口费率" prop="ifRate">
-            <a-input v-model="saveObject.ifRate" placeholder="请输入" suffix="%" />
-          </a-form-model-item>
+          <a-form-item label="支付接口费率" name="ifRate">
+            <a-input v-model:value="vdata.saveObject.ifRate" placeholder="请输入" suffix="%" />
+          </a-form-item>
         </a-col>
         <a-col :span="12">
-          <a-form-model-item label="状态" prop="state">
-            <a-radio-group v-model="saveObject.state">
-              <a-radio :value="1">
-                启用
-              </a-radio>
-              <a-radio :value="0">
-                停用
-              </a-radio>
+          <a-form-item label="状态" name="state">
+            <a-radio-group v-model:value="vdata.saveObject.state">
+              <a-radio :value="1">启用</a-radio>
+              <a-radio :value="0">停用</a-radio>
             </a-radio-group>
-          </a-form-model-item>
+          </a-form-item>
         </a-col>
         <a-col :span="24">
-          <a-form-model-item label="备注" prop="remark">
-            <a-input v-model="saveObject.remark" placeholder="请输入" type="textarea" />
-          </a-form-model-item>
+          <a-form-item label="备注" name="remark">
+            <a-input v-model:value="vdata.saveObject.remark" placeholder="请输入" type="textarea" />
+          </a-form-item>
         </a-col>
       </a-row>
-    </a-form-model>
+    </a-form>
     <a-divider orientation="left">
-      <a-tag color="#FF4B33">
-        {{ saveObject.ifCode }} 服务商参数配置
-      </a-tag>
+      <a-tag color="#FF4B33">{{ vdata.saveObject.ifCode }} 服务商参数配置</a-tag>
     </a-divider>
-    <a-form-model ref="isvParamFormModel" :model="ifParams" layout="vertical" :rules="ifParamsRules">
+    <a-form
+      ref="isvParamFormModel"
+      :model="vdata.ifParams"
+      layout="vertical"
+      :rules="ifParamsRules"
+    >
       <a-row :gutter="16">
         <a-col span="12">
-          <a-form-model-item label="微信支付商户号" prop="mchId">
-            <a-input v-model="ifParams.mchId" placeholder="请输入" />
-          </a-form-model-item>
+          <a-form-item label="微信支付商户号" name="mchId">
+            <a-input v-model:value="vdata.ifParams.mchId" placeholder="请输入" />
+          </a-form-item>
         </a-col>
         <a-col span="12">
-          <a-form-model-item label="应用AppID" prop="appId">
-            <a-input v-model="ifParams.appId" placeholder="请输入" />
-          </a-form-model-item>
+          <a-form-item label="应用AppID" name="appId">
+            <a-input v-model:value="vdata.ifParams.appId" placeholder="请输入" />
+          </a-form-item>
         </a-col>
         <a-col span="12">
-          <a-form-model-item label="应用AppSecret" prop="appSecret">
-            <a-input v-model="ifParams.appSecret" :placeholder="ifParams.appSecret_ph" />
-          </a-form-model-item>
+          <a-form-item label="应用AppSecret" name="appSecret">
+            <a-input
+              v-model:value="vdata.ifParams.appSecret"
+              :placeholder="vdata.ifParams.appSecret_ph"
+            />
+          </a-form-item>
         </a-col>
         <a-col span="12">
-          <a-form-model-item label="oauth2地址（置空将使用官方）" prop="oauth2Url">
-            <a-input v-model="ifParams.oauth2Url" placeholder="请输入" />
-          </a-form-model-item>
+          <a-form-item label="oauth2地址（置空将使用官方）" name="oauth2Url">
+            <a-input v-model:value="vdata.ifParams.oauth2Url" placeholder="请输入" />
+          </a-form-item>
         </a-col>
         <a-col span="12">
-          <a-form-model-item label="微信支付API版本" prop="apiVersion">
-            <a-radio-group v-model="ifParams.apiVersion" defaultValue="V2">
+          <a-form-item label="微信支付API版本" name="apiVersion">
+            <a-radio-group v-model:value="vdata.ifParams.apiVersion" defaultValue="V2">
               <a-radio value="V2">V2</a-radio>
               <a-radio value="V3">V3</a-radio>
             </a-radio-group>
-          </a-form-model-item>
+          </a-form-item>
         </a-col>
         <a-col span="24">
-          <a-form-model-item label="APIv2密钥" prop="key">
-            <a-input v-model="ifParams.key" :placeholder="ifParams.key_ph" type="textarea" />
-          </a-form-model-item>
+          <a-form-item label="APIv2密钥" name="key">
+            <a-input
+              v-model:value="vdata.ifParams.key"
+              :placeholder="vdata.ifParams.key_ph"
+              type="textarea"
+            />
+          </a-form-item>
         </a-col>
         <a-col span="24">
-          <a-form-model-item label="APIv3密钥" prop="apiV3Key">
-            <a-input v-model="ifParams.apiV3Key" :placeholder="ifParams.apiV3Key_ph" type="textarea" />
-          </a-form-model-item>
+          <a-form-item label="APIv3密钥" name="apiV3Key">
+            <a-input
+              v-model:value="vdata.ifParams.apiV3Key"
+              :placeholder="vdata.ifParams.apiV3Key_ph"
+              type="textarea"
+            />
+          </a-form-item>
         </a-col>
         <a-col span="24">
-          <a-form-model-item label="序列号" prop="serialNo">
-            <a-input v-model="ifParams.serialNo" :placeholder="ifParams.serialNo_ph" type="textarea" />
-          </a-form-model-item>
+          <a-form-item label="序列号" name="serialNo">
+            <a-input
+              v-model:value="vdata.ifParams.serialNo"
+              :placeholder="vdata.ifParams.serialNo_ph"
+              type="textarea"
+            />
+          </a-form-item>
         </a-col>
         <a-col span="24">
-          <a-form-model-item label="API证书(apiclient_cert.p12)" prop="cert">
-            <a-input v-model="ifParams.cert" disabled="disabled" />
+          <a-form-item label="API证书(apiclient_cert.p12)" name="cert" class="margin-botomt-5">
+            <a-input v-model:value="vdata.ifParams.cert" disabled="disabled" />
+          </a-form-item>
+          <JeepayUpload
+            :action="vdata.action"
+            :fileUrl="vdata.ifParams.cert"
+            @uploadSuccess="uploadSuccess($event, 'cert')"
+          >
+            <template #uploadSlot="{ loading }">
+              <a-button style="margin-top: 5px">
+                <a-icon :type="vdata.loading ? 'loading' : 'upload'" />
+                {{ vdata.loading ? '正在上传' : '点击上传' }}
+              </a-button>
+            </template>
+          </JeepayUpload>
+        </a-col>
+        <a-col span="24">
+          <a-form-item
+            label="证书文件(apiclient_cert.pem)"
+            name="apiClientCert"
+            class="margin-botomt-5"
+          >
+            <a-input v-model:value="vdata.ifParams.apiClientCert" disabled="disabled" />
             <JeepayUpload
-              :action="action"
-              :fileUrl="ifParams.cert"
-              @uploadSuccess="uploadSuccess($event, 'cert')"
-            >
-              <template slot="uploadSlot" slot-scope="{loading}">
-                <a-button style="marginTop:5px;"> <a-icon :type="loading ? 'loading' : 'upload'" /> {{ loading ? '正在上传' : '点击上传' }} </a-button>
-              </template>
-            </JeepayUpload>
-          </a-form-model-item>
-        </a-col>
-        <a-col span="24">
-          <a-form-model-item label="证书文件(apiclient_cert.pem)" prop="apiClientCert">
-            <a-input v-model="ifParams.apiClientCert" disabled="disabled" />
-            <JeepayUpload
-              :action="action"
-              :fileUrl="ifParams.apiClientCert"
+              :action="vdata.action"
+              :fileUrl="vdata.ifParams.apiClientCert"
               @uploadSuccess="uploadSuccess($event, 'apiClientCert')"
             >
-              <template slot="uploadSlot" slot-scope="{loading}">
-                <a-button style="marginTop:5px;"> <a-icon :type="loading ? 'loading' : 'upload'" /> {{ loading ? '正在上传' : '点击上传' }} </a-button>
+              <template #uploadSlot="{ loading }">
+                <a-button style="margin-top: 5px">
+                  <a-icon :type="vdata.loading ? 'loading' : 'upload'" />
+                  {{ vdata.loading ? '正在上传' : '点击上传' }}
+                </a-button>
               </template>
             </JeepayUpload>
-          </a-form-model-item>
+          </a-form-item>
         </a-col>
         <a-col span="24">
-          <a-form-model-item label="私钥文件(apiclient_key.pem)" prop="apiClientKey">
-            <a-input v-model="ifParams.apiClientKey" disabled="disabled" />
+          <a-form-item
+            label="私钥文件(apiclient_key.pem)"
+            name="apiClientKey"
+            class="margin-botomt-5"
+          >
+            <a-input v-model:value="vdata.ifParams.apiClientKey" disabled="disabled" />
             <JeepayUpload
-              :action="action"
-              :fileUrl="ifParams.apiClientKey"
+              :action="vdata.action"
+              :fileUrl="vdata.ifParams.apiClientKey"
               @uploadSuccess="uploadSuccess($event, 'apiClientKey')"
             >
-              <template slot="uploadSlot" slot-scope="{loading}">
-                <a-button style="marginTop:5px;"> <a-icon :type="loading ? 'loading' : 'upload'" /> {{ loading ? '正在上传' : '点击上传' }} </a-button>
+              <template #uploadSlot="{ loading }">
+                <a-button style="margin-top: 5px">
+                  <a-icon :type="vdata.loading ? 'loading' : 'upload'" />
+                  {{ vdata.loading ? '正在上传' : '点击上传' }}
+                </a-button>
               </template>
             </JeepayUpload>
-          </a-form-model-item>
+          </a-form-item>
         </a-col>
       </a-row>
-    </a-form-model>
+    </a-form>
     <div class="drawer-btn-center" v-if="$access('ENT_MCH_PAY_CONFIG_ADD')">
-      <a-button :style="{ marginRight: '8px' }" @click="onClose" icon="close">取消</a-button>
-      <a-button type="primary" @click="onSubmit" icon="check" :loading="btnLoading">保存</a-button>
+      <a-button :style="{ marginRight: '8px' }" @click="onClose">取消</a-button>
+      <a-button type="primary" @click="onSubmit" :loading="vdata.btnLoading">保存</a-button>
     </div>
   </a-drawer>
-
 </template>
 
-<script>
-import JeepayCard from '@/components/JeepayCard/JeepayCard'
-import JeepayUpload from '@/components/JeepayUpload/JeepayUpload'
+<script setup lang="ts">
 import { API_URL_ISV_PAYCONFIGS_LIST, req, getIsvPayConfigUnique, upload } from '@/api/manage'
-export default {
-  components: {
-      JeepayCard,
-      JeepayUpload
-  },
-  props: {
-    callbackFunc: { type: Function, default: () => ({}) }
-  },
+import { reactive, ref, getCurrentInstance } from 'vue'
+const { $infoBox, $access } = getCurrentInstance()!.appContext.config.globalProperties
 
-  data () {
-    return {
-      btnLoading: false,
-      visible: false, // 抽屉开关
-      isAdd: true,
-      action: upload.cert, // 上传文件地址
-      saveObject: {}, // 保存的对象
-      ifParams: { apiVersion: 'V2' }, // 参数配置对象
-      rules: {
-        ifRate: [{ required: false, pattern: /^(([1-9]{1}\d{0,1})|(0{1}))(\.\d{1,4})?$/, message: '请输入0-100之间的数字，最多四位小数', trigger: 'blur' }]
+const props = defineProps({
+  callbackFunc: { type: Function, default: () => ({}) },
+})
+
+const vdata: any = reactive({
+  btnLoading: false,
+  open: false, // 抽屉开关
+  isAdd: true,
+  action: upload.cert, // 上传文件地址
+  saveObject: {}, // 保存的对象
+  ifParams: { apiVersion: 'V2' }, // 参数配置对象
+  rules: {
+    ifRate: [
+      {
+        required: false,
+        pattern: /^(([1-9]{1}\d{0,1})|(0{1}))(\.\d{1,4})?$/,
+        message: '请输入0-100之间的数字，最多四位小数',
+        trigger: 'blur',
       },
-      ifParamsRules: {
-        mchId: [{ required: true, message: '请输入微信支付商户号', trigger: 'blur' }],
-        appId: [{ required: true, message: '请输入应用AppID', trigger: 'blur' }],
-        appSecret: [{ trigger: 'blur',
-          validator: (rule, value, callback) => {
-            if (this.isAdd && !value) {
-              callback(new Error('请输入应用AppSecret'))
-            }
-            callback()
-        } }],
-        key: [{ trigger: 'blur',
-          validator: (rule, value, callback) => {
-            if (this.ifParams.apiVersion === 'V2' && this.isAdd && !value) {
-              callback(new Error('请输入API密钥'))
-            }
-            callback()
-        } }],
-        apiV3Key: [{ trigger: 'blur',
-          validator: (rule, value, callback) => {
-            if (this.ifParams.apiVersion === 'V3' && this.isAdd && !value) {
-              callback(new Error('请输入API V3秘钥'))
-            }
-            callback()
-        } }],
-        serialNo: [{ trigger: 'blur',
-          validator: (rule, value, callback) => {
-            if (this.ifParams.apiVersion === 'V3' && this.isAdd && !value) {
-              callback(new Error('请输入序列号'))
-            }
-            callback()
-        } }],
-        cert: [{ trigger: 'blur',
-          validator: (rule, value, callback) => {
-            if (this.ifParams.apiVersion === 'V3' && this.isAdd && !value) {
-              callback(new Error('请上传API证书(apiclient_cert.p12)'))
-            }
-            callback()
-          } }],
-        apiClientCert: [{ trigger: 'blur',
-          validator: (rule, value, callback) => {
-            if (this.ifParams.apiVersion === 'V3' && this.isAdd && !value) {
-              callback(new Error('请上传证书文件(apiclient_cert.pem)'))
-            }
-            callback()
-          } }],
-        apiClientKey: [{ trigger: 'blur',
-          validator: (rule, value, callback) => {
-            if (this.ifParams.apiVersion === 'V3' && !value) {
-              callback(new Error('请上传私钥文件(apiclient_key.pem)'))
-            }
-            callback()
-        } }]
-      }
-    }
+    ],
   },
-  methods: {
-    // 弹层打开事件
-    show: function (isvNo, record) {
-      if (this.$refs.infoFormModel !== undefined) {
-        this.$refs.infoFormModel.resetFields()
-      }
-      if (this.$refs.isvParamFormModel !== undefined) {
-        this.$refs.isvParamFormModel.resetFields()
-      }
+})
 
-      // 数据初始化
-      this.saveObject = {
-        infoId: isvNo,
-        ifCode: record.ifCode,
-        state: record.ifConfigState === 0 ? 0 : 1
-      }
-
-      // 参数配置对象，数据初始化
-      this.ifParams = {
-        apiVersion: 'V2',
-        appSecret: '',
-        appSecret_ph: '请输入',
-        key: '',
-        key_ph: '请输入',
-        apiV3Key: '',
-        apiV3Key_ph: '请输入',
-        serialNo: '',
-        serialNo_ph: '请输入'
-      }
-      this.visible = true
-      this.getIsvPayConfig()
-    },
-    // 支付参数配置
-    getIsvPayConfig () {
-      const that = this
-      // 获取支付参数
-      getIsvPayConfigUnique(that.saveObject.infoId, that.saveObject.ifCode).then(res => {
-        if (res && res.ifParams) {
-          that.saveObject = res
-          that.ifParams = JSON.parse(res.ifParams)
-
-          that.ifParams.appSecret_ph = that.ifParams.appSecret
-          that.ifParams.appSecret = ''
-
-          that.ifParams.key_ph = that.ifParams.key
-          that.ifParams.key = ''
-
-          that.ifParams.apiV3Key_ph = that.ifParams.apiV3Key
-          that.ifParams.apiV3Key = ''
-
-          that.ifParams.serialNo_ph = that.ifParams.serialNo
-          that.ifParams.serialNo = ''
-
-          that.isAdd = false
-        } else if (res === undefined) {
-          that.isAdd = true
+const ifParamsRules = reactive({
+  mchId: [{ required: true, message: '请输入微信支付商户号', trigger: 'blur' }],
+  appId: [{ required: true, message: '请输入应用AppID', trigger: 'blur' }],
+  appSecret: [
+    {
+      trigger: 'blur',
+      validator: (rule, value, callback) => {
+        if (vdata.isAdd && !value) {
+          return Promise.reject('请输入应用AppSecret')
         }
-      })
+        return Promise.resolve()
+      },
     },
-    // 表单提交
-    onSubmit () {
-      const that = this
-      this.$refs.infoFormModel.validate(valid => {
-        this.$refs.isvParamFormModel.validate(valid2 => {
-          if (valid && valid2) { // 验证通过
-            that.btnLoading = true
-            const reqParams = {}
-            reqParams.infoId = that.saveObject.infoId
-            reqParams.ifCode = that.saveObject.ifCode
-            reqParams.ifRate = that.saveObject.ifRate
-            reqParams.state = that.saveObject.state
-            reqParams.remark = that.saveObject.remark
-            // 支付参数配置不能为空
-            if (Object.keys(that.ifParams).length === 0) {
-              this.$message.error('参数不能为空！')
-              return
-            }
-            // 脱敏数据为空时，删除该key
-            that.clearEmptyKey('appSecret')
-            that.clearEmptyKey('key')
-            that.clearEmptyKey('apiV3Key')
-            that.clearEmptyKey('serialNo')
-            reqParams.ifParams = JSON.stringify(that.ifParams)
-            // 请求接口
-            if (Object.keys(reqParams).length === 0) {
-              this.$message.error('参数不能为空！')
-              return
-            }
-            req.add(API_URL_ISV_PAYCONFIGS_LIST, reqParams).then(res => {
-              that.$message.success('保存成功')
-              that.visible = false
-              that.btnLoading = false
-              that.callbackFunc()
-            })
-          }
-        })
-      })
+  ],
+  key: [
+    {
+      trigger: 'blur',
+      validator: (rule, value, callback) => {
+        if (vdata.ifParams.apiVersion === 'V2' && vdata.isAdd && !value) {
+          return Promise.reject('请输入API密钥')
+        }
+        return Promise.resolve()
+      },
     },
-    // 脱敏数据为空时，删除对应key
-    clearEmptyKey (key) {
-      if (!this.ifParams[key]) {
-        this.ifParams[key] = undefined
-      }
-      this.ifParams[key + '_ph'] = undefined
+  ],
+  apiV3Key: [
+    {
+      trigger: 'blur',
+      validator: (rule, value, callback) => {
+        if (vdata.ifParams.apiVersion === 'V3' && vdata.isAdd && !value) {
+          return Promise.reject('请输入API V3秘钥')
+        }
+        return Promise.resolve()
+      },
     },
-    // 上传文件成功回调方法，参数value为文件地址，name是自定义参数
-    uploadSuccess (value, name) {
-      this.ifParams[name] = value
-      this.$forceUpdate()
+  ],
+  serialNo: [
+    {
+      trigger: 'blur',
+      validator: (rule, value, callback) => {
+        if (vdata.ifParams.apiVersion === 'V3' && vdata.isAdd && !value) {
+          return Promise.reject('请输入序列号')
+        }
+        return Promise.resolve()
+      },
     },
-    onClose () {
-      this.visible = false
-    }
+  ],
+  cert: [
+    {
+      trigger: 'blur',
+      validator: (rule, value, callback) => {
+        if (vdata.ifParams.apiVersion === 'V3' && vdata.isAdd && !value) {
+          return Promise.reject('请上传API证书(apiclient_cert.p12)')
+        }
+        return Promise.resolve()
+      },
+    },
+  ],
+  apiClientCert: [
+    {
+      trigger: 'blur',
+      validator: (rule, value, callback) => {
+        if (vdata.ifParams.apiVersion === 'V3' && vdata.isAdd && !value) {
+          return Promise.reject('请上传证书文件(apiclient_cert.pem)')
+        }
+        return Promise.resolve()
+      },
+    },
+  ],
+  apiClientKey: [
+    {
+      trigger: 'blur',
+      validator: (rule, value, callback) => {
+        if (vdata.ifParams.apiVersion === 'V3' && !value) {
+          return Promise.reject('请上传私钥文件(apiclient_key.pem)')
+        }
+        return Promise.resolve()
+      },
+    },
+  ],
+})
+
+const infoFormModel = ref()
+const isvParamFormModel = ref()
+
+// 弹层打开事件
+function show(isvNo, record) {
+  if (infoFormModel.value) {
+    infoFormModel.value.resetFields()
   }
+  if (isvParamFormModel.value) {
+    isvParamFormModel.value.resetFields()
+  }
+
+  // 数据初始化
+  vdata.saveObject = {
+    infoId: isvNo,
+    ifCode: record.ifCode,
+    state: record.ifConfigState === 0 ? 0 : 1,
+  }
+
+  // 参数配置对象，数据初始化
+  vdata.ifParams = {
+    apiVersion: 'V2',
+    appSecret: '',
+    appSecret_ph: '请输入',
+    key: '',
+    key_ph: '请输入',
+    apiV3Key: '',
+    apiV3Key_ph: '请输入',
+    serialNo: '',
+    serialNo_ph: '请输入',
+  }
+  vdata.open = true
+  getIsvPayConfig()
 }
+// 支付参数配置
+function getIsvPayConfig() {
+  // 获取支付参数
+  getIsvPayConfigUnique(vdata.saveObject.infoId, vdata.saveObject.ifCode).then((res) => {
+    if (res && res.ifParams) {
+      vdata.saveObject = res
+      vdata.ifParams = JSON.parse(res.ifParams)
+
+      vdata.ifParams.appSecret_ph = vdata.ifParams.appSecret
+      vdata.ifParams.appSecret = ''
+
+      vdata.ifParams.key_ph = vdata.ifParams.key
+      vdata.ifParams.key = ''
+
+      vdata.ifParams.apiV3Key_ph = vdata.ifParams.apiV3Key
+      vdata.ifParams.apiV3Key = ''
+
+      vdata.ifParams.serialNo_ph = vdata.ifParams.serialNo
+      vdata.ifParams.serialNo = ''
+
+      vdata.isAdd = false
+    } else if (res === undefined) {
+      vdata.isAdd = true
+    }
+  })
+}
+// 表单提交
+function onSubmit() {
+  infoFormModel.value.validate().then((valid) => {
+    isvParamFormModel.value.validate().then((valid2) => {
+      if (valid && valid2) {
+        // 验证通过
+        const reqParams: any = {}
+        reqParams.infoId = vdata.saveObject.infoId
+        reqParams.ifCode = vdata.saveObject.ifCode
+        reqParams.ifRate = vdata.saveObject.ifRate
+        reqParams.state = vdata.saveObject.state
+        reqParams.remark = vdata.saveObject.remark
+        // 支付参数配置不能为空
+        if (Object.keys(vdata.ifParams).length === 0) {
+          $infoBox.message.error('参数不能为空！')
+          return
+        }
+        // 脱敏数据为空时，删除该key
+        clearEmptyKey('appSecret')
+        clearEmptyKey('key')
+        clearEmptyKey('apiV3Key')
+        clearEmptyKey('serialNo')
+        reqParams.ifParams = JSON.stringify(vdata.ifParams)
+        // 请求接口
+        if (Object.keys(reqParams).length === 0) {
+          $infoBox.message.error('参数不能为空！')
+          return
+        }
+
+        vdata.btnLoading = true
+
+        req
+          .add(API_URL_ISV_PAYCONFIGS_LIST, reqParams)
+          .then((res) => {
+            $infoBox.message.success('保存成功')
+            vdata.open = false
+            props.callbackFunc()
+          })
+          .finally(() => {
+            vdata.btnLoading = false
+          })
+      }
+    })
+  })
+}
+// 脱敏数据为空时，删除对应key
+function clearEmptyKey(key) {
+  if (!vdata.ifParams[key]) {
+    vdata.ifParams[key] = undefined
+  }
+  vdata.ifParams[key + '_ph'] = undefined
+}
+// 上传文件成功回调方法，参数value为文件地址，name是自定义参数
+function uploadSuccess(value, name) {
+  vdata.ifParams[name] = value
+  // this.$forceUpdate()
+}
+function onClose() {
+  vdata.open = false
+}
+
+defineExpose({ show })
 </script>
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>
