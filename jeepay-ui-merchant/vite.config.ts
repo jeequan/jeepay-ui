@@ -18,7 +18,7 @@ export default ({ mode }) => {
     // 定义ENV, 可全局取到
     server: {
       host: true, // 监听所有host包括局域网
-      port: 8000,
+      port: 8001,
     },
 
     base: process.env.VITE_APP_BASE_URL,
