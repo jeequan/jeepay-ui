@@ -1,13 +1,33 @@
-@import '../node_modules/ant-design-vue/es/style/themes/default.less';
+// @import '../node_modules/ant-design-vue/es/style/themes/default.less';
 // @import './default.less';
 
 html,
 body,
-#app, #root {
+#app,
+#root {
   height: 100%;
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Microsoft YaHei,PingFang SC,Hiragino Sans GB,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Microsoft YaHei,
+    PingFang SC,
+    Hiragino Sans GB,
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    sans-serif,
+    Apple Color Emoji,
+    Segoe UI Emoji,
+    Segoe UI Symbol;
   letter-spacing: 0.4px;
 }
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
 // jee主题颜色class列表, 用于文字颜色
 .jee-theme {
   color: @jee-theme; //主题色
@@ -16,19 +36,19 @@ body,
   color: @jee-back; //主要背景色
 }
 .jee-card-back {
-  color: @jee-card-back;  //卡片底色
+  color: @jee-card-back; //卡片底色
 }
 .jee-theme-mask {
-  color: @jee-theme-mask;  //主体遮罩色(10% 透明度)
+  color: @jee-theme-mask; //主体遮罩色(10% 透明度)
 }
 .jee-strengthen {
-  color: @jee-strengthen;//强化色
+  color: @jee-strengthen; //强化色
 }
 .jee-theme-hover {
-  color: @jee-theme-hover;//主题Hover
+  color: @jee-theme-hover; //主题Hover
 }
 .jee-warning {
-  color: @jee-warning;   //危险，强化警告色
+  color: @jee-warning; //危险，强化警告色
 }
 .jee-inside-link {
   color: @jee-inside-link; //内部链接
@@ -38,25 +58,25 @@ body,
 }
 // jee主题颜色class列表, 用于文字颜色
 .jee-theme {
-  color: @jee-theme;  //主题色
+  color: @jee-theme; //主题色
 }
 .jee-back {
   color: @jee-back; //主要背景色
 }
 .jee-card-back {
-  color: @jee-card-back;  //卡片底色
+  color: @jee-card-back; //卡片底色
 }
 .jee-theme-mask {
-  color: @jee-theme-mask;  //主体遮罩色(10% 透明度)
+  color: @jee-theme-mask; //主体遮罩色(10% 透明度)
 }
 .jee-strengthen {
-  color: @jee-strengthen;//强化色
+  color: @jee-strengthen; //强化色
 }
 .jee-theme-hover {
-  color: @jee-theme-hover;//主题Hover
+  color: @jee-theme-hover; //主题Hover
 }
 .jee-warning {
-  color: @jee-warning;   //危险，强化警告色
+  color: @jee-warning; //危险，强化警告色
 }
 .jee-inside-link {
   color: @jee-inside-link; //内部链接
@@ -67,25 +87,25 @@ body,
 
 // jee主题颜色class列表, 用于背景颜色
 .jee-theme-back-color {
-  background-color: @jee-theme;  //主题色
+  background-color: @jee-theme; //主题色
 }
 .jee-back-color {
   background-color: @jee-back; //主要背景色
 }
 .jee-card-back-color {
-  background-color: @jee-card-back;  //卡片底色
+  background-color: @jee-card-back; //卡片底色
 }
 .jee-theme-mask-back-color {
-  background-color: @jee-theme-mask;  //主体遮罩色(10% 透明度)
+  background-color: @jee-theme-mask; //主体遮罩色(10% 透明度)
 }
 .jee-strengthen-back-color {
-  background-color: @jee-strengthen;//强化色
+  background-color: @jee-strengthen; //强化色
 }
 .jee-theme-hover-back-color {
-  background-color: @jee-theme-hover;//主题Hover
+  background-color: @jee-theme-hover; //主题Hover
 }
 .jee-warning-back-color {
-  background-color: @jee-warning;   //危险，强化警告色
+  background-color: @jee-warning; //危险，强化警告色
 }
 .jee-inside-link-back-color {
   background-color: @jee-inside-link; //内部链接
@@ -98,7 +118,7 @@ body,
   filter: invert(80%);
 }
 
-.ant-layout{
+.ant-layout {
   .layout-basic {
     height: 100vh;
     min-height: 100vh;
@@ -127,22 +147,22 @@ ol {
 }
 // 滚动条颜色
 ::-webkit-scrollbar-thumb {
-  background: #B3B3B3;
+  background: #b3b3b3;
 }
 // 滑块区域底色
 ::-webkit-scrollbar-track {
-  background: rgba(0,0,0,0.03);
+  background: rgba(0, 0, 0, 0.03);
 }
 // 滚动条hover色
 ::-webkit-scrollbar-thumb:hover {
-  background: #A6A6A6;
+  background: #a6a6a6;
 }
 // 滚动条选中色
 ::-webkit-scrollbar-thumb:active {
-  background: #8C8C8C;
+  background: #8c8c8c;
 }
 // 结合 表格组件中的 :scroll ，让表格在收缩时，展示滚动条
-.ant-table-body{
+.ant-table-body {
   overflow-x: auto !important;
 }
 // /*显示滚动条上方以及下方的渐增按钮*/
@@ -232,22 +252,22 @@ ol {
   }
 }
 
-@media (max-width: @screen-xs) {
-  .ant-table {
-    width: 100%;
-    overflow-x: auto;
-    &-thead > tr,
-    &-tbody > tr {
-      > th,
-      > td {
-        white-space: pre;
-        > span {
-          display: block;
-        }
-      }
-    }
-  }
-}
+// @media (max-width: @screen-xs) {
+//   .ant-table {
+//     width: 100%;
+//     overflow-x: auto;
+//     &-thead > tr,
+//     &-tbody > tr {
+//       > th,
+//       > td {
+//         white-space: pre;
+//         > span {
+//           display: block;
+//         }
+//       }
+//     }
+//   }
+// }
 
 // 修改侧边栏宽度为230
 .ant-pro-sider-menu-sider {
@@ -272,14 +292,16 @@ ol {
 
 // 登录页输入框fcous hover事件，边框为jee主题蓝
 .ant-input-affix-wrapper:hover .ant-input:not(.ant-input-disabled) {
-  border-color: @jee-theme
+  border-color: @jee-theme;
 }
 .ant-input:focus {
-  border-color: @jee-theme
+  border-color: @jee-theme;
 }
 
 // 抽屉，按钮板块，居中
 .drawer-btn-center {
+  box-sizing: border-box;
+
   position: absolute;
   right: 0px;
   bottom: 0px;
@@ -301,13 +323,13 @@ ol {
 
 .els {
   overflow: hidden;
-  text-overflow:ellipsis;
-  white-space: nowrap
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 // 内容区域去掉最外层的magin 24px ,改为 padding 15px
 .ant-pro-basicLayout-content {
-  margin: 0 ;
+  margin: 0;
   padding: 15px;
 }
 
@@ -318,15 +340,15 @@ ol {
 
 // 去掉表格边框线
 .ant-card-bordered {
-  border:none;
+  border: none;
 }
 
 .ant-table-align-left {
   padding-left: 38px;
 }
 // 向下的30外边距
-.mg-b-30 { 
-  margin-bottom: 30px
+.mg-b-30 {
+  margin-bottom: 30px;
 }
 
 .ant-card-bordered {
@@ -339,9 +361,9 @@ ol {
   justify-content: start;
   flex-wrap: wrap;
   .table-layer {
-   display: flex;
+    display: flex;
     flex-wrap: wrap;
-    flex-grow: 1; 
+    flex-grow: 1;
     flex-shrink: 1;
   }
 }
@@ -350,7 +372,7 @@ ol {
   max-width: 240px;
   flex-grow: 1;
   flex-shrink: 1;
-  margin-bottom:30px !important;
+  margin-bottom: 30px !important;
   margin-right: 16px !important;
 }
 
@@ -365,11 +387,20 @@ ol {
   overflow: auto;
   div {
     margin: 20px 0;
-    text-align:center;
+    text-align: center;
     font-size: 16px;
     p.big-text {
       font-size: 36px;
       font-weight: 700;
     }
   }
+}
+
+.margin-botomt-5 {
+  margin-bottom: 5px;
+}
+
+.ant-menu-item {
+  display: flex !important;
+  align-items: center;
 }

@@ -1,128 +1,132 @@
 .paydemo .content {
-	max-width: 1120px;
-	margin: 0 auto;
+  max-width: 1120px;
+  margin: 0 auto;
 }
 .paydemo .paydemo-type-content {
-	padding:20px 0;
-	margin-bottom:20px;
-	background-color: #FFFFFF;
-	border-radius: 6px;
+  padding: 20px 0;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  border-radius: 6px;
 }
 .paydemo .paydemo-type-name {
-	font-size: 16px;
-	margin-bottom: 12px;
-	display: flex;
-	align-items: center;
+  font-size: 16px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
 }
 .paydemo .paydemo-type-body {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
 }
 .paydemo .paydemo-type {
-	padding: 12px;
-	border: solid 1px #e2e2e2;
-	margin-right: 10px;
-	cursor: pointer;
+  padding: 12px;
+  border: solid 1px #e2e2e2;
+  margin-right: 10px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
 }
 .paydemo .paydemo-type-h5 {
-	padding: 12px;
-	border: solid 1px #e2e2e2;
-	margin-right: 10px;
-	cursor: pointer;
+  padding: 12px;
+  border: solid 1px #e2e2e2;
+  margin-right: 10px;
+  cursor: pointer;
 }
 .paydemo .codeImg_wx_h5 {
-	position: absolute;
-	z-index:1001;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	background-color: #ffffff;
-	width: 160px;
+  position: absolute;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff;
+  width: 160px;
 }
 .paydemo .paydemo-type-img {
-	width: 40px;
-	height: 40px;
-	vertical-align: center;
-	margin-right: 10px;
+  width: 40px;
+  height: 40px;
+  vertical-align: center;
+  margin-right: 10px;
 }
 .paydemo .this {
-	color: #1953ff;
-	border-color: #1953ff;
+  color: #1953ff;
+  border-color: #1953ff;
 }
 .paydemo .layui-input {
-	width: 50%;
-	display: inline;
-	font-size: 14px;
+  width: 50%;
+  display: inline;
+  font-size: 14px;
 }
 .paydemo .paydemo-form-item {
-	height: 38px;
-	margin-bottom: 5px;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
+  height: 38px;
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
-.paydemo .layui-form-radio i:hover, .layui-form-radioed i {
-	color: #1953ff;
+.paydemo .layui-form-radio i:hover,
+.layui-form-radioed i {
+  color: #1953ff;
 }
 .paydemo .layui-anim.layui-icon {
-	margin-top: 3px;
+  margin-top: 3px;
 }
 .paydemo .layui-form-radio {
-	margin-top: 2px;
+  margin-top: 2px;
 }
 .paydemo .paydemo-scan {
-	padding-top: 30px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .paydemo .layui-laypage .layui-laypage-curr .layui-laypage-em {
-	background-color: #1953ff;
+  background-color: #1953ff;
 }
 .paydemo .layui-laypage a:hover {
-	color: #1953ff;
+  color: #1953ff;
 }
 .paydemo-type-content p {
-	margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 .paydemo .layui-table-view .layui-table {
-	width: 100%;
+  width: 100%;
 }
 .paydemo .paydemo-btn {
-	border: 1px solid #e2e2e2;
-	background-color: #ffffff;
-	color:#000000;
-	margin-left: 8px;
-	display: inline-flex;
-	flex-direction: row;
-	align-items: center;
-	cursor:pointer;
+  border: 1px solid #e2e2e2;
+  background-color: #ffffff;
+  color: #000000;
+  margin-left: 8px;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
 }
 
 .paydemo #paydemo-amount {
-  display: flex; 
+  display: flex;
   align-items: inherit;
 }
-.paydemo #paydemo-amount .layui-unselect{
-  margin-right:15px
+.paydemo #paydemo-amount .layui-unselect {
+  margin-right: 15px;
 }
 
 #randomOrderNo:hover {
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .paydemo-form-item label {
-	display: flex;
-	align-items: center;
-	margin-right:15px;
-	flex-wrap:wrap
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+  flex-wrap: wrap;
 }
 .paydemo-form-item label input {
-	margin-left:3px;
+  margin-left: 3px;
 }
 
 .paydemo .article-title {
-	font-weight: 600
+  font-weight: 600;
 }
