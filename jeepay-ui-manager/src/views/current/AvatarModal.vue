@@ -172,7 +172,7 @@ function okHandel() {
   setTimeout(() => {
     vdata.confirmLoading = false
     close()
-    vdata.$message.success('上传头像成功')
+    $infoBox.message.success('上传头像成功')
   }, 2000)
 }
 

@@ -262,7 +262,7 @@ onUnmounted(() => window.removeEventListener('resize', handleResize))
 /*
   菜单栏部分
 */
-.jeepay-menu :deep {
+:deep(.jeepay-menu) {
   height: 100%;
   position: relative;
 

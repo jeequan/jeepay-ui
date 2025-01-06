@@ -7,6 +7,7 @@
             <a-range-picker
               class="table-head-layout"
               @change="onChange"
+              v-model:value="vdata.date"
               :show-time="{ format: 'HH:mm:ss' }"
               format="YYYY-MM-DD HH:mm:ss"
               :disabled-date="disabledDate"
@@ -46,7 +47,15 @@
               <a-button type="primary" @click="queryFunc" :loading="vdata.btnLoading">
                 搜索
               </a-button>
-              <a-button style="margin-left: 8px" @click="() => (vdata.searchData = {})">
+              <a-button
+                style="margin-left: 8px"
+                @click="
+                  () => {
+                    vdata.searchData = {}
+                    vdata.date = ''
+                  }
+                "
+              >
                 重置
               </a-button>
             </span>
@@ -61,7 +70,7 @@
         :closable="true"
         :initData="true"
         :reqTableDataFunc="reqTableDataFunc"
-        :tableColumns="tableColumns"
+        :tableColumns="vdata.tableColumns"
         :searchData="vdata.searchData"
         :rowSelection="rowSelection"
         rowKey="orderId"
@@ -255,6 +264,8 @@ const tableColumns = [
 ]
 
 const vdata: any = reactive({
+  date: '',
+
   btnLoading: true,
   tableColumns: tableColumns,
   searchData: {},

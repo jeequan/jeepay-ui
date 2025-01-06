@@ -148,12 +148,10 @@
             <div class="quick-start">
               <p class="quick-start-title">快速开始</p>
               <ul class="quick-start-ul">
-                <template v-for="menu in quickMenuList">
-                  <template>
-                    <li :key="menu.entId">
-                      <router-link :to="menu.menuUri" tag="span">{{ menu.entName }}</router-link>
-                    </li>
-                  </template>
+                <template v-for="menu in quickMenuList" :key="menu.entId">
+                  <li>
+                    <router-link :to="menu.menuUri">{{ menu.entName }}</router-link>
+                  </li>
                 </template>
               </ul>
             </div>
@@ -285,7 +283,7 @@
             <a-col :span="24">
               <a-descriptions>
                 <a-descriptions-item label="真实姓名">
-                  {{ userStore.userInfo.userName }}
+                  {{ userStore.userInfo.realname }}
                 </a-descriptions-item>
               </a-descriptions>
             </a-col>
@@ -361,7 +359,7 @@ const vdata: any = reactive({
   // recordId: userStore.userInfo.userId,
   searchData: {}, // 时间选择条件
 
-  greetImg: userStore.userInfo.avatarImgPath, // 头像图片地址
+  greetImg: userStore.userInfo.avatarUrl, // 头像图片地址
   isPayType: true, // 支付方式是否存在数据
   isPayCount: true, // 交易统计是否存在数据
   ispayAmount: true, // 今日交易金额是否存在数据
@@ -688,7 +686,7 @@ onMounted(() => {
   })
 
   // 用户名信息以及时间问候语句。由于退出登陆才让他更改成功，所以这里的数据先从 vuex中获取
-  vdata.mainTips.helloTitle = `${timeFix()}，` + userStore.userInfo.userName
+  vdata.mainTips.helloTitle = `${timeFix()}，` + userStore.userInfo.realname
   init()
   // 去掉交易统计 日期选择框，原生的边框
   // jeeRange.value.$refs.picker.$el.firstChild.style.border = 'none'

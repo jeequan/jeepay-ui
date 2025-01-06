@@ -193,7 +193,7 @@ function refVercode() {
     flex-direction: column;
     width: 100%;
     min-height: 100%;
-    background: #f0f2f5 url(~@/assets/svg/background.svg) no-repeat 50%;
+    background: #f0f2f5 url('../../assets/svg/background.svg') no-repeat 50%;
     background-size: cover;
     //padding: 50px 0 84px;
     position: relative;

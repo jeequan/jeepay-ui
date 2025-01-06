@@ -16,7 +16,19 @@
             </span>
           </div>
         </a-form>
-        <div>
+      </div>
+
+      <!-- 列表渲染 -->
+      <JeepayTable
+        ref="infoTable"
+        :initData="true"
+        :reqTableDataFunc="reqTableDataFunc"
+        :tableColumns="vdata.tableColumns"
+        :searchData="vdata.searchData"
+        @btnLoadClose="vdata.btnLoading = false"
+        rowKey="roleName"
+      >
+        <template #opRow>
           <a-button
             v-if="$access('ENT_UR_ROLE_ADD')"
             type="primary"
@@ -25,19 +37,8 @@
           >
             新建
           </a-button>
-        </div>
-      </div>
+        </template>
 
-      <!-- 列表渲染 -->
-      <JeepayTable
-        ref="infoTable"
-        :initData="true"
-        :reqTableDataFunc="reqTableDataFunc"
-        :tableColumns="tableColumns"
-        :searchData="vdata.searchData"
-        @btnLoadClose="vdata.btnLoading = false"
-        rowKey="roleName"
-      >
         <template #bodyCell="{ column, record }">
           <template v-if="column.key === 'roleId'">
             <b>{{ record.roleId }}</b>

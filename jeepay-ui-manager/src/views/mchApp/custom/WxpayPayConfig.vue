@@ -392,12 +392,16 @@ function onSubmit() {
           $infoBox.message.error('参数不能为空！')
           return
         }
-        req.add(API_URL_MCH_PAYCONFIGS_LIST, reqParams).then((res) => {
-          vdata.$message.success('保存成功')
-          vdata.open = false
-          vdata.btnLoading = false
-          props.callbackFunc()
-        })
+        req
+          .add(API_URL_MCH_PAYCONFIGS_LIST, reqParams)
+          .then((res) => {
+            $infoBox.message.success('保存成功')
+            vdata.open = false
+            props.callbackFunc()
+          })
+          .finally(() => {
+            vdata.btnLoading = false
+          })
       }
     })
   })

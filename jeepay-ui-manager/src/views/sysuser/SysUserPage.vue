@@ -16,17 +16,6 @@
             </span>
           </div>
         </a-form>
-
-        <div>
-          <a-button
-            v-if="$access('ENT_UR_USER_ADD')"
-            type="primary"
-            @click="addFunc"
-            class="mg-b-30"
-          >
-            新建
-          </a-button>
-        </div>
       </div>
 
       <!-- 列表渲染 -->
@@ -35,10 +24,21 @@
         ref="infoTable"
         :initData="true"
         :reqTableDataFunc="reqTableDataFunc"
-        :tableColumns="tableColumns"
+        :tableColumns="vdata.tableColumns"
         :searchData="vdata.searchData"
         rowKey="sysUserId"
       >
+        <template #opRow>
+          <a-button
+            v-if="$access('ENT_UR_USER_ADD')"
+            type="primary"
+            @click="addFunc"
+            class="mg-b-30"
+          >
+            新建
+          </a-button>
+        </template>
+
         <template #bodyCell="{ column, record }">
           <template v-if="column.key === 'avatarUrl'">
             <a-avatar size="default" :src="record.avatarUrl" />

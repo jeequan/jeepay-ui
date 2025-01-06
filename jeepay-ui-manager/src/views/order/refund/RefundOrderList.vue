@@ -260,6 +260,13 @@
               </a-descriptions-item>
             </a-descriptions>
           </a-col>
+          <a-col :sm="24">
+            <a-descriptions>
+              <a-descriptions-item label="退款原因">
+                {{ vdata.detailData.refundReason }}
+              </a-descriptions-item>
+            </a-descriptions>
+          </a-col>
           <a-col :sm="12">
             <a-descriptions>
               <a-descriptions-item label="订单状态">
@@ -372,35 +379,35 @@
           </a-descriptions>
         </a-col>
         <a-col :sm="24">
-          <a-form-model-item label="渠道额外参数">
+          <a-form-item label="渠道额外参数">
             <a-input
               type="textarea"
               disabled="disabled"
               style="height: 100px; color: black"
               v-model:value="vdata.detailData.channelExtra"
             />
-          </a-form-model-item>
+          </a-form-item>
         </a-col>
         <a-divider />
         <a-col :sm="24">
-          <a-form-model-item label="扩展参数">
+          <a-form-item label="扩展参数">
             <a-input
               type="textarea"
               disabled="disabled"
               style="height: 100px; color: black"
               v-model:value="vdata.detailData.extParam"
             />
-          </a-form-model-item>
+          </a-form-item>
         </a-col>
         <a-col :sm="24">
-          <a-form-model-item label="备注">
+          <a-form-item label="备注">
             <a-input
               type="textarea"
               disabled="disabled"
               style="height: 100px; color: black"
               v-model:value="vdata.detailData.remark"
             />
-          </a-form-model-item>
+          </a-form-item>
         </a-col>
       </a-drawer>
     </template>

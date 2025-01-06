@@ -80,12 +80,12 @@
             <a-row :gutter="4">
               <a-col :md="9">
                 <a-form-item label="">
-                  <a-input v-model="vdata.searchData2.wayCode" placeholder="支付方式代码" />
+                  <a-input v-model:value="vdata.searchData2.wayCode" placeholder="支付方式代码" />
                 </a-form-item>
               </a-col>
               <a-col :md="9">
                 <a-form-item label="">
-                  <a-input v-model="vdata.searchData2.wayName" placeholder="支付方式名称" />
+                  <a-input v-model:value="vdata.searchData2.wayName" placeholder="支付方式名称" />
                 </a-form-item>
               </a-col>
               <a-col :sm="6">

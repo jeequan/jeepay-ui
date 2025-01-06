@@ -22,9 +22,6 @@
             </span>
           </div>
         </a-form>
-        <a-button v-if="$access('ENT_PC_WAY_ADD')" type="primary" @click="addFunc" class="mg-b-30">
-          新建
-        </a-button>
       </div>
 
       <!-- 列表渲染 -->
@@ -33,10 +30,21 @@
         ref="infoTable"
         :initData="true"
         :reqTableDataFunc="reqTableDataFunc"
-        :tableColumns="tableColumns"
+        :tableColumns="vdata.tableColumns"
         :searchData="vdata.searchData"
         rowKey="wayCode"
       >
+        <template #opRow>
+          <a-button
+            v-if="$access('ENT_PC_WAY_ADD')"
+            type="primary"
+            @click="addFunc"
+            class="mg-b-30"
+          >
+            新建
+          </a-button>
+        </template>
+
         <template #bodyCell="{ column, record }">
           <template v-if="column.key === 'wayCode'">
             <b>{{ record.wayCode }}</b>

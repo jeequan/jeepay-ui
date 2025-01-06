@@ -7,7 +7,7 @@
     @close="onClose"
   >
     <a-form ref="infoFormModel" :model="vdata.saveObject" layout="vertical" :rules="vdata.rules">
-      <a-row :gutter="16">
+      <a-row :gutter="16" style="padding-bottom: 50px">
         <a-col :span="12">
           <a-form-item label="接口代码" name="ifCode">
             <a-input
@@ -98,7 +98,7 @@
         <a-col :span="24">
           <a-form-item label="支持的支付方式" name="checkedList">
             <a-checkbox-group
-              v-model:checked="vdata.checkedList"
+              v-model:value="vdata.checkedList"
               :options="vdata.wayCodesOptions"
               @change="onWayCodesChange"
             />
@@ -123,7 +123,7 @@
         </a-col>
         <a-col :span="12">
           <a-form-item label="页面展示：卡片背景色" name="bgColor">
-            <a-input v-model:value="vdata.saveObject.bgColor" placeholder="请输入" />
+            <a-input v-model:value="vdata.saveObject.bgColor" placeholder="请输入" type="color" />
           </a-form-item>
         </a-col>
       </a-row>

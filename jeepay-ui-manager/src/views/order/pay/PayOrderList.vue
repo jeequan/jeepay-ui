@@ -5,6 +5,7 @@
         <a-form layout="inline" class="table-head-ground">
           <div class="table-layer">
             <a-range-picker
+              v-model:value="vdata.date"
               class="table-head-layout"
               :show-time="{ format: 'HH:mm:ss' }"
               format="YYYY-MM-DD HH:mm:ss"
@@ -77,7 +78,17 @@
               <a-button type="primary" :loading="vdata.btnLoading" @click="queryFunc">
                 搜索
               </a-button>
-              <a-button style="margin-left: 8px" @click="vdata.searchData = {}">重置</a-button>
+              <a-button
+                style="margin-left: 8px"
+                @click="
+                  () => {
+                    vdata.searchData = {}
+                    vdata.date = ''
+                  }
+                "
+              >
+                重置
+              </a-button>
             </span>
           </div>
         </a-form>
@@ -88,7 +99,7 @@
         ref="infoTable"
         :init-data="true"
         :req-table-data-func="reqTableDataFunc"
-        :table-columns="tableColumns"
+        :table-columns="vdata.tableColumns"
         :search-data="vdata.searchData"
         row-key="payOrderId"
         :table-row-cross-color="true"
@@ -635,6 +646,8 @@ const infoTable = ref()
 const refundModalInfo = ref()
 
 const vdata: any = reactive({
+  date: '',
+
   btnLoading: false,
   tableColumns: tableColumns,
   searchData: {},

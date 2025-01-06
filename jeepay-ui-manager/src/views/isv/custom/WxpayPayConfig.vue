@@ -374,6 +374,9 @@ function onSubmit() {
             vdata.open = false
             props.callbackFunc()
           })
+          .catch(() => {
+            $infoBox.message.error('保存失败，请重试')
+          })
           .finally(() => {
             vdata.btnLoading = false
           })

@@ -27,16 +27,6 @@
             </span>
           </div>
         </a-form>
-        <div>
-          <a-button
-            v-if="$access('ENT_MCH_APP_ADD')"
-            type="primary"
-            class="mg-b-30"
-            @click="addFunc"
-          >
-            新建
-          </a-button>
-        </div>
       </div>
 
       <!-- 列表渲染 -->
@@ -49,6 +39,17 @@
         row-key="appId"
         @btn-load-close="vdata.btnLoading = false"
       >
+        <template #opRow>
+          <a-button
+            v-if="$access('ENT_MCH_APP_ADD')"
+            type="primary"
+            class="mg-b-30"
+            @click="addFunc"
+          >
+            新建
+          </a-button>
+        </template>
+
         <template #bodyCell="{ column, record }">
           <template v-if="column.key === 'appId'">
             <b>{{ record.appId }}</b>

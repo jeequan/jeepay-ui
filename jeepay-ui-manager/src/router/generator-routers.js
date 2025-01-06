@@ -121,7 +121,8 @@ export const generator = (allMenuRouteTreeArray) => {
       name: item.entId,
       // 该路由对应页面的 组件 :方案2 (动态加载)
       component:
-        (defComponent && defComponent.component) || (() => import(`@/views/${item.componentName}`)),
+        (defComponent && defComponent.component) ||
+        (() => import(/* @vite-ignore */ `@/views/${item.componentName}`)),
       // meta: 页面标题, 菜单图标, 页面权限(供指令权限用，可去掉)
       meta: {
         title: item.entName,

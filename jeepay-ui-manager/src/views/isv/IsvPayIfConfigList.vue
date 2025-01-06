@@ -136,7 +136,7 @@
                 :fileUrl="vdata.ifParams[item.name]"
                 @uploadSuccess="uploadSuccess($event, item.name)"
               >
-                <template slot="uploadSlot" slot-scope="{ loading }">
+                <template #uploadSlot="{ loading }">
                   <a-button style="margin-top: 5px">
                     <a-icon :type="vdata.loading ? 'loading' : 'upload'" />
                     {{ vdata.loading ? '正在上传' : '点击上传' }}
@@ -275,8 +275,6 @@ function editPayIfConfigFunc(record) {
       const newItems: any = [] // 重新加载支付接口配置定义描述json
 
       const isvParamsList = JSON.parse(record.isvParams)
-
-      console.log(isvParamsList, 'isvParamsList')
 
       if (Array.isArray(isvParamsList)) {
         isvParamsList.forEach((item) => {

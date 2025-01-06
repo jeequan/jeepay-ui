@@ -46,9 +46,6 @@ router.beforeEach((to: any, from, next) => {
         generatorDynamicRouter().then((resRouter) => {
           //增加rootRouter
           router.addRoute(resRouter[0])
-
-          console.log(to.matched, to.matched.length, to.path)
-
           // https://ask.csdn.net/questions/7419202, 解决跳转白屏的问题
           if (to.matched.length == 0) {
             router.push(to.path)
