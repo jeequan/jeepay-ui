@@ -567,16 +567,19 @@
           </a-col>
         </a-row>
         <a-divider />
+
         <a-row justify="start" type="flex">
           <a-col :sm="24">
-            <a-form-model-item label="扩展参数">
-              <a-input
-                v-model:value="vdata.detailData.extParam"
-                type="textarea"
-                disabled="disabled"
-                style="height: 100px; color: black"
-              />
-            </a-form-model-item>
+            <a-form layout="vertical">
+              <a-form-item label="扩展参数:">
+                <a-input
+                  v-model:value="vdata.detailData.extParam"
+                  type="textarea"
+                  disabled="disabled"
+                  style="height: 100px; color: black"
+                />
+              </a-form-item>
+            </a-form>
           </a-col>
         </a-row>
       </a-drawer>

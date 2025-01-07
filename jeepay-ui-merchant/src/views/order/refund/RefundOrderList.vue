@@ -16,15 +16,15 @@
             </a-range-picker>
             <jeepay-text-up
               placeholder="支付/退款列订单号"
-              v-model:model="vdata.searchData.unionOrderId"
+              v-model:value="vdata.searchData.unionOrderId"
             />
-            <!--            <jeepay-text-up :placeholder="'退款订单号'" :msg="searchData.refundOrderId" v-model:model="searchData.refundOrderId" />-->
-            <!--            <jeepay-text-up :placeholder="'商户退款单号'" :msg="searchData.mchRefundNo" v-model:model="searchData.mchRefundNo" />-->
-            <!--            <jeepay-text-up :placeholder="'支付订单号'" :msg="searchData.payOrderId" v-model:model="searchData.payOrderId" />-->
-            <!--            <jeepay-text-up :placeholder="'渠道订单号'" :msg="searchData.channelPayOrderNo" v-model:model="searchData.channelPayOrderNo" />-->
-            <jeepay-text-up placeholder="应用AppId" v-model:model="vdata.searchData.appId" />
+            <!--            <jeepay-text-up :placeholder="'退款订单号'" :msg="searchData.refundOrderId" v-model:value="searchData.refundOrderId" />-->
+            <!--            <jeepay-text-up :placeholder="'商户退款单号'" :msg="searchData.mchRefundNo" v-model:value="searchData.mchRefundNo" />-->
+            <!--            <jeepay-text-up :placeholder="'支付订单号'" :msg="searchData.payOrderId" v-model:value="searchData.payOrderId" />-->
+            <!--            <jeepay-text-up :placeholder="'渠道订单号'" :msg="searchData.channelPayOrderNo" v-model:value="searchData.channelPayOrderNo" />-->
+            <jeepay-text-up placeholder="应用AppId" v-model:value="vdata.searchData.appId" />
             <a-select
-              v-model:model="vdata.searchData.state"
+              v-model:value="vdata.searchData.state"
               placeholder="退款状态"
               class="table-head-layout"
             >
@@ -371,37 +371,39 @@
             </a-descriptions-item>
           </a-descriptions>
         </a-col>
-        <a-col :sm="24">
-          <a-form-model-item label="渠道额外参数">
-            <a-input
-              type="textarea"
-              disabled="disabled"
-              style="height: 100px; color: black"
-              v-model:model="vdata.detailData.channelExtra"
-            />
-          </a-form-model-item>
-        </a-col>
-        <a-divider />
-        <a-col :sm="24">
-          <a-form-model-item label="扩展参数">
-            <a-input
-              type="textarea"
-              disabled="disabled"
-              style="height: 100px; color: black"
-              v-model:model="vdata.detailData.extParam"
-            />
-          </a-form-model-item>
-        </a-col>
-        <a-col :sm="24">
-          <a-form-model-item label="备注">
-            <a-input
-              type="textarea"
-              disabled="disabled"
-              style="height: 100px; color: black"
-              v-model:model="vdata.detailData.remark"
-            />
-          </a-form-model-item>
-        </a-col>
+        <a-form layout="vertical">
+          <a-col :sm="24">
+            <a-form-item label="渠道额外参数:">
+              <a-input
+                type="textarea"
+                disabled="disabled"
+                style="height: 100px; color: black"
+                v-model:value="vdata.detailData.channelExtra"
+              />
+            </a-form-item>
+          </a-col>
+          <a-divider />
+          <a-col :sm="24">
+            <a-form-item label="扩展参数:">
+              <a-input
+                type="textarea"
+                disabled="disabled"
+                style="height: 100px; color: black"
+                v-model:value="vdata.detailData.extParam"
+              />
+            </a-form-item>
+          </a-col>
+          <a-col :sm="24">
+            <a-form-item label="备注:">
+              <a-input
+                type="textarea"
+                disabled="disabled"
+                style="height: 100px; color: black"
+                v-model:value="vdata.detailData.remark"
+              />
+            </a-form-item>
+          </a-col>
+        </a-form>
       </a-drawer>
     </template>
   </page-header-wrapper>

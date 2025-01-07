@@ -74,7 +74,6 @@ function show(recordId) {
 
   // 初始化角色权限分配功能
   nextTick(() => {
-    console.log(roleDistRef.value, 'roleDistRef.value')
     roleDistRef.value.initTree(recordId)
   })
 }

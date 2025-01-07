@@ -1,6 +1,6 @@
 <template>
   <a-modal v-model:open="vdata.isShow" title="新增角色" @ok="handleOkFunc">
-    <a-form-model
+    <a-form
       ref="infoFormModel"
       :model="vdata.saveObject"
       :label-col="{ span: 4 }"
@@ -10,7 +10,7 @@
       <a-form-item label="角色名称：" name="roleName">
         <a-input v-model:value="vdata.saveObject.roleName" />
       </a-form-item>
-    </a-form-model>
+    </a-form>
   </a-modal>
 </template>
 

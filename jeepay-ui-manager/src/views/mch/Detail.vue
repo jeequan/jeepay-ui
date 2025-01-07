@@ -2,7 +2,7 @@
 <template>
   <a-drawer
     v-model:open="vdata.open"
-    :title=" true ? '商户详情' : '' "
+    :title="true ? '商户详情' : ''"
     :body-style="{ paddingBottom: '80px' }"
     width="40%"
     @close="onClose"
@@ -60,7 +60,7 @@
       <a-col :sm="12">
         <a-descriptions>
           <a-descriptions-item label="商户类型">
-            {{ vdata.detailData.type === 1 ? '普通商户': '特约商户' }}
+            {{ vdata.detailData.type === 1 ? '普通商户' : '特约商户' }}
           </a-descriptions-item>
         </a-descriptions>
       </a-col>
@@ -74,8 +74,14 @@
       <a-col :sm="12">
         <a-descriptions>
           <a-descriptions-item label="状态">
-            <a-tag :color="vdata.detailData.state === 1?'green':'volcano'">
-              {{ vdata.detailData.state === 0?'禁用':vdata.detailData.state === 1?'启用':'未知' }}
+            <a-tag :color="vdata.detailData.state === 1 ? 'green' : 'volcano'">
+              {{
+                vdata.detailData.state === 0
+                  ? '禁用'
+                  : vdata.detailData.state === 1
+                    ? '启用'
+                    : '未知'
+              }}
             </a-tag>
           </a-descriptions-item>
         </a-descriptions>
@@ -90,14 +96,14 @@
     </a-row>
     <a-row justify="start" type="flex">
       <a-col :sm="24">
-        <a-form-model-item label="备注">
+        <a-form-item label="备注">
           <a-input
             v-model="vdata.detailData.remark"
             type="textarea"
             disabled="disabled"
             style="height: 50px"
           />
-        </a-form-model-item>
+        </a-form-item>
       </a-col>
     </a-row>
   </a-drawer>
@@ -107,38 +113,40 @@
 import { API_URL_MCH_LIST, API_URL_ISV_LIST, req } from '@/api/manage'
 import { reactive, ref } from 'vue'
 
-  const vdata: any = reactive({
-    btnLoading: false,
-    detailData: {}, // 数据对象
-    recordId: null, // 更新对象ID
-    open: false, // 是否显示弹层/抽屉
-    isvList: null, // 服务商下拉列表
-    isvName: '' // 服务商名称
+const vdata: any = reactive({
+  btnLoading: false,
+  detailData: {}, // 数据对象
+  recordId: null, // 更新对象ID
+  open: false, // 是否显示弹层/抽屉
+  isvList: null, // 服务商下拉列表
+  isvName: '', // 服务商名称
+})
+
+function show(recordId) {
+  // 弹层打开事件
+  vdata.detailData = { state: 1, type: 1 } // 数据清空
+
+  vdata.recordId = recordId
+  req.getById(API_URL_MCH_LIST, recordId).then((res) => {
+    vdata.detailData = res
   })
 
-  function show(recordId) { // 弹层打开事件
-    vdata.detailData = { 'state': 1, 'type': 1 } // 数据清空
-  
-    vdata.recordId = recordId
-    req.getById(API_URL_MCH_LIST, recordId).then(res => {
-      vdata.detailData = res
-    })
-
-    req.list(API_URL_ISV_LIST, { 'pageSize': null }).then(res => { // 服务商下拉选择列表
-      vdata.isvList = res.records
-      for (let i = 0; i < vdata.isvList.length; i++) {
-        if (vdata.detailData.isvNo === vdata.isvList[i].isvNo) {
-          vdata.isvName = vdata.isvList[i].isvName
-        }
+  req.list(API_URL_ISV_LIST, { pageSize: null }).then((res) => {
+    // 服务商下拉选择列表
+    vdata.isvList = res.records
+    for (let i = 0; i < vdata.isvList.length; i++) {
+      if (vdata.detailData.isvNo === vdata.isvList[i].isvNo) {
+        vdata.isvName = vdata.isvList[i].isvName
       }
-    })
+    }
+  })
 
-    vdata.open = true
-  }
+  vdata.open = true
+}
 
-  function onClose () {
-    vdata.open = false
-  }
+function onClose() {
+  vdata.open = false
+}
 
-  defineExpose({ show })
+defineExpose({ show })
 </script>

@@ -499,14 +499,16 @@
         <a-divider />
         <a-row justify="start" type="flex">
           <a-col :sm="24">
-            <a-form-model-item label="扩展参数">
-              <a-input
-                type="textarea"
-                disabled="disabled"
-                style="height: 100px; color: black"
-                v-model:value="vdata.detailData.extParam"
-              />
-            </a-form-model-item>
+            <a-form layout="vertical">
+              <a-form-item label="扩展参数:">
+                <a-input
+                  type="textarea"
+                  disabled="disabled"
+                  style="height: 100px; color: black"
+                  v-model:value="vdata.detailData.extParam"
+                />
+              </a-form-item>
+            </a-form>
           </a-col>
         </a-row>
       </a-drawer>

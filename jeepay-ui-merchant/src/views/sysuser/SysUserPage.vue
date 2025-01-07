@@ -102,7 +102,7 @@ const tableColumns = [
   {
     title: '性别',
     dataIndex: 'sex',
-    customRender: (record) => {
+    customRender: ({ record }) => {
       return record.sex === 1 ? '男' : record.sex === 2 ? '女' : '未知'
     },
   },
@@ -112,7 +112,7 @@ const tableColumns = [
   {
     title: '超管',
     dataIndex: 'isAdmin',
-    customRender: (record) => {
+    customRender: ({ record }) => {
       return record.isAdmin === 1 ? '是' : '否'
     },
   },

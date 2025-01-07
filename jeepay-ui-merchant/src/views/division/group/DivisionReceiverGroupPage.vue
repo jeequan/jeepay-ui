@@ -86,7 +86,7 @@ const tableColumns = [
     key: 'autoDivisionFlag',
     dataIndex: 'autoDivisionFlag',
     title: '自动分账组',
-    customRender: (text, record, index) => (text === 1 ? '是' : '否'),
+    customRender: ({ text }) => (text === 1 ? '是' : '否'),
   },
   { key: 'createdBy', dataIndex: 'createdBy', title: '创建人' },
   { key: 'createdAt', dataIndex: 'createdAt', title: '创建时间' },

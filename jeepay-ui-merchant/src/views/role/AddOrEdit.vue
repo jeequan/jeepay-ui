@@ -63,9 +63,6 @@ function show(recordId) {
     infoFormModel.value.resetFields()
   }
 
-  // 初始化角色权限分配功能
-  nextTick(() => roleDistRef.value.initTree(recordId))
-
   if (!vdata.isAdd) {
     // 修改信息 延迟展示弹层
     vdata.recordId = recordId
@@ -76,6 +73,9 @@ function show(recordId) {
   } else {
     vdata.isShow = true // 立马展示弹层信息
   }
+
+  // 初始化角色权限分配功能
+  nextTick(() => roleDistRef.value.initTree(recordId))
 }
 
 function handleOkFunc() {

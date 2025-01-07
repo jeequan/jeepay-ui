@@ -211,25 +211,30 @@
               </a-descriptions-item>
             </a-descriptions>
           </a-col>
+
           <a-col :sm="24">
-            <a-form-item label="通知地址">
-              <a-input
-                type="textarea"
-                disabled="disabled"
-                style="height: 100px; color: black"
-                v-model:value="vdata.detailData.notifyUrl"
-              />
-            </a-form-item>
+            <a-form layout="vertical">
+              <a-form-item label="通知地址:">
+                <a-input
+                  type="textarea"
+                  disabled="disabled"
+                  style="height: 100px; color: black"
+                  v-model:value="vdata.detailData.notifyUrl"
+                />
+              </a-form-item>
+            </a-form>
           </a-col>
           <a-col :sm="24">
-            <a-form-item label="响应结果">
-              <a-input
-                type="textarea"
-                disabled="disabled"
-                style="height: 100px; color: black"
-                v-model:value="vdata.detailData.resResult"
-              />
-            </a-form-item>
+            <a-form layout="vertical">
+              <a-form-item label="响应结果:">
+                <a-input
+                  type="textarea"
+                  disabled="disabled"
+                  style="height: 100px; color: black"
+                  v-model:value="vdata.detailData.resResult"
+                />
+              </a-form-item>
+            </a-form>
           </a-col>
         </a-row>
       </a-drawer>

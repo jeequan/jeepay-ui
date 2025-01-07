@@ -184,14 +184,14 @@
     <a-divider />
     <a-row justify="start" type="flex">
       <a-col :sm="24">
-        <a-form-model-item label="上游返回数据包">
+        <a-form-item label="上游返回数据包">
           <a-input
             type="textarea"
             disabled="disabled"
             style="height: 100px; color: black"
             v-model="vdata.detailData.channelRespResult"
           />
-        </a-form-model-item>
+        </a-form-item>
       </a-col>
     </a-row>
   </a-drawer>

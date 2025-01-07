@@ -378,37 +378,39 @@
             </a-descriptions-item>
           </a-descriptions>
         </a-col>
-        <a-col :sm="24">
-          <a-form-item label="渠道额外参数">
-            <a-input
-              type="textarea"
-              disabled="disabled"
-              style="height: 100px; color: black"
-              v-model:value="vdata.detailData.channelExtra"
-            />
-          </a-form-item>
-        </a-col>
-        <a-divider />
-        <a-col :sm="24">
-          <a-form-item label="扩展参数">
-            <a-input
-              type="textarea"
-              disabled="disabled"
-              style="height: 100px; color: black"
-              v-model:value="vdata.detailData.extParam"
-            />
-          </a-form-item>
-        </a-col>
-        <a-col :sm="24">
-          <a-form-item label="备注">
-            <a-input
-              type="textarea"
-              disabled="disabled"
-              style="height: 100px; color: black"
-              v-model:value="vdata.detailData.remark"
-            />
-          </a-form-item>
-        </a-col>
+        <a-form layout="vertical">
+          <a-col :sm="24">
+            <a-form-item label="渠道额外参数:">
+              <a-input
+                type="textarea"
+                disabled="disabled"
+                style="height: 100px; color: black"
+                v-model:value="vdata.detailData.channelExtra"
+              />
+            </a-form-item>
+          </a-col>
+          <a-divider />
+          <a-col :sm="24">
+            <a-form-item label="扩展参数:">
+              <a-input
+                type="textarea"
+                disabled="disabled"
+                style="height: 100px; color: black"
+                v-model:value="vdata.detailData.extParam"
+              />
+            </a-form-item>
+          </a-col>
+          <a-col :sm="24">
+            <a-form-item label="备注:">
+              <a-input
+                type="textarea"
+                disabled="disabled"
+                style="height: 100px; color: black"
+                v-model:value="vdata.detailData.remark"
+              />
+            </a-form-item>
+          </a-col>
+        </a-form>
       </a-drawer>
     </template>
   </page-header-wrapper>
