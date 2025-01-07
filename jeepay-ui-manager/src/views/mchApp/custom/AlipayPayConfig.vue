@@ -20,7 +20,7 @@
         </a-col>
         <a-col :span="24">
           <a-form-item label="备注" name="remark">
-            <a-input v-model:value="vdata.saveObject.remark" placeholder="请输入" type="textarea" />
+            <a-textarea v-model:value="vdata.saveObject.remark" placeholder="请输入" />
           </a-form-item>
         </a-col>
       </a-row>
@@ -50,19 +50,17 @@
         </a-col>
         <a-col span="24">
           <a-form-item label="应用私钥" name="privateKey">
-            <a-input
+            <a-textarea
               v-model:value="vdata.ifParams.privateKey"
               :placeholder="vdata.ifParams.privateKey_ph"
-              type="textarea"
             />
           </a-form-item>
         </a-col>
         <a-col span="24">
           <a-form-item label="支付宝公钥" name="alipayPublicKey">
-            <a-input
+            <a-textarea
               v-model:value="vdata.ifParams.alipayPublicKey"
               :placeholder="vdata.ifParams.alipayPublicKey_ph"
-              type="textarea"
             />
           </a-form-item>
         </a-col>

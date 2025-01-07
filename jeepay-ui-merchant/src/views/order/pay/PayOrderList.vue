@@ -501,8 +501,7 @@
           <a-col :sm="24">
             <a-form layout="vertical">
               <a-form-item label="扩展参数:">
-                <a-input
-                  type="textarea"
+                <a-textarea
                   disabled="disabled"
                   style="height: 100px; color: black"
                   v-model:value="vdata.detailData.extParam"

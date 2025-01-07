@@ -32,10 +32,9 @@
         </a-col>
         <a-col :span="24">
           <a-form-item label="私钥 AppSecret" prop="appSecret">
-            <a-input
+            <a-textarea
               v-model:value="vdata.saveObject.appSecret"
               :placeholder="vdata.saveObject.appSecret_ph"
-              type="textarea"
             />
             <a-button type="primary" ghost @click="randomKey(false, 128, 0)">
               <a-icon type="file-sync" />

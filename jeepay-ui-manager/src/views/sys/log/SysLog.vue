@@ -188,8 +188,7 @@
         <a-row justify="start" type="flex">
           <a-col :sm="24">
             <a-form-item label="请求参数">
-              <a-input
-                type="textarea"
+              <a-textarea
                 disabled="disabled"
                 style="background-color: black; color: #ffffff; height: 100px"
                 v-model:value="vdata.detailData.optReqParam"
@@ -200,8 +199,7 @@
         <a-row justify="start" type="flex">
           <a-col :sm="24">
             <a-form-item label="响应参数">
-              <a-input
-                type="textarea"
+              <a-textarea
                 disabled="disabled"
                 style="background-color: black; color: #ffffff; height: 150px"
                 v-model:value="vdata.detailData.optResInfo"

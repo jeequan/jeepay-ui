@@ -168,26 +168,28 @@ const rules: any = reactive({
   newPwd: [
     { required: false, trigger: 'blur' },
     {
-      validator: (rule, value, callBack) => {
+      validator: (rule, value) => {
         if (!vdata.sysPassword.defaultPass) {
           if (vdata.newPwd.length < 6 || vdata.newPwd.length > 12) {
-            callBack('请输入6-12位新密码')
+            return Promise.reject('请输入6-12位新密码')
           }
         }
-        callBack()
+        return Promise.resolve()
       },
     },
   ], // 新密码
   confirmPwd: [
     { required: false, trigger: 'blur' },
     {
-      validator: (rule, value, callBack) => {
+      validator: (rule, value) => {
         if (!vdata.sysPassword.defaultPass) {
-          vdata.newPwd === vdata.sysPassword.confirmPwd
-            ? callBack()
-            : callBack('新密码与确认密码不一致')
+          if (vdata.newPwd === vdata.sysPassword.confirmPwd) {
+            return Promise.resolve()
+          } else {
+            return Promise.reject('新密码与确认密码不一致')
+          }
         } else {
-          callBack()
+          return Promise.resolve()
         }
       },
     },

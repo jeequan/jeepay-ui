@@ -572,9 +572,8 @@
           <a-col :sm="24">
             <a-form layout="vertical">
               <a-form-item label="扩展参数:">
-                <a-input
+                <a-textarea
                   v-model:value="vdata.detailData.extParam"
-                  type="textarea"
                   disabled="disabled"
                   style="height: 100px; color: black"
                 />
@@ -590,7 +589,7 @@
 import RefundModal from './RefundModal.vue' // 退款弹出框
 import { API_URL_PAY_ORDER_LIST, API_URL_PAYWAYS_LIST, req } from '@/api/manage'
 import moment from 'moment'
-import { reactive, ref, getCurrentInstance, onMounted } from 'vue'
+import { reactive, ref, getCurrentInstance, onMounted, watch } from 'vue'
 
 const { $infoBox, $access } = getCurrentInstance()!.appContext.config.globalProperties
 
@@ -659,6 +658,9 @@ const vdata: any = reactive({
   visible: false,
   detailData: {},
   payWayList: [],
+
+  dateOneFlag: false,
+  dateOneFunction: () => {},
 })
 
 onMounted(() => {

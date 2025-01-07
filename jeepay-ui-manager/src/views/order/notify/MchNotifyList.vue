@@ -215,8 +215,7 @@
           <a-col :sm="24">
             <a-form layout="vertical">
               <a-form-item label="通知地址:">
-                <a-input
-                  type="textarea"
+                <a-textarea
                   disabled="disabled"
                   style="height: 100px; color: black"
                   v-model:value="vdata.detailData.notifyUrl"
@@ -227,8 +226,7 @@
           <a-col :sm="24">
             <a-form layout="vertical">
               <a-form-item label="响应结果:">
-                <a-input
-                  type="textarea"
+                <a-textarea
                   disabled="disabled"
                   style="height: 100px; color: black"
                   v-model:value="vdata.detailData.resResult"

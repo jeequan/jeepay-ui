@@ -20,7 +20,7 @@
         </a-col>
         <a-col :span="24">
           <a-form-item label="备注" name="remark">
-            <a-input v-model:value="vdata.saveObject.remark" placeholder="请输入" type="textarea" />
+            <a-textarea v-model:value="vdata.saveObject.remark" placeholder="请输入" />
           </a-form-item>
         </a-col>
       </a-row>
@@ -68,28 +68,22 @@
         </a-col>
         <a-col span="24">
           <a-form-item label="APIv2密钥" name="key">
-            <a-input
-              v-model:value="vdata.ifParams.key"
-              :placeholder="vdata.ifParams.key_ph"
-              type="textarea"
-            />
+            <a-textarea v-model:value="vdata.ifParams.key" :placeholder="vdata.ifParams.key_ph" />
           </a-form-item>
         </a-col>
         <a-col span="24">
           <a-form-item label="APIv3秘钥" name="apiV3Key">
-            <a-input
+            <a-textarea
               v-model:value="vdata.ifParams.apiV3Key"
               :placeholder="vdata.ifParams.apiV3Key_ph"
-              type="textarea"
             />
           </a-form-item>
         </a-col>
         <a-col span="24">
           <a-form-item label="序列号" name="serialNo">
-            <a-input
+            <a-textarea
               v-model:value="vdata.ifParams.serialNo"
               :placeholder="vdata.ifParams.serialNo_ph"
-              type="textarea"
             />
           </a-form-item>
         </a-col>

@@ -204,45 +204,54 @@
             <div class="paydemo-form-item">
               <span>支付金额(元)：</span>
 
-              <a-radio-group
-                name="radioGroup"
-                v-model:value="vdata.paytestAmount"
-                style="display: flex"
-              >
-                <div style="display: flex">
-                  <a-radio :value="0.01" @click="vdata.paytestAmount = 0.01">￥0.01</a-radio>
-                  <a-radio :value="0.15" @click="vdata.paytestAmount = 0.15">￥0.15</a-radio>
-                  <a-radio :value="0.21" @click="vdata.paytestAmount = 0.21">￥0.21</a-radio>
-                  <a-radio :value="0.29" @click="vdata.paytestAmount = 0.29">￥0.29</a-radio>
-                  <a-radio :value="0.64" @click="vdata.paytestAmount = 0.64">￥0.64</a-radio>
-                </div>
-                <a-radio @click="amountInputShow">
-                  <span style="margin-right: 3px">自定义金额</span>
-                  <a-input-number
-                    ref="amountInputFocus"
-                    :max="100000"
-                    :min="0.01"
-                    v-show="vdata.amountInput"
-                    v-model:value="vdata.paytestAmount"
-                    :precision="2"
-                  ></a-input-number>
+              <div style="display: flex" @click="vdata.amountInput = false">
+                <a-radio
+                  :checked="vdata.paytestAmount === '0.01'"
+                  @click="vdata.paytestAmount = '0.01'"
+                >
+                  ￥0.01
                 </a-radio>
-              </a-radio-group>
+                <a-radio
+                  :checked="vdata.paytestAmount === '0.15'"
+                  @click="vdata.paytestAmount = '0.15'"
+                >
+                  ￥0.15
+                </a-radio>
+                <a-radio
+                  :checked="vdata.paytestAmount === '0.21'"
+                  @click="vdata.paytestAmount = '0.21'"
+                >
+                  ￥0.21
+                </a-radio>
+                <a-radio
+                  :checked="vdata.paytestAmount === '0.29'"
+                  @click="vdata.paytestAmount = '0.29'"
+                >
+                  ￥0.29
+                </a-radio>
+                <a-radio
+                  :checked="vdata.paytestAmount === '0.64'"
+                  @click="vdata.paytestAmount = '0.64'"
+                >
+                  ￥0.64
+                </a-radio>
+              </div>
+              <a-radio @click="amountInputShow" :checked="vdata.amountInput">
+                <span style="margin-right: 3px">自定义金额</span>
+                <a-input-number
+                  ref="amountInputFocus"
+                  :max="100000"
+                  :min="0.01"
+                  v-show="vdata.amountInput"
+                  v-model:value="vdata.paytestAmount"
+                  :precision="2"
+                ></a-input-number>
+              </a-radio>
             </div>
 
             <div style="margin-top: 20px; text-align: left">
               <!-- <span style="color: #FD482C;font-size: 18px;padding-right: 10px;" id="amountShow">{{ paytestAmount }}</span> -->
-              <a-button
-                @click="immediatelyPay"
-                style="
-                  padding: 5px 20px;
-                  background-color: #1953ff;
-                  border-radius: 5px;
-                  color: #fff;
-                "
-              >
-                立即支付
-              </a-button>
+              <a-button @click="immediatelyPay" type="primary">立即支付</a-button>
             </div>
           </form>
         </div>
@@ -282,7 +291,7 @@ const vdata: any = reactive({
   currentPayDataType: '', // 支付参数
   mchOrderNo: '', // 模拟商户订单号
   authCode: '', // 条码的值
-  paytestAmount: 0.01, // 支付金额，默认为0.01
+  paytestAmount: '0.01', // 支付金额，默认为0.01
   amountInput: false, // 自定金额输入框是否展示
   noConfigText: false, // 尚无任何配置分割线提示文字
   divisionMode: 0, // 订单分账模式
@@ -367,7 +376,7 @@ function appPaywayListHandle(value) {
 // 立即支付按钮
 function immediatelyPay() {
   // 判断支付金额是否为0
-  if (!vdata.paytestAmount || vdata.paytestAmount === 0.0) {
+  if (!vdata.paytestAmount || vdata.paytestAmount == 0.0) {
     return $infoBox.message.error('请输入支付金额')
   }
   // 判断是否选择支付方式
@@ -395,7 +404,7 @@ function immediatelyPay() {
       vdata.currentWayCode === 'WX_JSAPI' || vdata.currentWayCode === 'ALI_JSAPI'
         ? 'QR_CASHIER'
         : vdata.currentWayCode, // 支付方式
-    amount: vdata.paytestAmount, // 支付金额
+    amount: parseFloat(vdata.paytestAmount), // 支付金额
     appId: vdata.appId, // appId
     mchOrderNo: vdata.mchOrderNo, // 订单编号
     payDataType: vdata.currentPayDataType, // 支付参数（二维码，条码）

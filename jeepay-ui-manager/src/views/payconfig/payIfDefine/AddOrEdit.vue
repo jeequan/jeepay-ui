@@ -51,11 +51,7 @@
           v-if="vdata.saveObject.isIsvMode == 1 && vdata.saveObject.configPageType === 1"
         >
           <a-form-item label="服务商接口配置定义描述" name="isvParams">
-            <a-input
-              v-model:value="vdata.saveObject.isvParams"
-              placeholder="请输入"
-              type="textarea"
-            />
+            <a-textarea v-model:value="vdata.saveObject.isvParams" placeholder="请输入" />
           </a-form-item>
         </a-col>
         <a-col
@@ -63,11 +59,7 @@
           v-if="vdata.saveObject.isIsvMode == 1 && vdata.saveObject.configPageType === 1"
         >
           <a-form-item label="特约商户接口配置定义描述" name="isvsubMchParams">
-            <a-input
-              v-model:value="vdata.saveObject.isvsubMchParams"
-              placeholder="请输入"
-              type="textarea"
-            />
+            <a-textarea v-model:value="vdata.saveObject.isvsubMchParams" placeholder="请输入" />
           </a-form-item>
         </a-col>
         <a-col
@@ -75,11 +67,7 @@
           v-if="vdata.saveObject.isMchMode == 1 && vdata.saveObject.configPageType === 1"
         >
           <a-form-item label="普通商户接口配置定义描述" name="normalMchParams">
-            <a-input
-              v-model:value="vdata.saveObject.normalMchParams"
-              placeholder="请输入"
-              type="textarea"
-            />
+            <a-textarea v-model:value="vdata.saveObject.normalMchParams" placeholder="请输入" />
           </a-form-item>
         </a-col>
         <a-col :span="12">

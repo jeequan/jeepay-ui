@@ -48,7 +48,7 @@
         </a-form-item>
 
         <a-form-item label="退款原因" name="refundReason">
-          <a-input v-model:value="vdata.refund.refundReason" type="textarea" />
+          <a-textarea v-model:value="vdata.refund.refundReason" />
         </a-form-item>
       </a-form>
     </a-modal>

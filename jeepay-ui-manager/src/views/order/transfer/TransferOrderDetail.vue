@@ -204,8 +204,7 @@
     <a-form layout="vertical">
       <a-col :sm="24">
         <a-form-item label="渠道额外参数:">
-          <a-input
-            type="textarea"
+          <a-textarea
             disabled="disabled"
             style="height: 100px; color: black"
             v-model="vdata.detailData.channelExtra"
@@ -215,8 +214,7 @@
       <a-divider />
       <a-col :sm="24">
         <a-form-item label="扩展参数:">
-          <a-input
-            type="textarea"
+          <a-textarea
             disabled="disabled"
             style="height: 100px; color: black"
             v-model="vdata.detailData.extParam"

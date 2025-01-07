@@ -72,7 +72,7 @@
                 修改
               </a-button>
               <a-button
-                v-if="$access('ENT_MCH_PAY_CONFIG_LIST')"
+                v-if="$access('ENT_MCH_PAY_CONFIG_LIST') && record.state"
                 type="link"
                 @click="showPayIfConfigList(record.appId)"
               >

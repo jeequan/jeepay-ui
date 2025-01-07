@@ -57,11 +57,7 @@
       <a-row justify="space-between" type="flex">
         <a-col :span="24">
           <a-form-item label="备注" name="remark">
-            <a-input
-              v-model:value="vdata.saveObject.remark"
-              placeholder="请输入备注"
-              type="textarea"
-            />
+            <a-textarea v-model:value="vdata.saveObject.remark" placeholder="请输入备注" />
           </a-form-item>
         </a-col>
       </a-row>

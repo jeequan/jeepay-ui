@@ -66,17 +66,17 @@
               </a-button>
               <a-button
                 type="link"
-                v-if="$access('ENT_MCH_PAY_CONFIG_LIST')"
+                v-if="$access('ENT_MCH_PAY_CONFIG_LIST') && record.state"
                 @click="showPayIfConfigList(record.appId)"
               >
                 支付配置
               </a-button>
-              <a-button type="link" v-if="$access('ENT_MCH_PAY_TEST')">
+              <a-button type="link" v-if="$access('ENT_MCH_PAY_TEST') && record.state">
                 <router-link :to="{ name: 'ENT_MCH_PAY_TEST', params: { appId: record.appId } }">
                   支付测试
                 </router-link>
               </a-button>
-              <a-button type="link" v-if="$access('ENT_MCH_TRANSFER')">
+              <a-button type="link" v-if="$access('ENT_MCH_TRANSFER') && record.state">
                 <router-link :to="{ name: 'ENT_MCH_TRANSFER', params: { appId: record.appId } }">
                   发起转账
                 </router-link>
