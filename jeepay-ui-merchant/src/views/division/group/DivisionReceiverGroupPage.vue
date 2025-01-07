@@ -48,19 +48,21 @@
           <template v-if="column.key === 'op'">
             <!-- 操作列插槽 -->
             <JeepayTableColumns>
-              <a
+              <a-button
+                type="link"
                 v-if="$access('ENT_DIVISION_RECEIVER_GROUP_EDIT')"
                 @click="editFunc(record.receiverGroupId)"
               >
                 修改
-              </a>
-              <a
-                style="color: red"
+              </a-button>
+              <a-button
+                danger
+                type="link"
                 v-if="$access('ENT_DIVISION_RECEIVER_GROUP_DELETE')"
                 @click="delFunc(record.receiverGroupId)"
               >
                 删除
-              </a>
+              </a-button>
             </JeepayTableColumns>
           </template>
         </template>

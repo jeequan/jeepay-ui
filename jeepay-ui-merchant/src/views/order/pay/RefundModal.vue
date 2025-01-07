@@ -56,7 +56,7 @@
 </template>
 <script setup lang="tsx">
 import { API_URL_PAY_ORDER_LIST, req, payOrderRefund } from '@/api/manage'
-import { reactive, computed, ref, getCurrentInstance } from 'vue'
+import { reactive, computed, ref, getCurrentInstance, h } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -70,6 +70,8 @@ const props = defineProps({
 const refundInfo = ref()
 
 const vdata: any = reactive({
+  refundErrorModal: '',
+
   recordId: '',
   labelCol: { span: 4 },
   wrapperCol: { span: 16 },
@@ -131,29 +133,17 @@ function handleOk(e) {
 
           if (res.state === 0 || res.state === 3) {
             // 订单生成 || 失败
-            const refundErrorModal = $infoBox.modalError('退款失败', (h) =>
-              buildModalText(res, h, () => {
-                refundErrorModal.destroy()
-              })
-            )
+            vdata.refundErrorModal = $infoBox.modalError('退款失败', buildModalText(res))
           } else if (res.state === 1) {
             // 退款中
-            const refundErrorModal = $infoBox.modalWarning('退款中', (h) =>
-              buildModalText(res, h, () => {
-                refundErrorModal.destroy()
-              })
-            )
+            vdata.refundErrorModal = $infoBox.modalWarning('退款中', buildModalText(res))
             props.callbackFunc()
           } else if (res.state === 2) {
             // 退款成功
             $infoBox.message.success('退款成功')
             props.callbackFunc()
           } else {
-            const refundErrorModal = $infoBox.modalWarning('退款状态未知', (h) =>
-              buildModalText(res, h, () => {
-                refundErrorModal.destroy()
-              })
-            )
+            vdata.refundErrorModal = $infoBox.modalWarning('退款状态未知', buildModalText(res))
           }
         })
         .catch(() => {
@@ -166,22 +156,22 @@ function handleCancel(e) {
   vdata.open = false
 }
 
-function buildModalText(res, h, callbackFunc) {
-  // 跳转退款列表Btn
-  const toRefundPageBtn = h('a', {
-    on: {
-      click: () => {
-        callbackFunc()
-        router.push({ name: 'ENT_REFUND_ORDER' })
-      },
-    },
-  })
-  toRefundPageBtn.text = '退款列表'
-  return h('div', [
-    h('div', res.errCode ? `错误码：${res.errCode}` : ''),
-    h('div', res.errMsg ? `错误信息：${res.errMsg}` : ''),
-    h('div', [h('span', '请到'), toRefundPageBtn, h('span', '中查看详细信息')]),
-  ])
+function buildModalText(res) {
+  return (
+    <div>
+      {res.errCode ? <div>错误码：{res.errCode} </div> : ''}
+      {res.errMsg ? <div>错误信息：{res.errMsg} </div> : ''}
+      <div>
+        请到<a onClick={toRefundList}>退款列表</a>中查看详细信息
+      </div>
+    </div>
+  )
+}
+
+// 跳转到退款列表函数
+function toRefundList() {
+  vdata.refundErrorModal.destroy()
+  router.push({ name: 'ENT_REFUND_ORDER' })
 }
 
 defineExpose({ show })

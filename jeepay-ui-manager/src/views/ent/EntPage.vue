@@ -50,7 +50,13 @@
           <template v-if="column.key === 'op'">
             <!-- 操作列插槽 -->
             <JeepayTableColumns>
-              <a v-if="$access('ENT_UR_ROLE_ENT_EDIT')" @click="editFunc(record.entId)">修改</a>
+              <a-button
+                v-if="$access('ENT_UR_ROLE_ENT_EDIT')"
+                type="link"
+                @click="editFunc(record.entId)"
+              >
+                修改
+              </a-button>
             </JeepayTableColumns>
           </template>
         </template>
