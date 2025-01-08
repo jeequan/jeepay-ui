@@ -113,16 +113,7 @@
               </div>
 
               <div style="margin-top: 20px; text-align: left">
-                <a-button
-                  :loading="vdata.load"
-                  @click="immediatelyPay"
-                  style="
-                    padding: 5px 20px;
-                    background-color: #1953ff;
-                    border-radius: 5px;
-                    color: #fff;
-                  "
-                >
+                <a-button type="primary" :loading="vdata.load" @click="immediatelyPay">
                   立即转账
                 </a-button>
               </div>
@@ -242,7 +233,7 @@ function immediatelyPay() {
       randomOrderNo() // 刷新订单号
 
       if (apiRes.state === 2) {
-        const succModal = $infoBox.infoBox.modalSuccess('转账成功', <div>2s后自动关闭...</div>)
+        const succModal = $infoBox.modalSuccess('转账成功', <div>2s后自动关闭...</div>)
         setTimeout(() => {
           succModal.destroy()
         }, 2000)
