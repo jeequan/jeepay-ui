@@ -171,7 +171,7 @@
                 <span style="color: #729ed5; background: #e7f5f7">支付</span>
                 {{ record.payOrderId }}
               </p>
-              <p style="margin-bottom: 0">
+              <p>
                 <span style="color: #56cf56; background: #d8eadf">商户</span>
                 <a-tooltip
                   v-if="record.mchOrderNo.length > record.payOrderId.length"
@@ -185,7 +185,7 @@
                 </a-tooltip>
                 <span v-else style="font-weight: normal">{{ record.mchOrderNo }}</span>
               </p>
-              <p v-if="record.channelOrderNo" style="margin-bottom: 0; margin-top: 10px">
+              <p v-if="record.channelOrderNo">
                 <span style="color: #fff; background: #e09c4d">渠道</span>
                 <a-tooltip
                   v-if="record.channelOrderNo.length > record.payOrderId.length"
@@ -731,6 +731,7 @@ function changeStr2ellipsis(orderNo, baseLength) {
 
   p {
     white-space: nowrap;
+    margin: 5px 0;
     span {
       display: inline-block;
       font-weight: 800;

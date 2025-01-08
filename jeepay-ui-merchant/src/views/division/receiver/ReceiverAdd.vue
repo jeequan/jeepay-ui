@@ -34,11 +34,7 @@
 
     <a-card title="微信账号" v-show="vdata.appSupportIfCodes.indexOf('wxpay') >= 0">
       <template #extra>
-        <a-button
-          style="background: green; color: white"
-          icon="wechat"
-          @click="addReceiverRow('wxpay')"
-        >
+        <a-button style="background: green; color: white" @click="addReceiverRow('wxpay')">
           添加【微信官方】分账接收账号
         </a-button>
       </template>
@@ -117,7 +113,7 @@
               labelInValue
               placeholder="分账关系类型"
               :defaultValue="{ key: 'PARTNER' }"
-              @change="changeRelationType(index, $event)"
+              @change="changeRelationType(record, $event)"
             >
               <a-select-option key="PARTNER">合作伙伴</a-select-option>
               <a-select-option key="SERVICE_PROVIDER">服务商</a-select-option>
@@ -235,7 +231,7 @@
               labelInValue
               placeholder="分账关系类型"
               :defaultValue="{ key: 'PARTNER' }"
-              @change="changeRelationType(index, $event)"
+              @change="changeRelationType(record, $event)"
             >
               <a-select-option key="PARTNER">合作伙伴</a-select-option>
               <a-select-option key="SERVICE_PROVIDER">服务商</a-select-option>
@@ -395,12 +391,12 @@ function delRow(item) {
     vdata.receiverTableData.splice(index, 1)
   }
 }
-function changeRelationType(index, value) {
-  vdata.receiverTableData[index].relationType = value.key
+function changeRelationType(record, value) {
+  record.relationType = value.key
   if (value.key !== 'CUSTOM') {
-    vdata.receiverTableData[index].relationTypeName = value.label[0].children
+    record.relationTypeName = value.label[0].children
   } else {
-    vdata.receiverTableData[index].relationTypeName = ''
+    record.relationTypeName = ''
   }
 }
 

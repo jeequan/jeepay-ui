@@ -72,7 +72,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, defineProps, onMounted, nextTick, ref, onUnmounted } from 'vue'
+import { reactive, onMounted, nextTick, ref, onUnmounted } from 'vue'
 
 const emit = defineEmits(['btnLoadClose'])
 

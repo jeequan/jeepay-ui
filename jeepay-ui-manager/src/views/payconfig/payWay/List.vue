@@ -53,10 +53,21 @@
           <template v-if="column.key === 'op'">
             <!-- 操作列插槽 -->
             <JeepayTableColumns>
-              <a v-if="$access('ENT_PC_WAY_EDIT')" @click="editFunc(record.wayCode)">修改</a>
-              <a type="danger" v-if="$access('ENT_PC_WAY_DEL')" @click="delFunc(record.wayCode)">
+              <a-button
+                type="link"
+                v-if="$access('ENT_PC_WAY_EDIT')"
+                @click="editFunc(record.wayCode)"
+              >
+                修改
+              </a-button>
+              <a-button
+                type="link"
+                danger
+                v-if="$access('ENT_PC_WAY_DEL')"
+                @click="delFunc(record.wayCode)"
+              >
                 删除
-              </a>
+              </a-button>
             </JeepayTableColumns>
           </template>
         </template>
