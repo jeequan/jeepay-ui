@@ -22,16 +22,6 @@
             </span>
           </div>
         </a-form>
-        <div>
-          <a-button
-            v-if="$access('ENT_DIVISION_RECEIVER_GROUP_ADD')"
-            type="primary"
-            @click="addFunc"
-            class="mg-b-30"
-          >
-            新建
-          </a-button>
-        </div>
       </div>
 
       <!-- 列表渲染 -->
@@ -44,6 +34,17 @@
         @btnLoadClose="vdata.btnLoading = false"
         rowKey="receiverGroupId"
       >
+        <template #opRow>
+          <a-button
+            v-if="$access('ENT_DIVISION_RECEIVER_GROUP_ADD')"
+            type="primary"
+            @click="addFunc"
+            class="mg-b-30"
+          >
+            新建
+          </a-button>
+        </template>
+
         <template #bodyCell="{ column, record }">
           <template v-if="column.key === 'op'">
             <!-- 操作列插槽 -->
