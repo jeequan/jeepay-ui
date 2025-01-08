@@ -426,8 +426,6 @@ function addReceiverRow(ifCode) {
 
 // 单条绑定 返回是否成功
 function reqBatchBindReceiver(i) {
-  console.log(123)
-
   if (vdata.receiverTableData.length <= 0) {
     return $infoBox.message.error('请先添加账号')
   }
@@ -467,7 +465,7 @@ function reqBatchBindReceiver(i) {
     .then((apiRes) => {
       // 绑定成功
       if (apiRes.bindState === 1) {
-        vdata.reqBatchBindReceiver(++i) // 递归继续绑定
+        reqBatchBindReceiver(++i) // 递归继续绑定
         currentReceiver.reqBindState = 1 // 成功
       } else {
         currentReceiver.reqBindState = 2 // 异常
