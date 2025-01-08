@@ -207,7 +207,7 @@
           <a-textarea
             disabled="disabled"
             style="height: 100px; color: black"
-            v-model="vdata.detailData.channelExtra"
+            v-model:value="vdata.detailData.channelExtra"
           />
         </a-form-item>
       </a-col>
@@ -217,7 +217,7 @@
           <a-textarea
             disabled="disabled"
             style="height: 100px; color: black"
-            v-model="vdata.detailData.extParam"
+            v-model:value="vdata.detailData.extParam"
           />
         </a-form-item>
       </a-col>

@@ -4,8 +4,8 @@
       <div v-if="$access('ENT_UR_ROLE_SEARCH')" class="table-page-search-wrapper">
         <a-form layout="inline" class="table-head-ground">
           <div class="table-layer">
-            <jeepay-text-up :placeholder="'角色ID'" v-model="vdata.searchData.roleId" />
-            <jeepay-text-up :placeholder="'角色名称'" v-model="vdata.searchData.roleName" />
+            <jeepay-text-up :placeholder="'角色ID'" v-model:value="vdata.searchData.roleId" />
+            <jeepay-text-up :placeholder="'角色名称'" v-model:value="vdata.searchData.roleName" />
             <span class="table-page-search-submitButtons">
               <a-button type="primary" @click="searchFunc" :loading="vdata.btnLoading">
                 查询

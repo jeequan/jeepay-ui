@@ -97,7 +97,11 @@
     <a-row justify="start" type="flex">
       <a-col :sm="24">
         <a-form-item label="备注">
-          <a-textarea v-model="vdata.detailData.remark" disabled="disabled" style="height: 50px" />
+          <a-textarea
+            v-model:value="vdata.detailData.remark"
+            disabled="disabled"
+            style="height: 50px"
+          />
         </a-form-item>
       </a-col>
     </a-row>

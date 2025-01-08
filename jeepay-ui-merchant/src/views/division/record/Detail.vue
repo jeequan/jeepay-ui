@@ -188,7 +188,7 @@
           <a-textarea
             disabled="disabled"
             style="height: 100px; color: black"
-            v-model="vdata.detailData.channelRespResult"
+            v-model:value="vdata.detailData.channelRespResult"
           />
         </a-form-item>
       </a-col>

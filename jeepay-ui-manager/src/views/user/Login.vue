@@ -70,7 +70,7 @@
 
             <a-form-item>
               <!-- 自动登录 -->
-              <a-checkbox v-model="isAutoLogin">自动登录</a-checkbox>
+              <a-checkbox v-model:checked="isAutoLogin">自动登录</a-checkbox>
               <!-- 忘记密码 -->
               <a class="forge-password" style="float: right">忘记密码?</a>
             </a-form-item>
