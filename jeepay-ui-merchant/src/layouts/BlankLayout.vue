@@ -4,11 +4,9 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 
-export default {
-  name: 'BlankLayout'
-}
+
 </script>
 
 <style scoped>

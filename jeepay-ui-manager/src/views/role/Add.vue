@@ -1,63 +1,66 @@
 <template>
-  <a-modal v-model="isShow" title="新增角色" @ok="handleOkFunc">
-
-    <a-form-model ref="infoFormModel" :model="saveObject" :label-col="{span: 4}" :wrapper-col="{span: 15}" :rules="rules">
-
-      <a-form-model-item label="角色名称：" prop="roleName">
-        <a-input v-model="saveObject.roleName" />
-      </a-form-model-item>
-
-    </a-form-model>
-
+  <a-modal v-model:open="vdata.isShow" title="新增角色" @ok="handleOkFunc">
+    <a-form
+      ref="infoFormModel"
+      :model="vdata.saveObject"
+      :label-col="{ span: 4 }"
+      :wrapper-col="{ span: 15 }"
+      :rules="vdata.rules"
+    >
+      <a-form-item label="角色名称：" name="roleName">
+        <a-input v-model:value="vdata.saveObject.roleName" />
+      </a-form-item>
+    </a-form>
   </a-modal>
-
 </template>
 
-<script>
+<script setup lang="ts">
 import { API_URL_ROLE_LIST, req } from '@/api/manage'
-export default {
-  props: {
-    callbackFunc: { type: Function }
+import { reactive, ref, getCurrentInstance } from 'vue'
+
+const { $infoBox, $access } = getCurrentInstance()!.appContext.config.globalProperties
+
+const props = defineProps({
+  callbackFunc: { type: Function, default: () => {} },
+})
+
+const vdata: any = reactive({
+  isShow: false, // 是否显示弹层/抽屉
+  saveObject: {}, // 数据对象
+
+  rules: {
+    roleName: [{ required: true, message: '请输入角色名称', trigger: 'blur' }],
   },
+})
 
-  data () {
-    return {
-      isShow: false, // 是否显示弹层/抽屉
-      saveObject: {}, // 数据对象
+const infoFormModel = ref()
 
-      rules: {
-        roleName: [
-          { required: true, message: '请输入角色名称', trigger: 'blur' }
-        ]
-      }
-    }
-  },
-  created () {
-  },
-  methods: {
-    show: function () { // 弹层打开事件
-      this.saveObject = {} // 数据清空
-      if (this.$refs.infoFormModel !== undefined) {
-        this.$refs.infoFormModel.resetFields()
-      }
-      this.isShow = true
-    },
-
-    handleOkFunc: function () { // 点击【确认】按钮事件
-        const that = this
-        this.$refs.infoFormModel.validate(valid => {
-          if (valid) { // 验证通过
-            // 请求接口
-            req.add(API_URL_ROLE_LIST, that.saveObject).then(res => {
-              that.$message.success('新增成功')
-              that.isShow = false
-              // 刷新列表
-              that.callbackFunc()
-            })
-          }
-        })
-    }
-
+function show() {
+  // 弹层打开事件
+  vdata.saveObject = {} // 数据清空
+  if (infoFormModel.value !== undefined) {
+    infoFormModel.value.resetFields()
   }
+  vdata.isShow = true
 }
+
+function handleOkFunc() {
+  // 点击【确认】按钮事件
+  infoFormModel.value.validate((valid) => {
+    if (valid) {
+      // 验证通过
+      // 请求接口
+      req.add(API_URL_ROLE_LIST, vdata.saveObject).then((res) => {
+        $infoBox.message.success('新增成功')
+        vdata.isShow = false
+        // 刷新列表
+        props.callbackFunc()
+      })
+    }
+  })
+}
+
+defineExpose({
+  show,
+})
 </script>
