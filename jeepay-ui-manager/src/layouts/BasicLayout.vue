@@ -71,7 +71,17 @@
         </div>
 
         <!-- 个人信息部分 -->
-        <div>
+        <div style="display: flex; align-items: center">
+          <a-button @click="openUrl('https://www.jeequan.com/ifstore/list.html')">
+            接口市场
+          </a-button>
+          <a-button
+            @click="openUrl('https://www.jeequan.com/product/jeepay4plus.html')"
+            style="margin: 0 10px"
+          >
+            Plus商业版
+          </a-button>
+
           <a-dropdown>
             <template #overlay>
               <a-menu>
@@ -205,6 +215,10 @@ const breadcrumb = computed(() =>
     }
   })
 )
+
+function openUrl(url) {
+  window.open(url, '_blank')
+}
 
 const handleCollapsed = () => {
   vdata.collapsed = !vdata.collapsed

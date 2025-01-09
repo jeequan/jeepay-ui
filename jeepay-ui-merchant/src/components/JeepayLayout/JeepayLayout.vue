@@ -144,9 +144,9 @@
         <slot />
 
         <div class="foot">
-          Copyright © 2023
-          <a href="http://www.jeequan.com" target="_blank">jeequan.com</a>
-          . All rights reserved.
+          Copyright © 2021-2025
+          <a href="https://www.jeequan.com" target="_blank">计全科技</a>
+          All rights reserved.
         </div>
       </a-layout-content>
     </a-layout>

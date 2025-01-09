@@ -1,23 +1,17 @@
 <template>
   <page-header-wrapper>
     <div style="background-color: #f0f2f5; padding: 20px; border-radius: 10px">
-      <template>
-        <a-card style="width: calc(100% - 24px); margin-bottom: 20px">
-          <a-alert message="" type="info">
-            <template #description>
-              <p style="display: flex; justify-content: space-between; margin: 0 0 4px">
-                计全科技已开放支付接口购买渠道，官方团队开发、源码提供、下载后直接使用。
-                <a href="https://docs.jeequan.com/docs/jeepay/jeepay-1ejdnsuhveb16" target="_blank">
-                  接口下载、安装说明。
-                </a>
-                <a href="https://www.jeequan.com/ifstore/list.html" target="_blank">
-                  前往接口市场 >
-                </a>
-              </p>
-            </template>
-          </a-alert>
-        </a-card>
-      </template>
+      <a-alert message="" type="info" style="width: calc(100% - 24px); margin-bottom: 20px">
+        <template #description>
+          <p style="display: flex; justify-content: space-between; margin: 0 0 4px">
+            计全科技已开放支付接口购买渠道，官方团队开发、源码提供、下载后直接使用。
+            <a href="https://docs.jeequan.com/docs/jeepay/jeepay-1ejdnsuhveb16" target="_blank">
+              接口下载、安装说明。
+            </a>
+            <a href="https://www.jeequan.com/ifstore/list.html" target="_blank">前往接口市场 ></a>
+          </p>
+        </template>
+      </a-alert>
       <JeepayCard
         ref="infoCard"
         :reqCardListFunc="reqCardListFunc"
