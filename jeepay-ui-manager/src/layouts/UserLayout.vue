@@ -1,18 +1,16 @@
 <template>
-
   <div id="userLayout" :class="['user-layout-wrapper']">
     <div class="container">
-      <div class="user-layout-lang">
-      </div>
+      <div class="user-layout-lang"></div>
       <div class="user-layout-content">
         <div class="top">
           <div class="header">
             <a href="/">
-              <img src="~@/assets/logo.svg" class="logo" alt="logo">
+              <img src="~@/assets/logo.svg" class="logo" alt="logo" />
             </a>
           </div>
           <div class="desc">
-            <img src="~@/assets/svg/operate.svg" class="logo" alt="logo">
+            <img src="~@/assets/svg/operate.svg" class="logo" alt="logo" />
             <span>运营平台</span>
           </div>
         </div>
@@ -25,9 +23,6 @@
           <!--            <a href="_self">隐私</a>-->
           <!--            <a href="_self">条款</a>-->
           <!--          </div>-->
-          <!-- <div class="copyright">
-            Copyright &copy; 2021 jeequan.com
-          </div> -->
         </div>
       </div>
     </div>
@@ -35,17 +30,15 @@
 </template>
 
 <script>
-
 export default {
   name: 'UserLayout',
-  components: {
-  },
-  mounted () {
+  components: {},
+  mounted() {
     document.body.classList.add('userLayout')
   },
-  beforeDestroy () {
+  beforeDestroy() {
     document.body.classList.remove('userLayout')
-  }
+  },
 }
 </script>
 
@@ -83,14 +76,13 @@ export default {
     }
 
     .user-layout-content {
-
       .top {
         text-align: center;
 
         .header {
           height: 44px;
           line-height: 44px;
-          margin-bottom:80px;
+          margin-bottom: 80px;
 
           .badge {
             position: absolute;
@@ -110,7 +102,7 @@ export default {
 
           .title {
             font-size: 33px;
-            color: rgba(0, 0, 0, .85);
+            color: rgba(0, 0, 0, 0.85);
             font-family: Avenir, 'Helvetica Neue', Arial, Helvetica, sans-serif;
             font-weight: 600;
             position: relative;
@@ -122,7 +114,9 @@ export default {
           color: rgba(0, 0, 0, 0.45);
           margin-bottom: 40px;
           font-size: 20px;
-          font-family: PingFang SC, PingFang SC-Medium;
+          font-family:
+            PingFang SC,
+            PingFang SC-Medium;
           font-weight: 500;
           color: #252626;
           letter-spacing: 1px;
@@ -173,7 +167,6 @@ export default {
     a {
       text-decoration: none;
     }
-
   }
 }
 </style>

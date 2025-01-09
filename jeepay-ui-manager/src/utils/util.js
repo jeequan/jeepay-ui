@@ -1,4 +1,3 @@
-import dayjs from 'dayjs'
 export function timeFix () {
   const time = new Date()
   const hour = time.getHours()
@@ -10,16 +9,4 @@ export function isIE () {
   const compare = (s) => bw.indexOf(s) >= 0
   const ie11 = (() => 'ActiveXObject' in window)()
   return compare('MSIE') || ie11
-}
-
-// 定义全局自增ID
-let atomicLong = 1
-/** 生成自增序列号（不重复） **/
-export function genRowKey () {
-  return new Date().getTime() + '_' + (atomicLong++)
-}
-
-/** 格式化 **/
-export function formatDate (format) {
-  return dayjs().format(format)
 }

@@ -1,13 +1,14 @@
-@import "~ant-design-vue/es/style/themes/default.less";
+@import 'ant-design-vue/dist/reset.css';
 
-// 清除头部栏下方阴影 
-.ant-layout-header, .ant-pro-basicLayout .ant-layout-header:not(.ant-pro-top-menu) {
+// 清除头部栏下方阴影
+.ant-layout-header,
+.ant-pro-basicLayout .ant-layout-header:not(.ant-pro-top-menu) {
   background: initial;
 }
-// 清除头部栏下方阴影 修改背景色 
+// 清除头部栏下方阴影 修改背景色
 .ant-pro-global-header {
   background: initial;
-  box-shadow: initial;  
+  box-shadow: initial;
 }
 // 面包屑导航部分 修改背景色
 .ant-pro-page-header-wrap-page-header-warp {
@@ -22,13 +23,13 @@
   height: 26px;
   width: initial;
 }
- 
+
 .ant-pro-global-header-index-right {
   margin-right: 8px;
 
   &.ant-pro-global-header-index-dark {
     .ant-pro-global-header-index-action {
-      color: hsla(0, 0%, 100%, .85);
+      color: hsla(0, 0%, 100%, 0.85);
 
       &:hover {
         background: #1890ff;
@@ -38,7 +39,7 @@
 
   .ant-pro-account-avatar {
     .antd-pro-global-header-index-avatar {
-      margin: ~'calc((@{layout-header-height} - 24px) / 2)' 0;
+      // margin: ~'calc((@{layout-header-height} - 24px) / 2)' 0;
       margin-right: 8px;
       color: @primary-color;
       vertical-align: top;
@@ -56,4 +57,3 @@
     }
   }
 }
-

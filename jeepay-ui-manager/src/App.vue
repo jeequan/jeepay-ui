@@ -1,31 +1,28 @@
 <template>
-  <a-config-provider :locale="locale">
-    <div id="app">
-      <router-view/>
-      <loading v-show="globalLoading"></loading>
-    </div>
+  <a-config-provider :locale="zhCN">
+    <a-spin :spinning="userStore.globalLoading">
+      <div id="app" style="height: 100vh">
+        <router-view />
+      </div>
+    </a-spin>
   </a-config-provider>
 </template>
 
-<script>
-import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN'
-import Loading from './components/GlobalLoad/GlobalLoad' // 全局Loading组件
-import { mapState } from 'vuex' // 引入vuex状态管理，mapState管理中存在全局loading
+<script lang="ts" setup>
+import zhCN from 'ant-design-vue/es/locale/zh_CN'
+import dayjs from 'dayjs'
+import 'dayjs/locale/zh-cn'
+import { useUserStore } from '@/store/modules/user'
+const userStore = useUserStore()
 
-export default {
-  data () {
-    return {
-      locale: zhCN
-    }
-  },
-  components: {
-    Loading // 注册全局loading 组件
-  },
-  computed: {
-    // 全局 loading
-		...mapState([
-			'globalLoading'
-		])
-	}
-}
+dayjs.locale('zh-cn')
+
+const styleDom = document.createElement('style')
+styleDom.textContent = `
+  :root {
+    --ant-primary-color: #1677ff
+  }
+`
+// 创建全局的css变量
+document.head.appendChild(styleDom)
 </script>
