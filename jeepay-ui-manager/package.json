@@ -1,6 +1,6 @@
 {
-  "name": "jeepay-open-test",
-  "version": "3.9.0",
+  "name": "jeepay-ui-manager",
+  "version": "3.0.0",
   "private": true,
   "scripts": {
     "dev": "vite",
