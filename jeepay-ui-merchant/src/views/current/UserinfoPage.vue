@@ -136,7 +136,7 @@ const vdata: any = reactive({
     newPwd: '', //  新密码
     confirmPwd: '', //  确认密码
   },
-  recordId: userStore.userInfo.userId, // 拿到ID
+  recordId: userStore.userInfo.sysUserId, // 拿到ID
   rules: {
     realname: [{ required: true, message: '请输入真实姓名', trigger: 'blur' }],
   },
