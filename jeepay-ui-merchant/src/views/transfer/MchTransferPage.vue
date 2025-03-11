@@ -88,7 +88,6 @@
                 <a-button
                   v-show="vdata.reqData.entryType == 'WX_CASH'"
                   size="small"
-                  type="danger"
                   @click="showChannelUserQR"
                 >
                   自动获取openID
@@ -154,7 +153,7 @@
     <a-modal v-model:open="vdata.openTransConfirmModal" title="等待领取" :footer="null" :width="300">
       <div style="width: 100%; margin-bottom: 20px; text-align: center">
         <img :src="vdata.openTransConfirmUrl" alt="" />
-        <span>等待微信用户领取,请稍后</span>
+        <p>请使用微信扫码领取</p>
       </div>
     </a-modal>
 
@@ -268,7 +267,7 @@ function immediatelyPay() {
   if(vdata.reqData.entryType == 'WX_CASH'){ // 微信支付特殊参数
     let channelExtra = {
       transferSceneId: vdata.wxpayTransferSceneId,
-      transferSceneReportInfo: [{
+      transferSceneReportInfos: [{
           "info_type" :   "活动名称",
           "info_content" : vdata.wxpayActiveName
       },{
@@ -310,7 +309,7 @@ function immediatelyPay() {
           </div>
         )
       } else {
-        return $infoBox.message.error('转账异常')
+        return $infoBox.message.error('转账异常' + (apiRes.errMsg ? ':' + apiRes.errMsg : '' ))
       }
     })
     .catch(() => {

@@ -9,7 +9,7 @@
     >
       <div style="width: 100%; margin-bottom: 20px; text-align: center">
         <div style="display: flex; justify-content: center" class="qrcode" id="qrCodeUrl">
-          <a-qrcode value="vdata.qrImgUrl" size="200" />
+          <a-qrcode :value="vdata.qrImgUrl" size="200" />
         </div>
         <hr />
         <span>{{ vdata.payText }}</span>
