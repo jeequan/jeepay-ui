@@ -160,6 +160,14 @@
             </JeepayUpload>
           </a-form-item>
         </a-col>
+        <a-col span="12">
+          <a-form-item label="微信转账版本" name="transferVersion">
+            <a-radio-group v-model:value="vdata.ifParams.transferVersion" defaultValue="old">
+              <a-radio value="old">旧版</a-radio>
+              <a-radio value="new202501">新版202501</a-radio>
+            </a-radio-group>
+          </a-form-item>
+        </a-col>
       </a-row>
       <a-row v-else-if="vdata.mchType === 2" :gutter="16">
         <a-col span="12">
@@ -350,7 +358,8 @@ function show(appId, record) {
     serialNo: '',
     serialNo_ph: '请输入',
     wxpayPublicKeyId: '',
-    wxpayPublicKey: ''
+    wxpayPublicKey: '',
+    transferVersion: '',
   }
   vdata.open = true
   getMchPayConfig()
