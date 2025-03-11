@@ -112,6 +112,27 @@
                 <a-input v-model:value="vdata.reqData.transferDesc" style="width: 200px" />
               </div>
 
+              <a-collapse v-if="vdata.reqData.entryType == 'WX_CASH'">
+                <a-collapse-panel key="1" header="新版转账扩展参数">
+                  <div class="paydemo-form-item">
+                    <span>场景ID：</span>
+                    <a-input v-model:value="vdata.wxpayTransferSceneId" style="width: 200px" />
+                    <span>&nbsp; 新版微信转账需要字段</span>
+                  </div>
+                  <div class="paydemo-form-item">
+                    <span>活动名称：</span>
+                    <a-input v-model:value="vdata.wxpayActiveName" style="width: 200px" />
+                    <span>&nbsp; 新版微信转账需要字段</span>
+                  </div>
+
+                  <div class="paydemo-form-item">
+                    <span>奖励说明：</span>
+                    <a-input v-model:value="vdata.wxpayActiveRemark" style="width: 200px" />
+                    <span>&nbsp; 新版微信转账需要字段</span>
+                  </div>
+              </a-collapse-panel>
+            </a-collapse>
+
               <div style="margin-top: 20px; text-align: left">
                 <a-button type="primary" :loading="vdata.load" @click="immediatelyPay">
                   立即转账
@@ -128,6 +149,15 @@
       ref="channelUserModal"
       @changeChannelUserId="changeChannelUserIdFunc($event)"
     />
+
+    <!-- 用户确认二维码 -->
+    <a-modal v-model:open="vdata.openTransConfirmModal" title="等待领取" :footer="null" :width="300">
+      <div style="width: 100%; margin-bottom: 20px; text-align: center">
+        <img :src="vdata.openTransConfirmUrl" alt="" />
+        <span>等待微信用户领取,请稍后</span>
+      </div>
+    </a-modal>
+
   </div>
 </template>
 
@@ -156,6 +186,12 @@ const vdata: any = reactive({
     accountName: '', // 收款人姓名
     transferDesc: '打款', // 转账备注
   },
+
+  wxpayTransferSceneId: '1001',
+  wxpayActiveName: '活动有礼', // 微信新版转账：活动名称
+  wxpayActiveRemark: '红包奖励', // 微信新版转账：奖励说明
+  openTransConfirmModal: false,
+  openTransConfirmUrl: '',
 
   mchAppList: [], // app列表
 })
@@ -228,8 +264,24 @@ function immediatelyPay() {
 
   vdata.load = true
 
-  doTransfer(vdata.reqData)
+  let _reqData = JSON.parse(JSON.stringify(vdata.reqData))
+  if(vdata.reqData.entryType == 'WX_CASH'){ // 微信支付特殊参数
+    let channelExtra = {
+      transferSceneId: vdata.wxpayTransferSceneId,
+      transferSceneReportInfo: [{
+          "info_type" :   "活动名称",
+          "info_content" : vdata.wxpayActiveName
+      },{
+          "info_type" : "奖励说明",
+          "info_content" : vdata.wxpayActiveRemark
+      }]
+    }
+    _reqData.channelExtra = JSON.stringify(channelExtra);
+  }
+
+  doTransfer(_reqData)
     .then((apiRes) => {
+
       randomOrderNo() // 刷新订单号
 
       if (apiRes.state === 2) {
@@ -238,7 +290,17 @@ function immediatelyPay() {
           succModal.destroy()
         }, 2000)
       } else if (apiRes.state === 1) {
-        $infoBox.modalWarning('转账处理中', <div>请前往转账订单列表查看最终状态</div>)
+
+        let channelResData = apiRes.channelResData ? JSON.parse(apiRes.channelResData) : null
+
+        if(channelResData && channelResData.userH5ConfirmQrImgUrl){ // 用户确认模式
+          vdata.openTransConfirmModal = true
+          vdata.openTransConfirmUrl = channelResData.userH5ConfirmQrImgUrl
+        }else{
+
+          $infoBox.modalWarning('转账处理中', <div>请前往转账订单列表查看最终状态</div>)
+        }
+        
       } else if (apiRes.state === 3) {
         $infoBox.modalError(
           '转账处理失败',
