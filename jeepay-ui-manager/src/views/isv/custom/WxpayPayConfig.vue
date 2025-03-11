@@ -152,25 +152,26 @@
           </a-form-item>
         </a-col>
         <a-col span="24">
-          <a-form-model-item label="微信侧公钥ID" prop="wxpayPublicKeyId">
-            <a-input v-model="vdata.ifParams.wxpayPublicKeyId" placeholder="请输入" />
-          </a-form-model-item>
+          <a-form-item label="微信侧公钥ID" name="wxpayPublicKeyId">
+            <a-input v-model:value="vdata.ifParams.wxpayPublicKeyId" placeholder="请输入" />
+          </a-form-item>
         </a-col>
         <a-col span="24">
-          <a-form-model-item label="微信侧公钥证书（pub_key.pem）" prop="wxpayPublicKey">
-            <a-input v-model="vdata.ifParams.wxpayPublicKey" disabled="disabled" />
+          <a-form-item label="微信侧公钥证书（pub_key.pem）" name="wxpayPublicKey" class="margin-botomt-5">
+            <a-input v-model:value="vdata.ifParams.wxpayPublicKey" disabled="disabled" />
             <JeepayUpload
               :action="vdata.action"
               :fileUrl="vdata.ifParams.wxpayPublicKey"
               @uploadSuccess="uploadSuccess($event, 'wxpayPublicKey')"
             >
-              <template slot="uploadSlot" slot-scope="{loading}">
-                <a-button style="marginTop:5px;"> <a-icon :type="vdata.loading ? 'loading' : 'upload'" /> 
-                  {{ vdata.loading ? '正在上传' : '点击上传' }} 
+              <template #uploadSlot="{ loading }">
+                <a-button style="margin-top: 5px">
+                  <a-icon :type="vdata.loading ? 'loading' : 'upload'" />
+                  {{ vdata.loading ? '正在上传' : '点击上传' }}
                 </a-button>
               </template>
             </JeepayUpload>
-          </a-form-model-item>
+          </a-form-item>
         </a-col>
       </a-row>
     </a-form>
