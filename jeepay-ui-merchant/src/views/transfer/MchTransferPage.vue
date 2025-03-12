@@ -161,7 +161,8 @@
 </template>
 
 <script setup lang="tsx">
-import { API_URL_MCH_APP, req, queryMchTransferIfCode, doTransfer } from '@/api/manage' // 接口
+import ReconnectingWebSocket from 'reconnectingwebsocket'
+import { API_URL_MCH_APP, req, queryMchTransferIfCode, doTransfer, getWebSocketPrefix } from '@/api/manage' // 接口
 import ChannelUserModal from '@/components/ChannelUser/ChannelUserModal.vue'
 import { use } from 'echarts'
 import { reactive, getCurrentInstance, ref, onMounted } from 'vue'
@@ -186,18 +187,23 @@ const vdata: any = reactive({
     transferDesc: '打款', // 转账备注
   },
 
-  wxpayTransferSceneId: '1001',
+  wxpayTransferSceneId: '1000',
   wxpayActiveName: '活动有礼', // 微信新版转账：活动名称
   wxpayActiveRemark: '红包奖励', // 微信新版转账：奖励说明
   openTransConfirmModal: false,
   openTransConfirmUrl: '',
 
   mchAppList: [], // app列表
+  transferOrderWebSocket: null, // 转账订单webSocket对象
 })
 
 const channelUserModal = ref()
 
 onMounted(() => {
+  // 关闭上一个webSocket监听
+  if (vdata.transferOrderWebSocket) {
+    vdata.transferOrderWebSocket.close()
+  }
   // 获取传入的参数，如果参数存在，则为appId 重新赋值
   const appId = route.params.appId
   if (appId) {
@@ -295,6 +301,32 @@ function immediatelyPay() {
         if(channelResData && channelResData.userH5ConfirmQrImgUrl){ // 用户确认模式
           vdata.openTransConfirmModal = true
           vdata.openTransConfirmUrl = channelResData.userH5ConfirmQrImgUrl
+
+          // 监听响应结果
+          vdata.transferOrderWebSocket = new ReconnectingWebSocket(
+            getWebSocketPrefix() + '/api/anon/ws/transferOrder/' + apiRes.transferId + '/' + new Date().getTime()
+          )
+          vdata.transferOrderWebSocket.onopen = () => {}
+          vdata.transferOrderWebSocket.onmessage = (msgObject) => {
+            const resMsgObject = JSON.parse(msgObject.data)
+            if (resMsgObject.state === 2) {
+              handleClose()
+              const succModal = $infoBox.modalSuccess('转账成功', <div>2s后自动关闭...</div>)
+              setTimeout(() => {
+                succModal.destroy()
+                vdata.openTransConfirmModal = false
+              }, 2000)
+            } else {
+              vdata.handleClose()
+              $infoBox.modalError(
+                '转账失败',
+                <div>
+                  <div>错误码：{apiRes.errCode}</div>
+                  <div>错误信息：{apiRes.errMsg}</div>
+                </div>
+              )
+            }
+          }
         }else{
 
           $infoBox.modalWarning('转账处理中', <div>请前往转账订单列表查看最终状态</div>)
@@ -340,6 +372,13 @@ function showChannelUserQR() {
 function changeChannelUserIdFunc({ channelUserId }) {
   $infoBox.message.success('成功获取渠道用户ID')
   vdata.reqData.accountNo = channelUserId
+}
+
+function handleClose() {
+  if (vdata.transferOrderWebSocket) {
+    vdata.transferOrderWebSocket.close()
+  }
+  vdata.open = false
 }
 </script>
 

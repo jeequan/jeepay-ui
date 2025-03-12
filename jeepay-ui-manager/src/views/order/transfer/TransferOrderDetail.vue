@@ -181,6 +181,27 @@
         </a-descriptions>
       </a-col>
     </a-row>
+    <a-row justify="space-between" type="flex" v-if="vdata.userH5ConfirmUrl && vdata.userH5ConfirmQrImgUrl">
+      <a-divider />
+      <a-col :sm="24" >
+        <a-descriptions>
+          <a-descriptions-item label="领取链接">
+            {{ vdata.userH5ConfirmUrl }}
+          </a-descriptions-item>
+        </a-descriptions>
+      </a-col>
+      <a-col :sm="12" >
+        <a-descriptions>
+          <a-descriptions-item label="领取二维码">
+            <div style="width: 100%; text-align: center">
+              <img :src="vdata.userH5ConfirmQrImgUrl" alt="" />
+              <p>请使用微信扫码领取</p>
+            </div>
+          </a-descriptions-item>
+        </a-descriptions>
+      </a-col>
+    </a-row>
+    
     <a-divider />
     <a-col :sm="12">
       <a-descriptions>
@@ -230,13 +251,24 @@ import { reactive } from 'vue'
 
 const vdata: any = reactive({
   detailData: {},
+  userH5ConfirmUrl: null, // 转账确认领取链接地址
+  userH5ConfirmQrImgUrl: null, // 转账确认领取二维码地址
   isShow: false, // 是否显示弹层/抽屉
   recordId: null, // 更新对象ID
 })
 
 function show(recordId) {
+  vdata.userH5ConfirmUrl = null
+  vdata.userH5ConfirmQrImgUrl = null
   req.getById(API_URL_TRANSFER_ORDER_LIST, recordId).then((res) => {
     vdata.detailData = res
+    if (res.channelResData && res.ifCode === 'wxpay') {
+        let channelResData =JSON.parse(res.channelResData)
+        if(channelResData && channelResData.userH5ConfirmQrImgUrl){ // 用户确认模式
+          vdata.userH5ConfirmUrl = channelResData.userH5ConfirmUrl
+          vdata.userH5ConfirmQrImgUrl = channelResData.userH5ConfirmQrImgUrl
+        }
+    }
   })
   vdata.isShow = true
 }
