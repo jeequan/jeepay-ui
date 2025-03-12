@@ -89,7 +89,7 @@ function showModal(wayCode, apiRes) {
   // 此处判断接口中返回的orderState，值为0，1 代表支付中，直接放行无需处理，2 成功 3 失败
   if (apiRes.orderState === 2 || apiRes.orderState === 3) {
     if (apiRes.orderState === 2) {
-      vdata.handleClose()
+      handleClose()
       const succModal = $infoBox.modalSuccess('支付成功', <div>2s后自动关闭...</div>)
       setTimeout(() => {
         succModal.destroy()
@@ -134,7 +134,7 @@ function showModal(wayCode, apiRes) {
         succModal.destroy()
       }, 2000)
     } else {
-      vdata.handleClose()
+      handleClose()
       $infoBox.modalError(
         '支付失败',
         <div>

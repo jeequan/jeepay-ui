@@ -260,7 +260,7 @@
     <!-- 二维码弹窗 -->
     <pay-test-modal
       ref="payTestModal"
-      @closeBarCode="payTestBarCodeRef.visible = false"
+      @closeBarCode="closeBarCodeFunc"
     ></pay-test-modal>
 
     <!-- 条码弹框 -->
@@ -461,6 +461,12 @@ function testCodeChange() {
 // handleCloseBarCode () {
 //   this.$refs.payTestBarCode.visible = false
 // }
+function closeBarCodeFunc(){
+  if(payTestBarCodeRef.value){
+    payTestBarCodeRef.value.closeVisible()
+  }
+  payTestBarCodeRef.value.open = false
+}
 </script>
 
 <style scoped lang="css">

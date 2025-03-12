@@ -78,5 +78,9 @@ function processCatch() {
   vdata.loading = false
 }
 
-defineExpose({ showModal, getVisible, processCatch, getopen })
+function closeVisible(){
+  vdata.open = false
+}
+
+defineExpose({ showModal, getVisible, processCatch, getopen, closeVisible })
 </script>

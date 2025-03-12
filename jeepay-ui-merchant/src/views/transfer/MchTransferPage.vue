@@ -314,10 +314,9 @@ function immediatelyPay() {
               const succModal = $infoBox.modalSuccess('转账成功', <div>2s后自动关闭...</div>)
               setTimeout(() => {
                 succModal.destroy()
-                vdata.openTransConfirmModal = false
               }, 2000)
             } else {
-              vdata.handleClose()
+              handleClose()
               $infoBox.modalError(
                 '转账失败',
                 <div>
@@ -378,7 +377,7 @@ function handleClose() {
   if (vdata.transferOrderWebSocket) {
     vdata.transferOrderWebSocket.close()
   }
-  vdata.open = false
+  vdata.openTransConfirmModal = false
 }
 </script>
 
