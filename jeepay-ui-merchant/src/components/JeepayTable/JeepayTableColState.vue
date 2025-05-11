@@ -7,17 +7,21 @@
 -->
 <template>
   <div>
-
     <template v-if="!showSwitchType">
-      <div v-if="state == 0" ><a-badge status="error" text="停用" /></div>
-      <div v-else-if="state == 1" ><a-badge status="processing" text="启用" /></div>
-      <div v-else ><a-badge status="warning" text="未知" /></div>
+      <div v-if="state == 0">
+        <a-badge status="error" text="停用" />
+      </div>
+      <div v-else-if="state == 1">
+        <a-badge status="processing" text="启用" />
+      </div>
+      <div v-else>
+        <a-badge status="warning" text="未知" />
+      </div>
     </template>
 
     <template v-if="showSwitchType">
       <a-switch class="els" checked-children="启用" un-checked-children="停用" :checked="switchChecked" @change="onChangeInner" />
     </template>
-
   </div>
 </template>
 
@@ -34,13 +38,13 @@ export default {
   data: function () {
         return { switchChecked: false }
   },
-  mounted () {
-    this.switchChecked = this.state === 1
-  },
   watch: {
     state: function (o, n) {
       this.switchChecked = this.state === 1
     }
+  },
+  mounted () {
+    this.switchChecked = this.state === 1
   },
   methods: {
     onChangeInner: function (checked) {

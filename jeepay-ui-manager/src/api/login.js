@@ -29,7 +29,17 @@ export function getInfo () {
   })
 }
 
-// 退出接口
-export function logout () {
-  return new Promise(resolve => { resolve() })
+// 获取到 网站标题等信息 
+export function getSiteInfo () {
+  return request.request({
+    url: '/api/auth/siteTitle',
+  }, true, true, true, false)
+}
+
+// 获取当前用户信息
+export function getCurrentUserInfo () {
+  return request.request({
+    url: '/api/current/user',
+    method: 'get'
+  })
 }

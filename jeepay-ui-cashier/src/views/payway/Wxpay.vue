@@ -21,13 +21,14 @@
       </div> -->
 
       <!-- 手写输入框 -->
-      <div  class="input-c">
-        <div  class="input-c-div-1">{{ payOrderInfo.amount/100 }}</div>
+      <div  class="input-c"  style="width: 100%">
+        <div  v-if="payOrderInfo.amount" class="input-c-div-1">{{ payOrderInfo.amount/100 }}</div>
+        <input style="height: 120px;"  type="number" v-else v-model="amount" placeholder="请输入金额">
         <!-- 数字金额后边的光标 -->
         <!-- <div class="input-c-div" style="background:#07c160"></div> -->
       </div>
       <!-- 手写输入框的提示文字 -->
-      <div v-show="!amount" class="placeholder">请输入金额</div>
+      <!-- <div v-show="!amount" class="placeholder">请输入金额</div> -->
     </div>
     <ul class="plus-ul" >
       <!-- 支付板块 -->
@@ -98,7 +99,7 @@ export default {
     return {
       merchantName: 'jeepay',  // 付款的商户默认
       avatar: require("../../assets/icon/wx.svg"), // 商户头像默认
-      amount: 1,  // 支付金额默认
+      amount: null,  // 支付金额默认
       resData : {},
       wxImg: require("../../assets/icon/wx.svg"), // 微信支付图片
       payOrderInfo: {}, //订单信息
@@ -106,19 +107,21 @@ export default {
   },
 
   mounted() {
-    this.setPayOrderInfo(true); //获取订单信息 & 调起支付插件
+    this.setPayOrderInfo(); //获取订单信息 & 调起支付插件
   },
 
   methods: {
 
-    setPayOrderInfo(isAutoPay){
+    setPayOrderInfo(){
       const that = this
       getPayOrderInfo().then(res => {
         that.payOrderInfo = res
 
-        if(isAutoPay){
+        if(res.amount){
+          this.amount = res.amount / 100;
           that.pay()
         }
+
       }).catch(res => {
         that.$router.push({name: config.errorPageRouteName, params: {errInfo: res.msg}})
       });
@@ -126,6 +129,11 @@ export default {
 
     // 支付事件
     pay: function (){
+
+      if(isNaN(this.amount) || this.amount <= 0){
+        return alert('请输入金额');
+      }
+
       // 该函数执行效果慢
       let that = this;
       getPayPackage(this.amount).then(res => {

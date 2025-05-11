@@ -1,38 +1,35 @@
 <template>
-  <div class="jee-text-up" >
-    <a-input required="required" :value="msg" @input="$emit('input', $event.target.value)">
-    </a-input>
+  <div class="jee-text-up table-head-layout">
+    <a-input :value="value" required="required" @change="onChange($event)" />
     <label>{{ placeholder }}</label>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'JeepayTextUp',
-  // props: ['msg', 'placeholder']
-  props: {
-    msg: { type: String },
-    placeholder: { type: String }
+<script lang="ts" setup>
+
+  const props = defineProps({
+    value: { type: String, default: undefined },
+    placeholder: { type: String, default: '' }
+  })
+
+  const emit = defineEmits(['update:value'])
+
+  const onChange = (e) => {
+    emit('update:value', e.target.value)
   }
-}
 </script>
 
 <style scoped lang="less">
 // 文字上移 效果
 .jee-text-up {
-  flex-grow:1;
-  flex-shrink: 1;
   position: relative;
-  min-width: 180px;
-  max-width: 230px;
-  margin-bottom:30px;
-  margin-right: 16px;
 
   input {
 
     outline: 0;
     text-indent: 60px;
     transition: all .3s ease-in-out;
+
   }
   input::-webkit-input-placeholder {
     color: #BFBFBF;
@@ -99,7 +96,7 @@ export default {
   }
 }
 
-// 初版文字上移 效果
+// 文字上移效果 初版
 // .jee-text-up {
 //   position: relative;
 
