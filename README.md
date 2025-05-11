@@ -1,7 +1,11 @@
 # Jeepay UI
 为Jeepay对应的前端项目，包括运营平台、商户系统、聚合码收银台。前端技术以vue为主，框架使用Ant Design Vue开发。
 
-Java服务端项目：https://gitee.com/jeequan/jeepay
+【Java服务端项目】
+
+github 地址：https://github.com/jeequan/jeepay    
+gitee 地址：https://gitee.com/jeequan/jeepay   
+gitcode 地址：https://gitcode.com/jeequantech/jeepay
 
 > 目录结构
 
