@@ -156,7 +156,7 @@ function getMchPayConfig(record) {
     const newItems: any = [] // 重新加载支付接口配置定义描述json
     let radioItems: any = [] // 存放单选框value title
 
-    const mchParams = vdata.mchType == 1 ? record.normalMchParams : record.isvsubMchParams // 根据商户类型获取接口定义描述
+    const mchParams = record.mchParams // 根据商户类型获取接口定义描述
 
     try {
       const mchParamsList = JSON.parse(mchParams)
