@@ -1,37 +1,19 @@
-/*
- * @Author: your name
- * @Date: 2020-12-23 09:05:40
- * @LastEditors: 王会峰
- * @LastEditTime: 2020-12-23 09:12:16
- * @FilePath: \pay\src\components\dialog\index.js
- * @SendWord: 永无BUG vite⚡
- */
-import Vue from 'vue'
+import { createApp, nextTick } from 'vue'
 import Dialog from './dialog.vue'
 
-const dialog = Vue.extend(Dialog)
-
-Dialog.install = function(options, type) {
+Dialog.install = function(options) {
     if (options === undefined || options === null) {
-        options = {
-            content: ''
-        }
+        options = { content: '' }
     } else if (typeof options === 'string' || typeof options === 'number') {
-        options = {
-            content: options
-        }
-        if (type != undefined && options != null) {
-            options.type = type;
-        }
+        options = { content: options }
     }
 
-    let instance = new dialog({
-            data: options
-        }).$mount()
-        // document.querySelector('#app')
+    const container = document.createElement('div')
+    const app = createApp(Dialog, options)
+    const instance = app.mount(container)
+    document.body.appendChild(container)
 
-    document.body.appendChild(instance.$el)
-    Vue.nextTick(() => {
+    nextTick(() => {
         instance.visible = true
     })
 }

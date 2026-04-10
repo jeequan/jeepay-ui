@@ -46,17 +46,19 @@
 
 <script>
 import { getPayPackage, getPayOrderInfo } from '@/api/api'
-import config from "@/config";
+import config from "@/config"
+import zfbImg from "@/assets/images/zfb.jpeg"
 export default {
 
   data: function (){
     return {
-      merchantName: 'jeepay',  // 付款的商户默认
-      avatar: require("../../assets/images/zfb.jpeg"), // 商户头像默认
-      amount: null,  // 支付金额默认
+      merchantName: 'jeepay',
+      avatar: zfbImg,
+      amount: null,
       resData : {},
-      wxImg: require("../../assets/images/zfb.jpeg"), // 微信支付图片
-      payOrderInfo: {}, //订单信息
+      wxImg: zfbImg,
+      payOrderInfo: {},
+      icon_member_default: zfbImg,
     }
   },
 

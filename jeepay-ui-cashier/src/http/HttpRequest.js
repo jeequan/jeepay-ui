@@ -9,7 +9,7 @@
 
 import axios from 'axios'
 class HttpRequest {
-  constructor (baseUrl = process.env.VUE_APP_API_BASE_URL) {
+  constructor (baseUrl = import.meta.env.VITE_API_BASE_URL) {
     this.baseUrl = baseUrl
     this.queue = {} // 发送队列, 格式为: {请求url: true}, 可以做一些验证之类
   }

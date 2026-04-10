@@ -91,18 +91,18 @@
 // import MyDialog from "./../dialog/dialog";  // 添加备注弹出的对话框
 // import Keyboard from "./../keyboard/keyboard";  // 手写键盘
 import {getPayPackage, getPayOrderInfo }from '@/api/api'
-import config from "@/config";
+import config from "@/config"
+import wxSvg from "@/assets/icon/wx.svg"
 export default {
-  // 注册备注对话框，和 手写键盘组件，由于这里是直接掉起支付事件，所以目前不应用
-  // components: { MyDialog, Keyboard },
   data: function (){
     return {
-      merchantName: 'jeepay',  // 付款的商户默认
-      avatar: require("../../assets/icon/wx.svg"), // 商户头像默认
-      amount: null,  // 支付金额默认
+      merchantName: 'jeepay',
+      avatar: wxSvg,
+      amount: null,
       resData : {},
-      wxImg: require("../../assets/icon/wx.svg"), // 微信支付图片
-      payOrderInfo: {}, //订单信息
+      wxImg: wxSvg,
+      payOrderInfo: {},
+      icon_member_default: wxSvg,
     }
   },
 
