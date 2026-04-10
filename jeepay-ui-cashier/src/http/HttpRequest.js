@@ -53,14 +53,9 @@ class HttpRequest {
       }
     }, error => {
       this.destroy(url, showLoading)
-      let errorInfo = error.response && error.response.data && error.response.data.data
-      if (!errorInfo) {
-        errorInfo = error.response.data
-      }
-
-      if (showErrorMsg) {
-        //Vue.prototype.$message.error(JSON.stringify(errorInfo)) // 显示异常信息
-      }
+      // 安全取值：网络断开时 error.response 为 undefined
+      const responseData = error.response && error.response.data
+      const errorInfo = (responseData && responseData.data) || responseData || { msg: '网络异常，请稍后重试' }
 
       return Promise.reject(errorInfo)
     })

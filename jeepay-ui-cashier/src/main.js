@@ -9,14 +9,14 @@ import 'amfe-flexible'
  * 路由守卫
  */
 router.beforeEach((to, from, next) => {
-    // 如果在免登录页面则直接放行
-    if (config.errorPageRouteName.includes(to.name)) {
+    // 免守卫路由名单（使用 passGuardRouteList 数组判断，而非字符串 includes）
+    if (config.passGuardRouteList.includes(to.name)) {
       next()
       return
     }
 
-    // 获取 token
-    let token = to.params[config.urlTokenName]
+    // 从路由参数或 query 中恢复 token（支持 /hub/:jeepayToken 和刷新场景）
+    const token = to.params[config.urlTokenName] || to.query[config.urlTokenName]
     if (token) {
         config.cacheToken = token
     }
@@ -26,7 +26,6 @@ router.beforeEach((to, from, next) => {
         return
     }
 
-    // 获取不到支付类型, 跳转到错误页面
     if (!wayCode.getPayWay()) {
         next({ name: config.errorPageRouteName, params: { errInfo: '不支持的支付方式！ 请在微信/支付宝/银联应用内扫码进入！' } })
         return
@@ -36,9 +35,6 @@ router.beforeEach((to, from, next) => {
 })
 
 const app = createApp(App)
-
-// Vue 3 全局属性注入（替代 Vue.prototype）
 app.config.globalProperties.$config = config
-
 app.use(router)
 app.mount('#app')
