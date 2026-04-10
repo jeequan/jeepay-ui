@@ -2,6 +2,9 @@
   "name": "jeepay-ui-cashier",
   "version": "2.0.0",
   "private": true,
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
