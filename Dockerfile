@@ -1,6 +1,5 @@
 # 构建阶段
-# cashier 使用 Vue 2 + vue-cli（兼容 Node 16）
-# manager / merchant 使用 Vue 3 + Vite（兼容 Node 16+）
+# cashier / manager / merchant 均使用 Vue 3 + Vite
 FROM node:16-alpine AS builder
 
 ARG PLATFORM
@@ -25,7 +24,7 @@ ENV BACKEND_HOST=${BACKEND_HOST}
 WORKDIR /workspace
 
 COPY --from=builder /workspace/jeepay-ui-${PLATFORM}/dist /workspace
-RUN chmod a+r /workspace
+RUN chmod -R a+r /workspace
 
 RUN rm -rf /etc/nginx/conf.d/default.conf
 
