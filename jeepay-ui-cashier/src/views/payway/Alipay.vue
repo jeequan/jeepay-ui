@@ -93,7 +93,7 @@ export default {
       const that = this;
       getPayPackage(this.amount).then(res => {
 
-        if (res.code !== 0 && res.code !== '0') {
+        if (res.code !== 0) {
           return alert(res.msg);
         }
 

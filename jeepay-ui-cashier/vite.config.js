@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
+import pxtorem from 'postcss-pxtorem'
 
 export default ({ mode }) => {
   const env = loadEnv(mode, process.cwd())
@@ -20,7 +21,7 @@ export default ({ mode }) => {
     css: {
       postcss: {
         plugins: [
-          require('postcss-pxtorem')({
+          pxtorem({
             rootValue: 75,
             propList: ['*'],
           }),

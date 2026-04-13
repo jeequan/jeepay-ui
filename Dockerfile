@@ -1,6 +1,6 @@
 # 构建阶段
 # cashier / manager / merchant 均使用 Vue 3 + Vite
-FROM node:16-alpine AS builder
+FROM node:20-alpine AS builder
 
 ARG PLATFORM
 
