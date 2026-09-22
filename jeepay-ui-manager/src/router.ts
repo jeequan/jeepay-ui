@@ -11,7 +11,9 @@ NProgress.configure({ showSpinner: false })
 const rootRoute: any = [{ name: 'login', path: '/login', component: Login }]
 
 const router = createRouter({
-  history: createWebHistory(),
+  // history base 需与 vite 构建的 base（VITE_APP_BASE_URL）一致：子路径部署（如 /manager/）时，
+  // 若不传 base 则缺省为 /，路由地址不带前缀，刷新页面会 404 或报 No match found
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: rootRoute,
 })
 
