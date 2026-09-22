@@ -230,7 +230,7 @@ export function getUserInfo () {
   })
 }
 
-/** 获取到webSocket的前缀 （ws://localhost） **/
+/** 获取到webSocket的前缀 （ws://localhost/merchant） **/
 export function getWebSocketPrefix () {
   // 获取网站域名 +  端口号
   let domain = document.location.protocol + '//' + document.location.host
@@ -240,11 +240,19 @@ export function getWebSocketPrefix () {
     domain = process.env.VUE_APP_API_BASE_URL
   }
 
+  // http->ws, https->wss
+  let prefix = 'ws://'
   if (domain.startsWith('https:')) {
-    return 'wss://' + domain.replace('https://', '')
+    prefix = 'wss://'
+    domain = domain.replace('https://', '')
   } else {
-    return 'ws://' + domain.replace('http://', '')
+    domain = domain.replace('http://', '')
   }
+
+  // 子路径部署（vite base = VITE_APP_BASE_URL，如 /merchant/）时 ws 地址需带上前缀，与 API 请求路径保持一致；
+  // 根路径部署（base=/）时行为与原逻辑一致
+  const base = import.meta.env.BASE_URL || '/'
+  return prefix + domain + (base === '/' ? '' : base.replace(/\/$/, ''))
 }
 
 /** 查询支付宝授权地址URL **/
