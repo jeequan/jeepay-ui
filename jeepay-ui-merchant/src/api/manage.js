@@ -235,9 +235,10 @@ export function getWebSocketPrefix () {
   // 获取网站域名 +  端口号
   let domain = document.location.protocol + '//' + document.location.host
 
-  // 判断api_base_url 是否设置
-  if (process.env.VUE_APP_API_BASE_URL && process.env.VUE_APP_API_BASE_URL !== '/') {
-    domain = process.env.VUE_APP_API_BASE_URL
+  // 判断api_base_url 是否设置（.env[.development] 中定义的是 VITE_API_BASE_URL；VUE_APP_ 为 Vue CLI 时代命名，保留兜底兼容）
+  const apiBaseUrl = process.env.VITE_API_BASE_URL || process.env.VUE_APP_API_BASE_URL
+  if (apiBaseUrl && apiBaseUrl !== '/') {
+    domain = apiBaseUrl
   }
 
   if (domain.startsWith('https:')) {

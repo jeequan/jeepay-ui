@@ -24,7 +24,10 @@ export default ({ mode }) => {
     base: process.env.VITE_APP_BASE_URL,
 
     define: {
-      'process.env': process.env,
+      // 只注入源码实际使用的变量。切勿恢复为 'process.env': process.env ——
+      // 那会把构建机的全部环境变量（可能含密钥）内联进公开的前端产物
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      'process.env.VITE_API_BASE_URL': JSON.stringify(process.env.VITE_API_BASE_URL ?? ''),
     },
 
     // @ --> src目录
