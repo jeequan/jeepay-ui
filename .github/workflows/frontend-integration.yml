@@ -1,12 +1,10 @@
 name: Frontend integration
 on:
+  # Always report checks so branch protection can require them without path-filter gaps.
   pull_request:
-    paths:
-      - 'jeepay-ui-manager/**'
-      - 'jeepay-ui-merchant/**'
-      - '.github/workflows/frontend-integration.yml'
-      - 'Dockerfile'
-      - '.dockerignore'
+    branches: [dev, main]
+  push:
+    branches: [dev, main]
 permissions:
   contents: read
 jobs:

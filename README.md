@@ -4,6 +4,8 @@ Jeepay 前端项目，包括运营平台、商户系统、聚合码收银台。
 
 三个子项目均采用 **Vue 3** + **Vite** 构建，UI 框架使用 Ant Design Vue（管理端/商户端）。
 
+社区贡献请先阅读 [贡献指南](CONTRIBUTING.md)：日常 PR 提交到 `dev`，`main` 用于稳定发布，发布版本以 Tag + Release 为准。
+
 ## 服务端项目
 
 - GitHub：<https://github.com/jeequan/jeepay>
