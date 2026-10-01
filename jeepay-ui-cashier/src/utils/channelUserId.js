@@ -13,7 +13,12 @@ const setChannelUserId = function (channelUserId) {
     localStorage.setItem("channelUserId", channelUserId)
 }
 
+const clearChannelUserId = function () {
+    localStorage.removeItem("channelUserId")
+}
+
 export default {
     getChannelUserId: getChannelUserId,
-    setChannelUserId: setChannelUserId
+    setChannelUserId: setChannelUserId,
+    clearChannelUserId: clearChannelUserId
 }
