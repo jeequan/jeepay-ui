@@ -1,9 +1,10 @@
 name: Cashier OAuth regression
 on:
+  # Always report checks so branch protection can require them without path-filter gaps.
   pull_request:
-    paths:
-      - 'jeepay-ui-cashier/**'
-      - '.github/workflows/cashier-oauth.yml'
+    branches: [dev, main]
+  push:
+    branches: [dev, main]
 permissions:
   contents: read
 jobs:
