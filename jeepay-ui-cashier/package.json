@@ -24,6 +24,6 @@
     "jsdom": "^22.1.0",
     "postcss-pxtorem": "^6.0.0",
     "vite": "^4.1.0",
-    "vitest": "^0.34.6"
+    "vitest": "^4.1.11"
   }
 }

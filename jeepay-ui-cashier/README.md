@@ -25,6 +25,8 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### OAuth callback regression tests
 
+The test tools require Node.js 20.19+ (or 22.12+/24+).
+
 ```sh
 npm ci
 npm run test:oauth
