@@ -1,0 +1,41 @@
+name: Frontend integration
+on:
+  pull_request:
+    paths:
+      - 'jeepay-ui-manager/**'
+      - 'jeepay-ui-merchant/**'
+      - '.github/workflows/frontend-integration.yml'
+      - 'Dockerfile'
+      - '.dockerignore'
+permissions:
+  contents: read
+jobs:
+  build:
+    name: ${{ matrix.app }} build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [manager, merchant]
+    defaults:
+      run:
+        working-directory: jeepay-ui-${{ matrix.app }}
+    env:
+      JEEPAY_BUILD_SENTINEL: jeepay-integration-build-environment-must-not-leak
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: jeepay-ui-${{ matrix.app }}/package-lock.json
+      - run: npm ci
+      - name: Check merchant configuration preservation
+        if: matrix.app == 'merchant'
+        run: npm run test:merchant-config
+      - run: npm run build
+      - name: Check build environment stays private
+        run: '! grep -R --quiet "$JEEPAY_BUILD_SENTINEL" dist'
