@@ -45,16 +45,18 @@
 
 <script>
 import {getPayPackage}from '@/api/api'
-import config from "@/config";
+import config from "@/config"
+import ysfImg from "@/assets/images/ysf.jpg"
 export default {
 
   data: function (){
     return {
-      merchantName: 'jeepay',  // 付款的商户默认
-      avatar: require("../../assets/images/ysf.jpg"), // 商户头像默认
-      amount: 1,  // 支付金额默认
+      merchantName: 'jeepay',
+      avatar: ysfImg,
+      amount: 1,
       resData : {},
-      wxImg: require("../../assets/images/ysf.jpg") // 微信支付图片
+      wxImg: ysfImg,
+      icon_member_default: ysfImg,
     }
   },
 

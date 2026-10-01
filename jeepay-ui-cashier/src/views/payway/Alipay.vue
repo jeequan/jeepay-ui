@@ -46,17 +46,19 @@
 
 <script>
 import { getPayPackage, getPayOrderInfo } from '@/api/api'
-import config from "@/config";
+import config from "@/config"
+import zfbImg from "@/assets/images/zfb.jpeg"
 export default {
 
   data: function (){
     return {
-      merchantName: 'jeepay',  // 付款的商户默认
-      avatar: require("../../assets/images/zfb.jpeg"), // 商户头像默认
-      amount: null,  // 支付金额默认
+      merchantName: 'jeepay',
+      avatar: zfbImg,
+      amount: null,
       resData : {},
-      wxImg: require("../../assets/images/zfb.jpeg"), // 微信支付图片
-      payOrderInfo: {}, //订单信息
+      wxImg: zfbImg,
+      payOrderInfo: {},
+      icon_member_default: zfbImg,
     }
   },
 
@@ -86,15 +88,16 @@ export default {
         return alert('请输入金额');
       }
 
-      let that = this;
+      // 后端 /api/cashier/pay 返回双层 ApiRes：外层由 HttpRequest 拦截器拆除，
+      // 这里 res 仍是内层 ApiRes 结构 { code, msg, data: { orderState, alipayTradeNo, ... } }
+      const that = this;
       getPayPackage(this.amount).then(res => {
 
-        //订单创建异常
-        if(res.code != '0') {
+        if (res.code !== 0) {
           return alert(res.msg);
         }
 
-        if(res.data.orderState != 1 ) { //订单不是支付中，说明订单异常
+        if (res.data.orderState !== 1) {
           return alert(res.data.errMsg);
         }
 
@@ -120,7 +123,7 @@ export default {
       AlipayJSBridge.call("tradePay", {
         tradeNO: alipayTradeNo
       }, function (data) {
-        if ("9000" == data.resultCode) {
+        if (data.resultCode === "9000") {
           // alert('支付成功！');
 
           // //重定向
@@ -133,7 +136,7 @@ export default {
 
           //‘8000’：后台获取支付结果超时，暂时未拿到支付结果;
         // ‘6004’：支付过程中网络出错， 暂时未拿到支付结果;
-        }else if("8000" == data.resultCode || "6004" == data.resultCode){ //其他
+        } else if (data.resultCode === "8000" || data.resultCode === "6004") { //其他
 
           alert(JSON.stringify(data));
           window.AlipayJSBridge.call('closeWebview')

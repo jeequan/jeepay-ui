@@ -12,7 +12,8 @@ const passGuardRouteList = [errorPageRouteName]  // 不进入路由守卫的name
 /** 定义支付方式 **/
 const payWay = {
     WXPAY : {wayCode: "WX_JSAPI", routeName: "CashierWxpay"},
-    ALIPAY : {wayCode: "ALI_JSAPI", routeName: "CashierAlipay"}
+    ALIPAY : {wayCode: "ALI_JSAPI", routeName: "CashierAlipay"},
+    YSFPAY : {wayCode: "YSF_JSAPI", routeName: "CashierYsfpay"}
 }
 
 export default {
