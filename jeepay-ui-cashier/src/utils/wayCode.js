@@ -8,29 +8,28 @@
 
 import config from '@/config'
 
-const getToPageRouteName = function () {
-    const payWay = getPayWay();
-    return  payWay? payWay.routeName : null
-}
-
 const getPayWay = function () {
+    const ua = navigator.userAgent
 
-    const userAgent = navigator.userAgent;
-
-    if(userAgent.indexOf("MicroMessenger") >= 0){
-        return config.payWay.WXPAY;
+    if (ua.indexOf('MicroMessenger') >= 0) {
+        return config.payWay.WXPAY
     }
 
-    if(userAgent.indexOf("AlipayClient") >= 0){
-        return config.payWay.ALIPAY;
+    if (ua.indexOf('AlipayClient') >= 0) {
+        return config.payWay.ALIPAY
     }
 
-    return null;
+    // 云闪付 App UA 包含 CloudPay 或 UnionPay
+    if (ua.indexOf('CloudPay') >= 0 || ua.indexOf('UnionPay') >= 0) {
+        return config.payWay.YSFPAY
+    }
 
+    return null
 }
 
-
-export default { getToPageRouteName: getToPageRouteName,
-    getPayWay: getPayWay
-
+const getToPageRouteName = function () {
+    const payWay = getPayWay()
+    return payWay ? payWay.routeName : null
 }
+
+export default { getPayWay, getToPageRouteName }

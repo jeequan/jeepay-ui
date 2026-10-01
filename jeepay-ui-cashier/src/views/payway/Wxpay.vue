@@ -91,18 +91,18 @@
 // import MyDialog from "./../dialog/dialog";  // 添加备注弹出的对话框
 // import Keyboard from "./../keyboard/keyboard";  // 手写键盘
 import {getPayPackage, getPayOrderInfo }from '@/api/api'
-import config from "@/config";
+import config from "@/config"
+import wxSvg from "@/assets/icon/wx.svg"
 export default {
-  // 注册备注对话框，和 手写键盘组件，由于这里是直接掉起支付事件，所以目前不应用
-  // components: { MyDialog, Keyboard },
   data: function (){
     return {
-      merchantName: 'jeepay',  // 付款的商户默认
-      avatar: require("../../assets/icon/wx.svg"), // 商户头像默认
-      amount: null,  // 支付金额默认
+      merchantName: 'jeepay',
+      avatar: wxSvg,
+      amount: null,
       resData : {},
-      wxImg: require("../../assets/icon/wx.svg"), // 微信支付图片
-      payOrderInfo: {}, //订单信息
+      wxImg: wxSvg,
+      payOrderInfo: {},
+      icon_member_default: wxSvg,
     }
   },
 
@@ -134,15 +134,16 @@ export default {
         return alert('请输入金额');
       }
 
-      // 该函数执行效果慢
-      let that = this;
+      // 后端 /api/cashier/pay 返回双层 ApiRes：外层由 HttpRequest 拦截器拆除，
+      // 这里 res 仍是内层 ApiRes 结构 { code, msg, data: { orderState, payInfo, ... } }
+      const that = this;
       getPayPackage(this.amount).then(res => {
 
-        if(res.code != '0') {
+        if (res.code !== 0) {
           return alert(res.msg);
         }
 
-        if(res.data.orderState != 1 ) { //订单不是支付中，说明订单异常
+        if (res.data.orderState !== 1) {
           return alert(res.data.errMsg);
         }
 
@@ -173,7 +174,7 @@ export default {
       WeixinJSBridge.invoke(
           'getBrandWCPayRequest', JSON.parse(that.resData.payInfo),
           function(res) {
-            if (res.err_msg == "get_brand_wcpay_request:ok") {
+            if (res.err_msg === "get_brand_wcpay_request:ok") {
               // 使用以上方式判断前端返回,微信团队郑重提示：
               //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
               // //重定向
@@ -185,15 +186,15 @@ export default {
               }
 
             }
-            if (res.err_msg == "get_brand_wcpay_request:cancel") {
+            if (res.err_msg === "get_brand_wcpay_request:cancel") {
               alert("支付取消");
               window.WeixinJSBridge.call('closeWindow')
             }
-            if (res.err_msg == "get_brand_wcpay_request:fail") {
+            if (res.err_msg === "get_brand_wcpay_request:fail") {
               alert('支付失败:' + JSON.stringify(res))
               window.WeixinJSBridge.call('closeWindow')
             }
-            if (res.err_msg == "total_fee") {
+            if (res.err_msg === "total_fee") {
               alert('缺少参数')
               window.WeixinJSBridge.call('closeWindow')
             }

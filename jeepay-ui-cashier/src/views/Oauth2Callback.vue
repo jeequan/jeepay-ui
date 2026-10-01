@@ -1,56 +1,33 @@
 <template>
   <div>
-    <!-- <p style="font-size:16px;">获取用户ID信息</p> -->
     <p style="font-size:16px;">正在跳转...</p>
   </div>
 </template>
 
 <script>
-
-import {getChannelUserId} from '@/api/api'
+import { getChannelUserId } from '@/api/api'
 import wayCodeUtils from '@/utils/wayCode'
 import channelUserIdUtil from '@/utils/channelUserId'
-import config from "@/config";
+import config from '@/config'
+
 export default {
-  components: {
-  },
   mounted() {
+    // Vue Router 4 的 this.$route.query 已包含 URL 查询参数，无需手动解析
+    const allQuery = { ...this.$route.query }
 
-
-    const allQuery = Object.assign({}, this.searchToObject(), this.$route.query)
-
-    const that = this;
+    const that = this
     getChannelUserId(allQuery).then(res => {
+      channelUserIdUtil.setChannelUserId(res)
 
-      //设置channelUserId
-      channelUserIdUtil.setChannelUserId(res);
-
-      this.$router.push({name: wayCodeUtils.getPayWay().routeName})
+      const payWay = wayCodeUtils.getPayWay()
+      if (payWay && payWay.routeName) {
+        that.$router.push({ name: payWay.routeName })
+      } else {
+        that.$router.push({ name: config.errorPageRouteName, params: { errInfo: '无法识别支付方式' } })
+      }
     }).catch(res => {
-      that.$router.push({name: config.errorPageRouteName, params: {errInfo: res.msg}})
-    });
-
-  },
-  methods: {
-
-    searchToObject: function() {
-
-      if(!window.location.search){
-        return {};
-      }
-
-      var pairs = window.location.search.substring(1).split("&"),
-          result = {},
-          pair,
-          i;
-      for ( i in pairs ) {
-        if ( pairs[i] === "" ) continue;
-        pair = pairs[i].split("=");
-        result[ decodeURIComponent( pair[0] ) ] = decodeURIComponent( pair[1] );
-      }
-      return result;
-    }
-
+      that.$router.push({ name: config.errorPageRouteName, params: { errInfo: (res && res.msg) || '获取用户信息失败' } })
+    })
   }
 }
 </script>

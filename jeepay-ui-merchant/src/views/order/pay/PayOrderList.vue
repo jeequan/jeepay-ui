@@ -153,36 +153,27 @@
           <template v-if="column.key == 'orderNo'">
             <div class="order-list">
               <p>
-                <span style="color: #729ed5; background: #e7f5f7">支付</span>
-                {{ record.payOrderId }}
+                <span style="color: #729ed5; background: #e7f5f7">支付</span>{{ record.payOrderId }}
               </p>
               <p style="margin-bottom: 0">
-                <span style="color: #56cf56; background: #d8eadf">商户</span>
-                <a-tooltip
+                <span style="color: #56cf56; background: #d8eadf">商户</span><a-tooltip
                   placement="bottom"
                   style="font-weight: normal"
                   v-if="record.mchOrderNo.length > record.payOrderId.length"
                 >
                   <template slot="title">
                     <span>{{ record.mchOrderNo }}</span>
-                  </template>
-                  {{ changeStr2ellipsis(record.mchOrderNo, record.payOrderId.length) }}
-                </a-tooltip>
-                <span style="font-weight: normal" v-else>{{ record.mchOrderNo }}</span>
+                  </template>{{ changeStr2ellipsis(record.mchOrderNo, record.payOrderId.length) }}</a-tooltip><span style="font-weight: normal" v-else>{{ record.mchOrderNo }}</span>
               </p>
               <p v-if="record.channelOrderNo" style="margin-bottom: 0; margin-top: 10px">
-                <span style="color: #fff; background: #e09c4d">渠道</span>
-                <a-tooltip
+                <span style="color: #fff; background: #e09c4d">渠道</span><a-tooltip
                   placement="bottom"
                   style="font-weight: normal"
                   v-if="record.channelOrderNo.length > record.payOrderId.length"
                 >
                   <template slot="title">
                     <span>{{ record.channelOrderNo }}</span>
-                  </template>
-                  {{ changeStr2ellipsis(record.channelOrderNo, record.payOrderId.length) }}
-                </a-tooltip>
-                <span style="font-weight: normal" v-else>{{ record.channelOrderNo }}</span>
+                  </template>{{ changeStr2ellipsis(record.channelOrderNo, record.payOrderId.length) }}</a-tooltip><span style="font-weight: normal" v-else>{{ record.channelOrderNo }}</span>
               </p>
             </div>
           </template>
