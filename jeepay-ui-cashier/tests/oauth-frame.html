@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><title>Cashier OAuth test frame</title></head>
+<body><div id="app"></div>
+<script type="module">
+import axios from 'axios'
+const scenario = parent.oauthScenario
+Object.defineProperty(navigator, 'userAgent', { value: 'Mozilla/5.0 MicroMessenger/8.0' })
+localStorage.clear()
+if (scenario.staleId) localStorage.setItem('channelUserId', scenario.staleId)
+scenario.calls = []
+scenario.completed = 0
+axios.defaults.adapter = async config => {
+  const path = config.url
+  const data = JSON.parse(config.data)
+  scenario.calls.push({ path, data })
+  let result
+  if (path.endsWith('/channelUserId')) {
+    if (scenario.delay && data.code === 'old-code') await scenario.delay
+    if (scenario.networkError) throw new Error('test-only network failure')
+    result = scenario.response || { code: 0, data: data.code === 'new-code' ? 'new-openid' : 'test-openid' }
+  } else if (path.endsWith('/payOrderInfo')) {
+    result = { code: 0, data: { mchName: 'Test merchant', amount: 0 } }
+  } else {
+    // Never contact a real payment endpoint from these tests.
+    throw new Error(`Unexpected API request: ${path}`)
+  }
+  scenario.completed++
+  return { data: result, status: 200, statusText: 'OK', headers: {}, config }
+}
+await import('/src/main.js')
+scenario.router = (await import('/src/router/index.js')).default
+</script>
+</body></html>
