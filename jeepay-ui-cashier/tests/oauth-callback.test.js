@@ -29,6 +29,7 @@ const waitForRoute = name => vi.waitFor(() => expect(router.currentRoute.value.n
 afterEach(() => {
   document.querySelector('#app')?.__vue_app__?.unmount()
   router?.options.history.destroy()
+  vi.restoreAllMocks()
 })
 
 for (const [name, url, code] of [
@@ -99,4 +100,12 @@ test('newer callback wins when component is reused', async () => {
     expect(localStorage.getItem('channelUserId')).toBe('new-openid')
     expect(calls.filter(call => call.path.endsWith('/channelUserId')).map(call => call.data.token)).toEqual(['old-token', 'new-token'])
   } finally { release({ code: 0, data: 'old-openid' }) }
+})
+
+test('storage failure displays an error without exchanging or paying', async () => {
+  vi.spyOn(Storage.prototype, 'removeItem').mockImplementationOnce(() => { throw new Error('storage unavailable') })
+  const calls = await open('/#/oauth2Callback/test-token?code=test-code')
+  await waitForRoute('Error')
+  expect(document.body.textContent).toContain('storage unavailable')
+  expect(calls).toHaveLength(0)
 })

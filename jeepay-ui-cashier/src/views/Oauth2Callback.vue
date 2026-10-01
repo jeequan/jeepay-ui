@@ -38,8 +38,8 @@ export default {
         allQuery[key] = value
       })
 
-      channelUserIdUtil.clearChannelUserId()
       try {
+        channelUserIdUtil.clearChannelUserId()
         const res = await getChannelUserId(allQuery)
         if (!isCurrent()) return
         if (typeof res !== 'string' || !res.trim() || ['undefined', 'null'].includes(res.trim())) {
