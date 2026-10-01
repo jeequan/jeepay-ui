@@ -20,6 +20,7 @@ async function open(url, scenario = {}) {
   frame.src = `/tests/oauth-frame.html${url}`
   frameHost.replaceChildren(frame)
   await waitFor(() => scenario.router && frame.contentDocument?.querySelector('#app'))
+  await scenario.router.isReady()
   return { frame, scenario, win: frame.contentWindow }
 }
 const callback = '#/oauth2Callback/test-token'
@@ -72,6 +73,7 @@ test('Back does not replay a consumed callback', async () => {
   const { win, scenario } = await open('#/error?errInfo=before')
   await scenario.router.push('/oauth2Callback/test-token?code=test-code')
   await waitFor(() => win.location.hash === cashier)
+  equal(win.history.state.back, '/error?errInfo=before')
   win.history.back()
   await waitFor(() => win.location.hash === '#/error?errInfo=before')
   equal(exchanges(scenario).length, 1)
